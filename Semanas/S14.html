@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 13 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 13 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 14   </title>
+    
+  </head>
+  <body class="fondo-body" >
+    
+    <h1 class="number-title flexbox"> Semana 14</h1>   
+    <h1 class="title flexbox"></h1>   
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Dos normas $\| \cdot \|_{1} $ y $\| \cdot \|_{2} $ son <b>equivalentes</b> 
+        si existen números reales $\alpha$ y $\beta$ tales que 
+        $$\alpha \| \cdot\|_{1} \leq  \| \cdot\|_{2} \leq \beta \|\cdot \|_{1}  $$
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>Para todo $\vec{x} \in \mathbb{R}^{n}$, se satisface 
+        $$\| \cdot\|_{\infty} \leq  \| \cdot\|_{2} \leq \sqrt{n} \|\cdot \|_{\infty}  $$
+        esto es, las normas $\| \cdot\|_{\infty}$ y $  \| \cdot\|_{2}$ son equivalentes. 
+      </p>
+      <p><b>Demostración:</b></p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>Por el teorema anterior, se tiene que si  la sucesión de vectores 
+        $\{x^{(k)}\}_{k=1}^{\infty}$ en $\mathbb{R}^{n}$ en converge al vector $\vec{x} \in \mathbb{R}^{n}$ 
+      con la norma $\| \cdot\|_{\infty}$, entonces también converge a $\vec{x}$ con la norma  Euclideana $\| \cdot\|_{2}$ y viceversa.</p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>Para cada $k \in \mathbb{N}$, sea $\vec{x}^{(k)} \in \mathbb{R}^{4}$ dado por 
+        $$\vec{x}^{(k)} := \left(x_{1}^{(k)}, x_{2}^{(k)}, \ldots , x_{4}^{(k)}\right)^{t}:= \left(1,2+\frac{1}{k}, \frac{1}{k^{2}}, e^{-k} \mathrm{Sen}(k)\right)^{t}$$
+        Prueba  que la sucesión de vectores $\{x^{(k)}\}_{k=1}^{\infty}$ en $\mathbb{R}^{4}$ en converge al vector $(1,2,0,0)^{t}$ 
+        con  la norma $\| \cdot \|_{2}$.
+      </p>
+    </div>
+    
+    <h1 class="title flexbox">Normas matriciales</h1>   
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Una <b>norma matricial</b> sobre el conjunto $\mathbb{M}_{n \times n}(\mathbb{R})$ de todas las matrices
+        de tamaño  $n \times n$ con entradas en $\mathbb{R}$  es una función $\| \cdot\|\colon \mathbb{M}_{n \times n}(\mathbb{R}) \to \mathbb{R}_{+}$, tal que 
+        <ol>
+          <li>$\| A \| \geq 0$ para todo $A \in \mathbb{M}_{n \times n}(\mathbb{R})$ </li>
+          <li>$\| A \| = 0$  si y sólo si  $A$ es la matriz de tamaño $n\times n$ cuyas entradas son todas iguales a cero. </li>
+          <li>$\| \alpha A \| = |\alpha| \|  A \| $ para todo $A \in \mathbb{M}_{n \times n}(\mathbb{R})$ y para todo $\alpha \in \mathbb{R}$ </li>
+          <li>$\| A + B \| \leq \| A  \| + \| B \|$ para cualesquiera 
+            $A,B \in \mathbb{M}_{n \times n}(\mathbb{R})$</li>
+            <li>$\| A  B \| \leq \| A  \| \| B \|$ para cualesquiera 
+              $A,B \in \mathbb{M}_{n \times n}(\mathbb{R})$</li>
+        </ol>
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>
+        Sean  $A,B \in \mathbb{M}_{n \times n}(\mathbb{R})$. Se  define la <b>distancia entre 
+        $A$ y $B$ respecto a la norma  $\|\cdot  \|$</b> como: 
+        $$d(A,B) := \|A-B \|$$
+      </p>
+      
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>Si $\|\cdot\| $ es una norma en $\mathbb{R}^{n}$, entonces la  función
+        $\|\cdot \|\colon  \mathbb{M}_{n \times n}(\mathbb{R})  \to \mathbb{R}_{+}$ definida como:
+        $$\|A \|:=\max_{\|\vec{x}\|=1} \| A\vec{x}\|$$
+        es una norma matricial y se le llama la <b>norma natural</b> o <b>inducida asociada con la norma $\|\cdot\|$</b>. 
+      </p>
+      <p><b>Demostración:</b></p>
+      
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Corolario </h2>
+      <p>Si $\vec{z} \in \mathbb{R}^{n}$,  $\vec{z} \not= \vec{0} $, $A\in \mathbb{M}_{n \times n}(\mathbb{R})$
+        y $\| \cdot \|$ la norma natural, entonces 
+        $$\|A\vec{z} \|\leq \| A\|\|\vec{z}\|$$
+      </p>
+      
+    </div>
+    
+    
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>
+       Para cualquier $A \in \mathbb{M}_{n\times n}(\mathbb{R})$ se satisface 
+       $$\max_{\|\vec{x}\|=1} \| A\vec{x}\| = \max_{\vec{x}\not= \vec{0}} \left\| A\left(\displaystyle{\frac{\vec{x}}{\|\vec{x} \|}}\right) \right\|= \max_{\vec{x}\not= \vec{0}} \displaystyle{ \frac{\| A\vec{x}\|}{\|\vec{x} \| } } $$
+      Por lo tanto, podemos escribir:
+      $$\|A \|= \max_{\vec{x}\not= \vec{0}} \displaystyle{ \frac{\| A\vec{x}\|}{\|\vec{x} \| } }$$
+
+      </p>
+      
+    </div>
+
+   
+
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Ejemplos</h2>
+      <p>Sea $A\in \mathbb{M}_{n \times n}(\mathbb{R})$. Entonces
+        <ul>
+          <li>Para la norma vectorial  $\| \cdot \|_{2}$ en $\mathbb{R}^{n}$, se tiene que: 
+            $$\|A \|_{2}:=\max_{\|\vec{x}\|_{2}=1} \| A\vec{x}\|_{2}$$
+          </li>
+          <li>Para la norma vectorial $\| \cdot \|_{\infty}$ en $\mathbb{R}^{n}$, se tiene que:
+            $$\|A \|_{\infty}:=\max_{\|\vec{x}\|_{\infty}=1} \| A\vec{x}\|_{\infty}$$
+          </li>
+        </ul>
+
+      </p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>Si $A=(a_{ij}) \in   \mathbb{M}_{n \times n}(\mathbb{R})$ entonces 
+        $$\|A \|_{\infty}=\max\left\{\displaystyle{\sum_{j=1}^{n} |a_{ij}|}\, \, \colon \,\, 1\leq i \leq n \right\}$$
+        
+      </p>
+      <p><b>Demostración:</b></p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>Si $A= \begin{pmatrix} 1& 2 & -1 \\ 0 & 3 &  -1 \\ 5 & -1 & 1  \end{pmatrix}$, entonces 
+        $\|A\|_{\infty} = 7.$
+        
+      </p>
+    </div>
+
+    <h1 class="title flexbox"> Eigenvalores y eigenvectores </h1>    
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Sea $A  \in   \mathbb{M}_{n \times n}(\mathbb{R})$, se define el <b>polinomio característico</b> de $A$  
+        como: 
+        $$p(\lambda) := \mathrm{det}(A- \lambda \mathrm{I}_{n\times n})$$
+      </p>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Observaciones </h2>
+      <p>
+        <ul>
+          <li>$p$ es un polinomio de grado $n$.</li><br>
+          <li>Si $\lambda$ es un cero de $p$, entonces $\mathrm{det}(A- \lambda \mathrm{I}_{n\times n})=0$. Por lo tanto, 
+            el sistema de ecuaciones lineales  determinado por 
+            $$(A- \lambda \mathrm{I}_{n\times n})\vec{x}=\vec{0}$$ 
+            tiene una solución  $\vec{x}\not= \vec{0}$.
+          </li><br>
+        </ul>       
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Definición </h2>
+      <p>
+        <ul>
+          <li>Sea $A  \in   \mathbb{M}_{n \times n}(\mathbb{R})$. Si $p$ es el polinomio característico de la matriz 
+        $A$, los ceros de $p$ son llamados <b>eigenvalores</b>  o <b>valores característicos</b> de  $A$.
+        </li><br>
+        <li>Si $\lambda$ es un eigenvalor de $A$ y $\vec{x} \not= \vec{0} $ satisface $(A- \lambda \mathrm{I}_{n\times n})\vec{x}=\vec{0}$,
+          entonces $\vec{x}$ es un <b>eigenvector</b>  o <b>vector característico</b>  de $A$ correspondiente al eigenvalor $\lambda$
+           </li>
+      </ul>
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Observaciones </h2>
+      <p>
+        <ul>
+          <li>$\lambda$ es un eigenvalor de $A$ si y sólo si  $\mathrm{det}(A- \lambda \mathrm{I}_{n\times n})=0$
+
+          </li><br>
+          <li>Sea $\lambda$ es un eigenvalor de $A$, entonces  $\vec{x}\not= \vec{0} $ es un eigenvector de $A$ si y sólo si $\vec{x}$ 
+            es una solución no trivial del sistema  
+            $$(A- \lambda \mathrm{I}_{n\times n})\vec{x}=\vec{0}$$
+          </li><br>
+        </ul>       
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Sea $A  \in   \mathbb{M}_{n \times n}(\mathbb{R})$.  El <b>radio espectral</b> $\rho(A)$ de $A$ esta definido
+        por:
+        $$\rho(A):= \max\{| \lambda  |  \,  \colon \, \lambda  \text{ es un eigenvalor de } A \}$$
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>Si $A  \in   \mathbb{M}_{n \times n}(\mathbb{R})$, entonces 
+        <ul>
+          <li>$\|A \|_{2} = \sqrt{\rho(A^{t} A)}$</li><br>
+          <li>$\rho(A) \leq \|A\|,\, \text{para cualquier norma natural  } \| \cdot \|. $</li>
+        </ul>
+      </p>
+      <p><b>Demostración:</b></p> 
+    </div>
+
+    <h1 class="title flexbox">Número de condición y matrices mal condicionadas</h1>   
+    
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+    <p>Consideremos el sistema de ecuaciones lineales $A\vec{x}=\vec{b}$ tal que que $\mathrm{det}(A)\not= 0$ con  
+      solución   $\vec{x}_{0}\not = \vec{0}$. 
+      Nos gustaría controlar los cambios que   se producen en la solución cuando hacemos 
+      pequeños cambios en las componentes de  $\vec{b}$ o de $A$.  
+    </p>
+
+      <p>Supongamos que el el vector de terminos independientes es perturbado por la cantidad denotada por $\Delta \vec{b}$, 
+        entonces la solución correspondiente es perturbada por la cantidad denotada por el $\Delta  \vec{x}$.
+        De esta manera, se tiene que 
+        $$A(\vec{x} + \Delta  \vec{x})= A\vec{x} + A \Delta  \vec{x}= \vec{b} + \Delta  \vec{b} $$ 
+        de donde se sigue que
+        $$A\Delta \vec{x} = \Delta  \vec{b}.$$
+        Del sistema lineal original y las propiedades de las normas, se tiene que:
+        $$\|\vec{b}\| = \| A\vec{x}\|\leq \| A\| \|\vec{x}\| $$
+        Por lo tanto
+        $$\displaystyle{\frac{1}{\|\vec{x}\|} \leq \frac{\| A\|}{ \| \vec{b} \|} }$$
+      </p>
+
+      <p>Por otro lado del sistema lineal perturbado $A\Delta \vec{x} = \Delta  \vec{b} $, se tiene
+        $$\Delta  \vec{x} = A^{-1} \Delta  \vec{b}$$
+        y además, 
+        $$\|\Delta \vec{x}\| \leq \|A^{-1} \|\, \|\Delta  \vec{b}\|$$
+      </p>
+      <p>
+      Luego, de las dos desigualdades anteriores se deduce que:
+      $$\displaystyle{\frac{\|\Delta  \vec{x} \|}{\|\vec{x}\|} \leq  \left( \|A \| \, \|A^{-1}\|\right)  \frac{\| \Delta \vec{b} \|}{ \| \vec{b} \|} }$$
+    </p>
+
+    <p>Por lo tanto, la variación en el error relativo de la solución está asociada a la cantidad $\|A \| \, \|A^{-1}\|$</p>
+    </div>
+
+   
+    
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+    <p>Se define el <b>número de condición</b> de un sistema de ecuaciones lineales $A\vec{x}=\vec{b}$  como la constante:
+      $$\kappa(A)= \|A \|\,  \|A^{-1}\|$$ 
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Observaciones</h2>
+      <p>
+        <ul>
+          <li>El número de condición $\kappa(A)$ tiene cierta influencia en la solución númerica
+            de un sistema de ecuaciones lineales $A\vec{x}=\vec{b}$. En la solución de sistemas 
+            de ecuaciones  el número de condición de la matriz de coeficientes
+            mide la sensibilidad del sistema a los errores en los datos.
+          </li><br>
+          <li>El número de condición $\kappa(A)$ mide la transferencia del error de la matriz $A$ 
+            y el vector $\vec{b}$ a la solución $\vec{x}$. Resulta que si $\kappa(A)= 10^{k}$, entonces 
+            se puede esperar perder al menos $k$ dígitos de precisión en la solución del sistema $A\vec{x}=\vec{b}$.    
+          </li><br>
+          <li>Cuando el número de condición $\kappa(A)$ es grande, <b>¡la solución calculada del sistema 
+            puede correr peligro de error!</b> Se deben hacer más verificaciones antes de aceptar la solución como correcta.
+          </li><br>
+          <li>Los valores del número de condición, cercanos a $1$ indican una <em>matriz bien condicionada</em>, 
+            mientras que los valores grandes indican una <em>matriz mal condicionada</em>. 
+          </li>
+        </ul>
+      </p>
+    </div>
+
+      
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Si el sistema de ecuaciones lineales $A\vec{x}=\vec{b}$ es sensible a las perturbaciones en los 
+        elementos de $A$, o a las perturbaciones de los  componentes  de $\vec{b}$, entonces esto se refleja en 
+        la matriz $A$, que tendra un número de condición muy alto. En tal caso, se dice que la matriz $A$ esta 
+        <b>mal condicionada</b>. Esto es, entre mayor sea el número de condición más mal condicionado esta el sistema.
+      </p>
+      </div>
+
+      
+
+    </body>

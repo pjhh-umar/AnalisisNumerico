@@ -1,0 +1,240 @@
+
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="main.js"></script>
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          }
+        }
+      };
+    </script>
+
+    
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+      MathJax = {
+      tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+      svg: {
+          fontCache: 'global'
+      }
+  };
+  </script>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="style.css" />
+
+    
+    <!-- Top Menu  -->
+
+
+        <header class="main-header">
+          
+          <h1> Análisis Númerico</h1>
+         <nav class="top-nav">
+          <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+          </ul>
+          </nav>
+        <!-- 
+          <nav class="small-nav" align=right>
+            <button onclick="myFunction()">Claro/Obscuro 
+          </nav> 
+        -->
+        </header>
+
+
+        
+      <!-- This part is for title in tab-->
+      <title>Inicio</title>
+      <div class="flexbox">
+      <img src="./Imagenes/umar_logo.png" alt="Logo_UMAR", width="80%" height="auto">
+      </div>
+    <center> <!-- <h1>Licenciatura en Administración Turística </h1> -->
+    <h2> Profesor: M. en C. Pablo Jorge Hernández Hernández</h2>
+    <h2> Cubículo 5, Instituto de Matemáticas y Actuaría</h2>
+        
+     
+
+    </center>
+    
+
+  </head>
+  
+  <body class="fondo-body" >
+
+    <div class="info-box">
+      <h2>Temario</h2>
+
+        
+      <ul>
+        <li><b><font size="5">Introducción</font></b></li>
+      <ol> 
+        <li>Conceptos y resultados básicos del Cálculo infinitesimal.</li>
+       </ol>
+      
+   <li><b><font size="5">Aritmética de una computadora</font></b></li>
+      <ol> 
+        <li>Números de punto flotante.</li>
+        <li>Errores de truncamiento y redondeo.</li>
+        <li>Errores absolutos y relativos.</li>
+        <!--<li>Cifras significativas.</li>
+        <li>Operaciones aritméticas y propagación de errores.</li>-->
+      </ol>
+
+      <li><b><font size="5">Resolución de ecuaciones no lineales $f(x)=0$. </font></b> </li>
+    
+    <ol>
+        <li>Método de Bisección.</li>
+        <li>Método de la regula falsi o de la posición falsa</li>
+        <li>Método del punto fijo
+          <ul>
+            <li>Puntos fijos e iteración funcional.</li>
+          </ul>
+        </li>
+       <li>Método de Newton-Raphson.</li>
+        <li>Método de la Secante.</li>
+        <li>Orden de convergencia.</li>
+        <li>Aceleración de convergencia.</li>
+        <ul>
+          <li>Algoritmo de Aitken</li>
+        </ul>      
+        <li>Método de Steffenson.</li>
+        <li>Método de Müller</li>
+    </ol>
+
+    <li><b><font size="5">Resolucion de sistemas de ecuaciones lineales $A\vec{x}=\vec{b}$.</font></b> </li>
+        <ol>
+          <li>Sistemas  de ecuaciones lineales</li>
+          <li>Métodos directos para la resolución de sistemas de ecuaciones lineales.
+              <ul>
+                <li>Eliminación Gaussiana</li>
+                <li>Eliminación Gaussiana hacia atras</li>
+                <li>Estrategias de pivoteo</li>
+                <ul>
+                    <li>Eliminación Gaussiana con pivoteo parcial</li>
+                    <li>Eliminación Gaussiana con pivoteo escalonado</li>
+                    <li>Eliminación Gaussiana con pivoteo escalonado completo</li>
+                    <li>Eliminación Gaussiana con pivoteo completo</li>
+                </ul>
+                <li>Factorización $\mathrm{LU}$</li>
+                  <ul>
+                    <li>Método de Doolittle</li>
+                    <li>Método de Crout</li>
+                  </ul>
+                <li>Factorización de una matriz definida positiva
+                  <ul>
+                    <li>Factorización $\mathrm{LD}\mathrm{L}^{t}$</li>
+                    <li>Factorización de Cholesky.</li>
+                  </ul>
+                </li>
+              </ul>  <!-- <li>Factorización de Crout para matrices tridiagonales</li>-->
+          </li>
+          <li>Métodos iterativos  para la resolución de sistemas de ecuaciones lineales.
+            <ul>
+              <li>Normas vectoriales y normas matriciales</li>     
+              <li>Número de condición</li>
+              <li>Método de Gauss-Seidel</li>
+              <li>Método de Jacobi</li>
+            </ul>
+        </ol>
+
+
+      <li><b><font size="5">Interpolación.</font></b> </li>
+      <ol>
+        <li>Definición de interpolación.</li>
+        <li>Interpolación polinomial de Lagrange.</li>
+        <li>Método de Neville.</li>
+        <li>Diferencias divididas e interpolación polinomial de Newton</li>
+       <!-- <li>Interpolación polinomial segmentaria. Splines.</li>-->
+      </ol>
+
+      <!--
+      <li><b><font size="5">Cuadratura numérica.</font></b> </li>
+      <ol>
+        <li>Cuadraturas simples: del punto medio, del trapecio y de Simpson.</li>
+        <li>La versión compuesta de las cuadraturas simples.</li>
+        <li>Cuadraturas de Newton–Cotes.</li>
+        <li>Cuadratura de Gauss.</li>
+      </ol>
+
+      -->
+
+      <li><b><font size="5">Ecuaciones Diferenciales Ordinarias.</font></b> </li>
+      <ol>
+        <li>Ecuaciones de primer orden.</li>
+        <li>Método de Euler.</li>
+        <li>Métodos Runge-Kutta.</li>
+      </ol>
+
+
+      </ul>
+
+    </div>
+    
+
+
+  </ul>
+
+
+    </div>
+  
+          
+    <div class="info-box">
+      <h2>BIBLIOGRAFÍA</h2>
+
+      <b><font size="5">Libros básicos</font></b>
+        <ol>
+          <li><b>Numerical Analysis</b>. Burden R. L., Faires J. D. Thomson Learning, 2010</li>
+          <li><b>Numerical mathematics and computing</b>. Kincaid D. R., Cheney E. W. Thomson Brooks/Cole, 2012. </li>
+          <li><b>Applied Numerical Analysis</b>. Gerald C. F., Wheatley, P. O. Ed. Addison-Wesley, 2003</li>
+          <li><b>Métodos Numéricos para ingenieros</b>. Chapra S. C., Canale R.P. McGraw Hill, 2006.</li>
+        </ol>
+
+        <b><font size="5">Libros de consulta</font></b>
+
+        <ol>
+          <li><b>Numerical analysis and graphic visualization with MATLAB</b>. Nakamura S. Ed. Prentice Hall, 2002.</li>
+          <li><b>Classical and modern numerical analysis</b>. S. Ackleh A., E. James A.,R. Baker H. CRC Press., 2009.</li>
+          <li><b>Mathematical Analysis and and Numerical methods for Science and Technology</b>. R. Dautray, JL
+            Lions. Springer-Verlag, 1999.</li>
+          <li><b>Applied Numerical Analysis</b>. Curtis F. G., Patrick O. W. Ed. Addison-Wesley, 2003</li>
+        </ol>
+    </div>
+
+
+    
+    <!--  
+    <div class="info-box">
+      <h3> Por favor registrar sus datos de contacto en el siguiente enlace: </h3> 
+      <p> <h3> <a href="https://forms.gle/JmCW9a6McMcWXzWJ8"> Información  de contacto</a></h3></p>
+   </div>
+    -->
+
+      <p> La plantilla utilizada para la creación de esta página fue tomada de https://github.com/tfrancisco-ciencias</p>
+  </body>
+</html>

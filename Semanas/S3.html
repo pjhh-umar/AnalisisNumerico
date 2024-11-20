@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 2 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 2 cardCounter ;
+        }
+      </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 3   </title>
+    
+  </head>
+
+
+
+  <body class="fondo-body" >
+    
+    <h1 class="number-title flexbox"> Semana 3 </h1>   
+    <h1 class="title flexbox"> Representación de números racionales  </h1>   
+
+  <div class="nota-box"> <h2 class="number-title_nota"> Representación decimal de números racionales  </h2>
+    <p>Cuando los números racionales se expresan en forma decimal, se da a veces el caso en el que hace falta una cantidad 
+      infinita de cifras.
+    </p>
+  </div>
+    
+  <div class="nota-box"> <h2 class="number-title">Ejemplo</h2>
+     <p> \begin{align*}\displaystyle{\frac{1}{3}}&= \overline{3}\\
+      &= (3\times 10^{-1}) + (3\times 10^{-2}) + (3\times 10^{-3})+ \cdots\\
+      &=\displaystyle{\sum_{k=1}^{\infty} 3 \times 10^{-k} }
+      \end{align*}
+    </p>
+  
+
+
+    <p>Si sólo usamos una cantidad finita de cifras lo que estamos obteniendo es una aproximación  $\displaystyle{\frac{1}{3}}$. 
+      Por ejemplo  $\displaystyle{\frac{1}{3} \approx 0.333= \frac{333}{1000}}$
+    </p>
+  </div>
+
+
+    <div class="nota-box"> <h2 class="number-title">Afirmación</h2>
+    <p>Las propiedades de una serie geométrica nos permiten convertir una expresión decimal periodica 
+      en una fracción.
+      $$0.\overline{3}=$$    
+      </p>
+
+    </div>
+
+
+    
+    <div class="nota-box"> <h2 class="number-title_nota"> Fracciones binarias </h2>
+
+      <p>Las fracciones binarias (base $2$) pueden expresarse como sumas en las que aparecen potencias negativas de $2$. 
+        
+       <HR>
+       <p><b><u>Afirmación:</u></b> Si $R$ es un número real tal que $0 < R < 1$, entonces existe una sucesión de cifras 
+        $d_1,d_2, \ldots, d_n, \ldots \in \{0,1\}$  tales que:
+
+        $$R= (d_{1} \times 2^{-1}) + (d_{2} \times 2^{-2}) + \cdots +  (d_{n} \times 2^{-n})+ \cdots $$
+
+        La expresión en el lado derecho de la igualdad anterior se escribe en notación binaria como:
+        
+        $$ R= 0. d_{1} d_{2} \cdots d_{n} \cdots \mbox{}_\text{dos}$$
+       </p>
+
+       <HR>
+        <p><b><u>Observación:</u></b> Hay muchos números reales cuya representación requiere de una cantidad infinita de cifras
+        iguales a $1$. Por ejemplo la fracción $\displaystyle{\frac{7}{10}}$, puede representarse como $0.7$ en 
+        base $10$ como $0.7$, pero su representación en base $2$ requiere de una cantidad infnita de unos:
+        
+        $$\displaystyle{\frac{7}{10}}=0.1\overline{0110}\mbox{}_{2}$$
+       
+        Esta fracción es periodica: el grupo de cuatro dígitos $0110$ se repite sin fin.  
+      
+        </p>
+      
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title_nota"> Desplazamiento  binario </h2>
+   <p>Si queremos hallar un número racional conocida su representación binaria periodica, entonces 
+    resulta utíl hacer un <em>desplazamiento</em> adecuado de sus cifras binarias.
+   </p>
+
+   <HR>
+    <p><b><u>Ejemplo:</u></b>
+    Supongamos que la representación binaria de  $S$ esta  dado por 
+    $$S=0.00000\overline{11000}_\text{dos}$$ 
+    </p>
+    </div>
+
+   
+
+       <h1 class="title flexbox"> Números de una computadora </h1>   
+
+       
+    <div class="nota-box">
+      <h2 class="number-title_nota"> Representación binaria de un número de  punto flotante </h2>
+    <p>¿Alguna vez te has preguntado como las computadoras almacenan números de punto flotante como:
+      $\pi$ o $9.108\times 10^{-31}$ (masa del electron en kilogramos) en la memoria que esta limitada 
+      por un número finito de $1$ y $0$'s (también conocidos como bits). 
+    </p>
+
+    <p>La memoria de los computadores es limitada, no puedes almacenar números con precisión infinita, 
+      no importa si usasfracciones binarias o decimales, en algún momento tienes que cortar.
+     </p>
+
+     <p>Para números enteros parece bastante sencillo. Supongamos que tenemos $16$ bits ($2$ bytes) para 
+      almacenar un número entero, por ejemplo $17$, se tiene que:  
+        $$17= 0000000000010001\mbox{}_{2}$$
+    </p>
+
+    <HR>
+      <p><b><u>Observación:</u></b> En $16$ bits podriamos almacenar los enteros en el rango:
+         $$\left[0,\displaystyle{\sum_{k=0}^{15} 2^{k}}\right]=[0,65535]$$
+     
+
+    <HR>
+
+        <p>Si necesitamos representar un entero con signo, podemos usar alguna
+          de las representación de números con signo como por ejemplo: el formato <b>complemento a dos</b>
+          y cambiar el rango de $[0, 65535]$ hacia los números negativos. En este caso, nuestros $16$ bits
+          representarían los números en un rango de $[-32768, +32767]$.
+        </p>
+
+
+      <h2 class="number-title_nota"> Representación de números con signo </h2>  
+
+      <p>En matemáticas, los números negativos en cualquier base se representan del modo habitual, 
+        precediéndolos con un signo. Sin embargo, en una computadora hay varias formas de representar
+        números con signo, por ejemplo <b>complemento a uno</b>, <b>complemento a dos</b>
+      </p>
+
+      
+
+      <h2 class="number-title_nota"> Complemento a uno </h2>  
+
+      <p>La forma del <b>complemento a uno</b> de un número binario es un <b>NOT bit a bit</b> aplicado al número, 
+        es decir, la inversión de unos por ceros y ceros por unos.</p>
+        
+      <p>En la <b>representación por complemento a uno</b> de un número con signo de $n$-bits asignamos:
+        <ol>
+          <li>Un bit para representar el signo. Ese bit a menudo es el bit más significativo y,
+             por convención: un $0$ denota un número positivo, y un $1$ denota un número negativo;</li>
+          <li>Los $(n-1)$-bits restantes para representar la magnitud del número en valor absoluto para el
+             caso de números positivos, o bien, el complemento a uno del valor absoluto del
+             número, en caso de ser negativo.
+          </li>
+        </ol>
+      </p>
+
+      <HR>
+        <p><b><u>Observación</u></b> Consideremos una representación en formato de complemento a uno con $8$ bits (un byte)
+          de un número con signo. Entonces $1$ bit se designa para  el signo y $7$ bits para la magnitud del número.
+          De esta manera con $8$ bits, podemos representar $256$ números. Los cuales, según este formato, van a estar
+          repartidos entre $128$ números positivos (bit de signo en 0) y 128 números negativos (bit de signo en 1).
+        </p>
+
+        <HR>
+          <p><b><u>Ejemplo:</u></b> Representar el número $-97_{10}$ en formato por complemento a uno.
+          </p>
+        
+          <HR>
+            <p><b><u>Ejemplo:</u></b> Dado el  número binario en Complemento a uno $10110101_{2}$, obtener el 
+              número decimal correspondiente.
+            </p>
+        <h2>Desventajas de la representación en Complemento a uno</h2>
+
+        <p>Siguiendo con el ejemplo de $n = 8$ ($8$ bits).<br>
+
+          Posee doble representación del cero. Al representar en Complemento a uno, aparece nuevamente el cero signado: 
+          $00000000_{2}= +0_{10}$ y  $11111111_{2} =-0_{10}$.</p>
+
+
+          <h2> Ventajas de la representación en Complemento a uno</h2>
+
+          <p>Siguiendo con el ejemplo de n = 8 (8 bits).</p>
+          <p>
+          <ol>
+            <li>Representa un <b>rango simétrico</b> de valores: los números van del $+127_{10} = 01111111_{2}$, pasando por el 
+              $+0_{10} = 00000000_{2}$ y el $-0_{10} = 11111111-{2}$, hasta el $-127_{10} = 10000000_{2}$. 
+              En forma general, para $n$-bits, el rango (en decimal) para Complemento a uno es $(-(2^{n-1}-1), 2^{n-1}-1)$</li>
+          </ol></p>
+          
+      <h2 class="number-title"> Complemento a dos </h2>  
+
+      <p> El  <b>método por complemento a dos</b> de un número binario se obtiene  del 
+        complemento a uno y sumarle uno, o bien:
+        <ol>
+          <li>Empezando desde la derecha encontramos el primer $1$</li>
+          <li>Hacemos un NOT a todos los bits que quedan por la izquierda</li>
+        </ol>
+      </p>
+
+      <p>De esta forma, en la <b>representación por Complemento a dos</b> de un número con signo 
+        de $n$-bits asignamos:
+      <ol>
+      <li>Un bit para representar el signo. Ese bit a menudo es el bit más significativo y,
+         por convención: un $0$ denota un número positivo, y un $1$ denota un número negativo;</li>
+      <li>Los $(n-1)$-bits restantes para representar  la magnitud del número en valor absoluto
+         para el caso de números positivos, o bien, en el complemento a dos del valor absoluto del número,
+        en caso de ser negativo.</li>
+      </ol>
+        </p>
+
+
+      <p>
+        <HR>
+          <p><b><u>Observación:</u></b> La representación en Complemento a dos de un número negativo se puede obtener
+             invirtiendo  unos por ceros y ceros por unos dela mantisa, y sumarle uno al valor obtenido.
+      </p>
+
+
+      <HR>
+        <p><b><u>Ejemplo:</u></b> Representar el número $-97_{10}$ en formato por complemento a Dos.
+        </p>
+   
+        <HR>
+          <p><b><u>Ejemplo:</u></b> Dado el  número binario en Complemento a dos $10110101_{2}$, obtener el 
+            número decimal correspondiente.
+          </p>
+
+          <p> Si el bit de signo fuese $0$, el número hubiese sido $0110101_{2}=$ </p>
+          <HR>
+          <h2>Desventajas de la representación en Complemento a dos</h2>
+
+          <p>Siguiendo con el ejemplo de $n = 8$ ($8$ bits).<br>
+
+            Posee un <b>rango asimétrico:</b> los números van del $+127_{10} = 01111111_{2}$, pasando por el 
+            $+0_{10} = 00000000_{2}$. Y aquí aparece la primera diferencia, el $11111111_{2}$, ya no es $-0_{10}$ 
+            como en la representación anterior, sino que es $-1_{10}$, y al llegar al
+            $10000000_{2}$ nos encontramos con que el complemento a dos de $10000000_{2}$ es $10000000_{2}$, ¡el mismo número!.
+            Por convención, se asigna a este número particular el valor $-128_{10}$ (para $8$ bits). En forma general,
+            para $n$-bits, el rango (en decimal) para Complemento a dos es $(-2^{n-1}, 2^{n-1}-1)$.</p>
+
+            <h2>Ventajas de la representación en Complemento a dos</h2>
+
+            <p>Siguiendo con el ejemplo de $n = 8$ ($8$ bits).  No posee doble representación del cero.
+
+            </p>
+
+
+            <h2 class="number-title"> Notación cientifica  </h2>
+
+            <p>En 1985, el Instituto para Ingenieros Eléctricos y Electrónicos (IEEE; Institute for Electrical and Electronic Ingineers)
+              publico un reporte llamado <em>Binary Floating Point Arithmetic Standar 754-1985 (Estandar para la Aritmetica Binaria de punto flotante)</em>.
+             En 2008 se publicó una versión actualizada con el nombre de IEEE 754-2008; la cual proporciona 
+             estandares para números de punto flotante decimales y binarios.
+           </p>
+
+           <h3>Notación cientifica sistema decimal</h3>
+
+            <p>En el sistema decimal, cualquier número real puede expresarse mediante <b>notación  científica normalizada</b>.
+               Para expresar un número en notación científica normalizada multiplicamos o dividimos por $10$ tantas veces como
+               sea necesario para que todos los dígitos aparezcan a la derecha del punto decimal y de modo que el primer dígito
+               después del punto no sea cero.
+             </p>
+             <HR>
+              <p><b><u>Ejemplos:</u></b>
+              <ol>
+                <li>$0.0000747= 0.747\times 10^{-4}$</li>
+                <li>$31.4159265=0.314159265\times 10^{2}$</li>
+                <li>$9\, 700 \, 000 \, 000 = 0.97 \times 10^{10}$</li>
+                <li>$-0.0055612=-0.44512\times 10^{-2}$</li>
+              </ol>
+              </p>
+
+              <p>En general, todo número real $x$ distinto de cero, se representa en <b>notación científica normalizada</b> como:<br>
+                $$x=\pm r \times 10^{n}$$ 
+                donde $r \in \mathbb{R}$ tal que $\displaystyle{\frac{1}{10} &le; r &lt; 1}$  Y $ n \in \mathbb{Z}$. Esta representación, 
+                permite  expresar números que son demasiado grandes o demasiado pequeños para escribirlos convenientemente en forma decimal.</p>
+
+                <p>
+                En la representación anterior podemos  distinguir  tres partes:
+                 <ol>
+                  <li>El <b>signo</b> del número $x$.</li>
+                  <li>Los <b>dígitos significativos</b> del número $x$ </li>
+                  <li>El <b>exponente</b>: controla hasta dónde y en qué dirección mover el punto decimal en la fracción decimal.</li>
+                </ol>
+              </p>
+                <p>La parte base, se puede  omitir teniendo presente que siempre será la misma.</p>
+                
+             <h3>Notación cientifica sistema binario</h3>
+
+                <p>Exactamente de la  misma manera podemos utilizar 
+                  la notación científica en el sistema binario,  tomando a $2$ como base. En este caso, tenemos que:
+                  $$x=\pm q \times 2^{m}$$ 
+                  donde  $ m \in \mathbb{Z}$ y $q$ es una fracción binaria tal que su equivalente decimal $q_{10}$ satisface 
+                   $\displaystyle{\frac{1}{2} &le; q_{10} &lt; 1}$.
+                </p>
+              
+                <p> Notemos que en la fracción binaria $q$, el primer dígito  que  aparece a la izquierda (El bit más significativo)
+                  del punto decimal siempre es $1$. Por lo tanto,  el $1$ inicial en la representación de $q$
+                  se omite del almacenamiento porque es redundante, por lo tanto podemos escribir: 
+                  $$x=\pm 1.f \times 2^{m}$$
+                  donde $f$ es una fracción binaria.   
+                  </p>
+
+
+                <h2 class="number-title">  Representación de los números de punto flotante</h2>
+
+                <p>En lugar de usar los $16$ bits, $32$ bits o $64$ bits para almacenar la fracción del número, podemos compartir 
+                  los bits y almacenar un <b>signo</b>, un <b>exponente</b> y una <b>fracción</b> al mismo tiempo. Dependiendo de la
+                  cantidad de bits que vamos a usar para almacenar el número. 
+
+              <!-- 
+                <p>Con este enfoque, se ha reducido el número de bits para la fracción (es decir, para el número de 16 bits se 
+                  redujo de $16$ bits a $10$ bits). Significa que la fracción podría tomar un rango de valores más estrecho ahora
+                  (perdiendo algo de precisión). Sin embargo, dado que también tenemos una parte de exponente, en realidad
+                  aumentará el rango de números final y también nos permitirá describir los números entre $0$ y $1$ (si el exponente 
+                  es negativo).
+                </p>
+              
+              -->
+
+
+               <p>En el formato IEEE una representación de $32$ bits (digito binario). El primer bit 
+                es un <b>indicador de signo</b>, denominado $s$. A este le sigue un exponente de $8$ bits, $c$ 
+                llamado <b>caracteristica</b>, y una fracción binaria de $23$ bits, $f$, llamada <b>mantisa</b>. 
+                La base para el exponente es $2$. Esto es, los bits, se organizan de la siguiente manera:
+               </p>  
+
+               
+                <p>
+                  <div class="flexbox">
+                      <img src="../Imagenes/32bits.JPG" alt="", width="auto" height="auto">
+                  </div>
+              </p>
+
+                
+               <p>Los formatos de almacenamiento binario de punto flotante más comunmente utilizados son:</p>
+                <p>        
+                  <table class="info">
+                    
+                    <caption><b><font size="4"></font></b></caption>
+                    <thead>
+                    <tr>
+                      <th>Formato del punto flotante</th>
+                      <th> Total de bits</th>
+                      <th>Bits para el signo</th>
+                      <th>Bit para el exponente</th>
+                      <th>Bits para la mantisa</th>
+                      <th>Base</th>
+                    </tr>
+                    </thead>
+                      <tbody>
+                      <tr>
+                        <td>Presición media</td>
+                        <td>$16$</td>
+                        <td>$1$</td>
+                        <td>$5$</td>
+                        <td>$10$</td>
+                        <td>$2$</td>
+                      </tr>
+                     
+                      <tr>
+                        <td>Precisión simple</td>
+                        <td>$32$</td>
+                        <td>$1$</td>
+                        <td>$8$</td>
+                        <td>$23$</td>
+                        <td>$2$</td>
+                      </tr>
+                      <tr>
+                        <td>Precisión doble</td>
+                        <td>$64$</td>
+                        <td>$1$</td>
+                        <td>$11$</td>
+                        <td>$52$</td>
+                        <td>$2$</td>
+                      </tr>
+                      
+                      </tbody>
+                  </table>
+                </p>
+
+                <HR>
+                <p><b><u>Ejemplos:</u></b>
+                  Una variable entera de $32$ bits con signo tiene un valor máximo de $2^{31}-1 = 2\, 147\, 483\, 647$, 
+                  mientras que una variable de punto flotante base $2$ de $32$ bits con este formato tiene un valor máximo de
+                  aproximadamente  $3.4028235 \times  10^{38}$.
+                </p>
+
+
+                <h3>El exponente sesgado</h3>
+
+              
+                <p>
+                  Para que sea posible tener un exponente negativo, el estándar IEEE 754 utiliza el <b>exponente sesgado</b>. 
+                  La idea es simple: reste el sesgo del valor del exponente para que sea negativo. Por ejemplo, 
+                  si el exponente tiene $5$ bits, podría tomar valores del rango $[0, 31]$ (aquí todos los valores son positivos). 
+                  Pero si le restamos el valor de 15, el rango será $[-15, 16]$. El número 15 se llama sesgo y se calcula mediante
+                  la siguiente fórmula:
+                  $$2^{k-1}-1$$
+                donde $k$ es el número de bits destinados para el exponente.                </p>
+                
+               <HR>
+              <h2 class="number-title"> Representación de  números de  punto flotante </h2>
+              <p>
+                Para ahorrar almacenamiento y proporcionar una representación única para cada número
+                de punto flotante, se impone una normalización. 
+              </p>
+                
+                <p>Por ejemplo, en el caso de una representación de $64$ bits
+                utilizada comunmente para almacenar números reales, por medio de este sistema obtenemos un número 
+                de punto flotante de la forma:
+
+                $$(-1)^{s}2^{c-1023}(1+f)_{2}$$
+              </p>
+           
+            <HR>                 
+
+            <p><b><u>Ejemplos:</u></b> Determine el numero decimal representado usando $64$ bits bajo el estandar propuesto por 
+              el IEEE-754:
+
+            $$0100000000111011100100010000000000000000000000000000000000000000$$
+            </p>
+
+
+            <HR>                 
+
+            <p><b><u>Observaciones:</u></b> 
+            
+              <ol>
+                <li>El siguiente número de máquina más pequeño es:
+                  $$0 10000000011 1011100100001111111111111111111111111111111111111111$$
+                </li>
+                <li>El siguiente número de máquina más grande es:
+                  $$0 10000000011 1011100100010000000000000000000000000000000000000001$$
+                </li>
+
+              </ol>
+            <p>Esto significa que el número dado no sólo representa $27.56640625$ sino cualquier número en 
+              el intervalo:
+              $$()$$
+            </p>
+            
+            </p>
+
+
+        
+        
+
+
+                  
+          </div>
+
+
+
+   
+  <!-- 
+    <div class="nota-box"> <h2 class="number-title"> Cifras significativas </h2>
+
+    <p>
+      Las <b>cifras significativas</b> son los dígitos usados para expresar el número: $1, 2, 3, 4, 5, 6, 7,8$ y $9$. 
+      El <b>cero</b> es también signicativo, excepto cuando es usado para para fijar el punto decimal o para llenar los lugares 
+      de dígitos desconocidos o descartados. 
+    </p>
+
+    <HR>
+      <p><b><u>Ejemplo:</u></b> Los números decimales  $0.147$ y $3.23$ tienen tres cifras significativas mientras que
+      $0.000207 = 0.207 \times  10^{-3}$ tiene tres cifras significativas.
+      </p>
+    
+    <HR>
+      <p><b><u>Definición:</u></b> Un digito es <b>significativo</b> si, 
+        <ol>
+         <li>Es no nulo</li>
+         <li>El digito $0$ es significativo si se encuentra entre otros digitos significativos.</li>
+         <li></li>
+        </ol>
+      </p>
+    </div>
+    -->
+
+
+</body>

@@ -1,0 +1,42 @@
+---
+title: "S2"
+author: "Análisis númerico"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  latex_engine: xelatex
+---
+
+# Evaluacion de un polinomio
+
+Sea $p_n(x)$ un polinomio de grado $n$, escribimos este de la forma:
+\begin{equation}
+4+9
+\end{equation}
+
+
+## Método de Horner, regla de Riffini o división sintética
+
+Es una técnica para evaluar polinomios que puede ser visto como una colección de multiplicaciones anidadas.
+
+
+## R Markdown
+
+
+
+
+```{python } 
+2+3
+```
+
+```{r}
+summary(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+```{python } 
+2+3
+```

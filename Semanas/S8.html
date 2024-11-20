@@ -1,0 +1,460 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 7 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 7 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 8   </title>
+    
+  </head>
+
+
+
+  <body class="fondo-body" >
+    
+    
+    <h1 class="number-title flexbox"> Semana 8 </h1>   
+    <h1 class="title flexbox"> </h1>   
+
+    
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>
+        Sea $g \in C[a,b]$ tal que $g(x) \in [a,b]$ para toda $ x \in [a,b]$, si además $g^{'} $  es continua en $(a,b)$  
+        y existe una constante positiva $0 < K < 1$ tal que 
+        $$|g^{'}(x)| \leq K\, \, \, \, \text{ para toda  } x \in (a,b)$$
+        Si $g^{'}(p) \not = 0 $,  entonces para cualquier $p_{0} \in [a,b]$ la sucesión 
+        $$p_{n}:= g(p_{n-1}), \, \, \, \, \text{ para toda  } n \geq 1$$  
+        converge linealmente al único punto fijo $p$  en $[a,b]$ .
+      </p>
+      <b>Demostración:</b>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>
+        Sea $p$ una solución de la ecuación $g(x)=x$ con $g^{'}(p)=0$ y que $g^{''}$ es continua 
+        y estrictamente acotada por $M$ en un intervalo abierto $I$ que contiene a $p$. i.e. 
+        $$|g^{''}(x)| < M, \,\,\, \,\,\,\, \forall x \in I$$
+        Entonces existe $\delta >0$ tal que, para $p_{0} \in [p-\delta, p+ \delta]$  la sucesión 
+        definida por $p_{n} := g(p_{n-1})$, para cada $n \geq 1$, converge al menos cuadraticamente 
+        a $p$.</p>
+        <p>Además, para valores suficientemente grandes de $n$ se satisface:
+        $$|p_{n+1} - p| \leq \frac{M}{2} |p_{n} - p|^{2} $$
+      </p>
+      <b>Demostración:</b>
+    </div>
+
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>De los teoremas anteriores se observa que para que los métodos iterativos de punto fijo converjan 
+        cuadraticamente la derivada de la función en el punto fijo $p$ debe ser igual a cero.
+      </p>
+    </div>
+    <h1 class="title flexbox">  Algoritmo de Aitken </h1>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>Cuando $g(p)=p$, se tiene que al expander la función  $g(x)$ alrededor de $p$, 
+        $$\lim_{n \to \infty} \frac{p_{n+1} - p}{p_{n} -p}= g^{'}(p)$$
+      Para valores finitos de $n$ se tiene que:
+      $$ \frac{p_{n+1} - p}{p_{n} -p} \approx g^{'}(p)$$
+      O bien,
+      $$p_{n+1} - p\approx g^{'}(p) (p_{n} - p)$$
+      Similarmente se tiene que: 
+      $$p_{n+2} - p\approx g^{'}(p) (p_{n+1} - p)$$
+      De lo anterior se deduce que:
+      $$p_{n+2} - p_{n+1}\approx g^{'}(p) (p_{n+1} - p_{n})$$
+      Por lo tanto, 
+      \begin{equation} 
+      g^{'}(p) \approx \frac{p_{n+2} - p_{n+1}}{p_{n+1} - p_{n}}
+      \end{equation}
+      Despejando $p$ en la expresión: $p_{n+1} - p\approx g^{'}(p) (p_{n} - p)$  se tiene que:
+      $$p \approx \frac{p_{n+1} - g^{'}(p) p_{n}}{1 - g^{'}(p)}$$
+      Sustituyendo en la aproximación  a $g^{'}(p)$ se tiene que:
+      $$p \approx \frac{p_{n+1} - \left( \displaystyle{\frac{p_{n+2} - p_{n+1}}{p_{n+1} - p_{n}}} \right) p_{n}}{1 - \left( \displaystyle{ \frac{p_{n+2} -p_{n+1}}{p_{n+1} - p_{n}} }\right)}$$
+      o bien 
+      \begin{align*} p &\approx p_{n} + \displaystyle{\frac{\left(  p_{n+1} - p_{n}\right)^{2}}{2 p_{n+1} - p_{n} - p_{n+2}}}\\
+                       &= p_{n} - \displaystyle{\frac{\left(  p_{n+1} - p_{n}\right)^{2}}{p_{n+2} - 2 p_{n+1} +p_{n} }}
+      \end{align*}
+      </p>
+
+      <p>La parte derecha de la equivalencia anterior da una aproximación a la raiz $p$ a partir de los valores ya obtenidos  en 
+        alguna sucesión.
+       </p>
+
+
+        <p>Denotamos  a estas nuevas aproximaciones como: 
+        $$x_{0}^{'}, x_{1}^{'}, x_{2}^{'}, x_{3}^{'} \ldots $$
+        para calcular $x_{0}^{'}$ se requieren de lo valores de $x_{1}, x_{2}$ y $x_{3}$:
+        
+        $$x_{0}^{'} = x_{0} - \frac{(x_{1} - x_{0})^{2}}{x_{2}  - 2x_{1} - x_{0}}$$
+        
+        <b>En general</b>, para $n \geq 1$ se tiene que:
+        $$x_{n}^{'} = x_{n} - \frac{(x_{n+1} - x_{n})^{2}}{x_{n+3}  - 2x_{n+1} - x_{n}}$$
+       </p>
+
+       <p>Al proceso de aplicar la ecuación anterior a alguna sucesión dada,  se le llama <b>Algoritmo de Aitken</b></p>
+
+    </div>
+
+    
+    
+    <h1 class="title flexbox">  Método de Steffenson  </h1>
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+    <p>El <b>método de Steffenson</b> es una aplicación del algoritmo de Aitken al método del punto fijo 
+    </p>
+
+    <p>Dado una aproximación inicial  se calculan  los valores $p_{1}:= g(p_{0}), p_{2}:= g(p_{1})$.</p>
+    
+    <p>Luego, con los valores $p_{0}, p_{1}$ y $p_{2}$ se aplica el algoritmo de Aitken, obteniendo:
+       $$p_{0}^{'} := p_{0} - \frac{(p_{1} - p_{0})^{2}}{p_{2}  - 2p_{1} - p_{0}}$$
+     </p>
+
+     <p>Si $p^{'}_{0}$ no cumple algún criterio de convergencia, entonces se toma 
+      $$p_{3}:= p_{0}^{'}$$ 
+    y de nuevo se calcula $p_{4}:= g(p_{3})$ y $p_{5}:=g(p_{4})$</p>
+
+    <p>Con los valores $p_{3}, p_{4}$ y $p_{5}$ se aplica el algoritmo de Aitken,  para calcular $p_{1}^{'}$:
+      $$p_{1}^{'} := p_{3} - \frac{(p_{4} - p_{3})^{2}}{p_{5}  - 2p_{4} - p_{3}}$$
+
+      y así sucesivamente...
+    </p>
+
+    </div>
+
+    
+    
+    <h1 class="title flexbox">  Raices multiples </h1>
+
+    
+   
+   
+    <div class="nota-box"><h2 class="number-title"> Introducción </h2>
+      
+      <p>Si  $f(p)=0$ y $f^{'}(p) \not= 0$, entonces para valores suficientemente cercanos a $p$, 
+        el método de Newton-Raphson convergerá al menos cuadraticamente.
+        Particularmente el método de Newton-Raphson y el método de la Secante,
+        en general dan problemas si $f^{'}(p) \not= 0$ cuando $f(p)=0$. 
+      </p>
+
+
+      
+    </div>
+
+    <div class="nota-box"><h2 class="number-title"> Definición </h2>
+      <ol>
+      <li><p>
+        Una solución $p$ de la ecuación $f(x)=0$ es un <b>cero de multiplicidad </b> $m$ de $f$ si para todo $x\not= p$, 
+        se verifica que   
+        $$f(x)= (x-p)^{m} q(x),$$ donde $\displaystyle{\lim_{x\to p } q(x) \not=0}$.
+      </p>
+    </li><br>
+     <li><p>En el caso en el que $f(x)$ es un polinomio, $p$ es un <b>cero de multiplicidad </b> $m$ de $f$ si
+      $$f(x)= (x-p)^{m} q(x) $$
+      donde $q(x)$ es un polinomio tal que $\mathrm{grado }(q(x)) < \mathrm{grado }(f(x))$ y $q(p)\not= 0.$
+      </p>
+    </li> 
+    </ol>
+    </div>
+
+
+
+    <div class="nota-box"><h2 class="number-title"> Nota </h2>
+      <p>
+      El siguiente resultado proporciona los medios para identificar facilmente los <b>ceros simples de una función</b> i.e. 
+      aquellos ceros de multiplicidad uno.
+      </p>
+    </div>
+
+    
+<div class="nota-box">
+  <h2 class="number-title"> Ejercicio </h2>
+  Sean $f$ y $g$ dos funciones definidas en una vecindad agujereada de \(a\).
+  <ol>
+  <li> Si $\displaystyle{\lim_{x\to a}(f+g)(x)}$ existe y $\displaystyle{\lim_{x\to a} f(x)}$ existe,
+    demuestra que $\displaystyle{\lim_{x\to a}g(x)}$ también existe.
+  </li><br>
+  <li> Si $\displaystyle{\lim_{x\to a} (fg)(x)}$ existe , $\displaystyle{\lim_{x\to a} f(x)}$ existe y
+    es distinto de cero, demuestra que $\displaystyle{\lim_{x\to a}g(x)}$ existe.
+  </li>
+  </ol>
+  </div>
+
+    <div class="nota-box">
+      <h2 class="number-title"> Ejercicio </h2>
+      Sean $f$ y $g$ dos funciones definidas en una vecindad agujereada de
+      $x_0$ y supongamos que existe \(M>0\) tal que
+      $|g(x) | \leq M$, para $x$ en la vecindad agujereada.
+      
+      Si $\displaystyle{\lim_{x\to x_0} f(x)=0}$ demuestra que:
+      $$
+      \lim_{x\to x_0}f(x)g(x)=0.
+      $$
+      Nota: no se asume que el límite $ \displaystyle{\lim_{x\to x_0}g(x)}$ existe.
+      
+      </div>
+
+      
+    <div class="nota-box"><h2 class="number-title"> Teorema </h2>
+    <p>
+     Sea $f \in C^{1}[a,b]$. Entonces la función $f$ tiene un cero simple en $p \in (a,b)$ si y sólo si $f(p)=0$ 
+     y $f^{'}(p)\not= 0$ 
+    </p>
+    <p><b>Demostración:</b></p>
+    </div>
+
+    <div class="nota-box"><h2 class="number-title"> Teorema </h2>
+      <p>
+       Sea $m\in \mathbb{N}$ y $f \in C^{m}[a,b]$. Entonces la función $f$ tiene un cero de multiplicidad $m$ en $p \in (a,b)$ si y sólo
+      si 
+      $$f(p) = f^{'}(p)= f^{''}(p)= \cdots =f^{m-1}(p)=0, \, \, \, \, \text{ pero }\,\,\,\, f^{m}(p)\not= 0$$ 
+      </p>
+      <p><b>Demostración:</b> Se deja como ejercicio al estudiante.</p>
+      </div>
+  
+
+      
+    
+    <div class="nota-box"><h2 class="number-title"> Teorema (Teorema fundamental del Álgebra) </h2>
+     
+      <p>Si $p(x)$ es un polinomio de grado $n \geq 1$  con coeficientes reales o complejos 
+        entonces $p(x)=0 $ tiene por lo menos una raíz (posiblemente compleja).</p>
+
+    </div>
+
+    <div class="nota-box"><h2 class="number-title"> Corolario </h2>
+     
+      <p>Si $p(x)$ es un polinomio de grado $n\geq 1$ con coeficientes reales o complejos, entonces 
+        existen únicas $x_{1}, x_{2}, \ldots , x_{k}$, posiblemente complejas y enteros positivos
+        únicos $m_{1}, m_{2},\ldots , m_{k},$ tal que $\displaystyle \sum_{i=1}^{k} m_{i} = n$
+        $$ p(x) = a_{n} (x - x_{1})^{m_{1}} (x - x_{2})^{m_{2}} \cdots (x - x_{k})^{m_{k}}$$ </p>
+
+    </div>
+
+    <div class="nota-box"><h2 class="number-title"> Observación  </h2>
+    <p>La colección de ceros de un polinomio es única y, si cada 
+      cero $x_{i}$ se cuenta tantas veces como su multiplicidad $m_{i}$,
+       un polinomio de grado $n$ tiene exactamente $n$ ceros</p>
+    </div>
+
+       <div class="nota-box"><h2 class="number-title"> Corolario </h2>
+     
+        <p>Sean  $p(x)$ y $q(x)$ polinomios de grado a lo más $n\geq 1$. Si $x_{1}, x_{2}, \ldots , x_{k}$,
+          con $k > n$ son números distintos con $p(x_{i})=q(x_{i})$ para $i=1,2,\ldots,k$ entonces 
+        $p(x)=q(x)$ para todos los valores de $x$</p>
+  
+      </div>
+
+      
+    <div class="nota-box"><h2 class="number-title"> Observación  </h2>
+      <p>Este resultado implica que para mostrar que dos polinomios de grado menor o igual que 
+        $n$s son iguales, sólo necesitamos mostrar que concuerdan en n 1 1 valores.</p>
+    </div>
+
+  <h1 class="title flexbox">  Método de Müller </h1>
+   
+  <div class="nota-box"><h2 class="number-title"> Introducción </h2>
+    <p>En el método de Newton-Raphson se tiene el problema de que hay que encontrar 
+      la derivada de la función $f(x)$ para la cual hay que encontrar la raíz. 
+    </p>
+  
+
+    <p>
+      Sin embargo, en el caso en el que <b>$f(x)$ es un polinomio</b>. El método de Newton-Raphson puede ser modificado 
+      para evitar trabajar con $f^{'}(x)$, esto se logra utilizando el método de Horner.  
+    </p>
+
+    <p>Si $f(x)$ es un  polinomio, dado  un valor $x_{0}$, por el método de Horner  se tiene que:
+      $$f(x)= (x-x_{0})Q(x) + f(x_{0})$$
+    donde $\mathrm{grado}(Q(x)) = \mathrm{grado}(f(x)) - 1  $.
+    </p>
+
+    <p>Por lo tanto, en el método de Newton-Raphson dada la aproximación inicial $x_{0}$
+      se tiene que:
+    $$x_{1}:= x_{0} - \frac{f(x_{0})}{f^{'}(x_{0})}$$
+    para obtener $f(x_{0})$ y $f^{'}(x_{0})$ se aplica el método de Horner a $f(x)$ y $x_{0} $
+    obteniendo $f(x_{0})$ y $f^{'}(x_{0})= Q(x_{0})$ y así sucesivamente.
+     </p>
+
+</div>
+
+
+<div class="nota-box"><h2 class="number-title"> Observación </h2>
+<p>Un problema con la aplicación de los métodos de la secante, de posición falsa o de Newton a 
+  los polinomios, es la posibilidad de que el polinomio tenga raíces complejas incluso cuando todos 
+  los coeficientes son números reales son números reales.  Si las aproximaciones subsiguientes
+  también serán números reales</p>
+</div>
+
+<!--- 
+<div class="nota-box"><h2 class="number-title"> Teorema </h2>
+  <p>Si $z= a +  ib$ es un cero complejo de multiplicidad $m$ del polinomio 
+    $p(x)$ con coeficientes   reales, entonces $\overline{z} = a − ib$ también 
+    es un cero de multiplicidad $m$ del polinomio $p(x)$ y $(x^{2} - 2ax + a^{2} + b^{2})^{m}$ 
+    es un un factor de $p(x)$. 
+  </p>
+</div>
+
+-->
+
+        <div class="nota-box"><h2 class="number-title"> El método de Müller </h2>
+          <p>El método de Müller utiliza tres aproximaciones iniciales $x_{0}, x_{1}, x_{2}$.</p>
+
+          <p>La siguiente aproximación $x_{3}$ es la abscisa del punto de intersección del eje $X$ 
+            con la parábola que pasa por los puntos $(x_{0}, f(x_{0}))$, $(x_{1},f(x_{1}))$ y $(x_{2},f(x_{2}))$
+          </p>
+
+          <p>Para encontrar la ecuación de la parabola, consideremos el polinomio 
+            
+            $$p(x):= a(x-x_{2})^{2}  + b(x - x_{2}) + c $$
+            
+            donde $a,b$ y $c$ son constantes a determinar. Como el polinomio pasa por los puntos 
+            $(x_{0}, f(x_{0}))$, $(x_{1},f(x_{1}))$ y $(x_{2},f(x_{2}))$ entonces 
+
+            $$f(x_{0}) = a(x_{0} - x_{2})^{2} + b(x_{0} - x_{2}) + c$$
+
+            $$f(x_{1}) = a(x_{1}-x_{2})^{2}  + b(x_{1} - x_{2}) + c$$
+
+            $$f(x_{2}) = a(x_{2}-x_{2})^{2}  + b(x_{2} - x_{2}) +c$$
+
+            Luego, 
+
+            $$c= f(x_{2})$$
+
+            $$a(x_{0} - x_{2})^{2} + b(x_{0} - x_{2}) = f(x_{0}) - f(x_{2})$$
+
+            $$a(x_{1} - x_{2})^{2} + b(x_{1} - x_{2}) = f(x_{1}) - f(x_{2})$$
+
+            Por la regla de Cramer se deduce que, 
+
+            \begin{align*} 
+            a <!--&=  \frac{(x_{1} - x_{2})[f(x_{0}) - f(x_{2})] - (x_{0} - x_{2})[f(x_{1}) - f(x_{2})]}{(x_{0} - x_{2}) ( x_{1} - x_{2})(x_{0} - x_{2} -x_{1} +x_{2})}\\-->
+            &=  \frac{(x_{1} - x_{2})[f(x_{0}) - f(x_{2})] - (x_{0} - x_{2})[f(x_{1}) - f(x_{2})]}{(x_{0} - x_{2}) ( x_{1} - x_{2})(x_{0}  - x_{1} )}\\
+            \end{align*}
+
+            y 
+
+            \begin{align*} 
+            b&= \frac{(x_{0} - x_{2})^{2}[f(x_{1}) - f(x_{2})] - (x_{1} - x_{2})^{2}[f(x_{0}) - f(x_{2})]}{(x_{0} - x_{2}) ( x_{1} - x_{2})(x_{0} -x_{1})}\\
+            \end{align*}
+
+            Una vez que se tiene $a,b$ y $c$ se sustituyen en la ecuación: $ p(x):= a(x-x_{2})^{2}  + b(x - x_{2}) + c $ y 
+            se encuentra una solución de $p(x)$, $x_{3}$. Aplicando la fórmula cuadrática se tiene que:
+
+            $$x_{3} - x_{2} = \frac{-b \pm \sqrt{b^{2} -4ac}} {2a}$$
+
+            Racionalizando el numerador se tiene que:
+
+            \begin{align*} 
+            x_{3} - x_{2} =& \left( \frac{-b \pm \sqrt{b^{2} -4ac}} {2a} \right ) \cdot \left(  \frac{-b \mp \sqrt{b^{2} -4ac}} {-b \mp \sqrt{b^{2} -4ac} } \right) \\
+                          =& \frac{ 4ac } {2a (-b\mp \sqrt{b^{2} -4ac})}\\
+                          =& \frac{ -2c } { b\pm \sqrt{b^{2} -4ac}}\\
+            \end{align*}
+
+
+            Así, se deduce que:
+
+
+            \begin{align*} 
+            x_{3}  &= x_{2} - \frac{ 2c } { b\pm \sqrt{b^{2} -4ac}}\\
+            \end{align*}
+
+            Sin embargo en el método de Müller, el signo se selecciona de acuerdo  con el signo de $b$. Elegido de esta forma el denominador será
+            el más grande en magnitud:  
+            
+
+            \begin{align*} 
+            x_{3}  &= x_{2} - \frac{ 2c } { b + \mathrm{sgn}(b)  \sqrt{b^{2} -4ac}}\\
+
+            \end{align*}
+            
+            Entonces, si $x_{3}$ cumple algún criterio de convergencia se detiene el  proceso, siendo $x_{3}$ 
+            una aproximación a la raiz de $f(x)$. En caso contrario se redefine: $$x_{0}=x_{1}, x_{1}=x_{2}  \text{ y }  x_{2}=x_{3}$$
+
+            se repite el proceso ...
+            
+
+          </p> 
+
+
+
+    </body>

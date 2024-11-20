@@ -1,0 +1,515 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 4 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 4 cardCounter ;
+        }
+      </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 5   </title>
+    
+  </head>
+
+
+
+  <body class="fondo-body" > 
+    <h1 class="number-title flexbox"> Semana 5 </h1>   
+
+    <h1 class="title flexbox"> Orden de aproximación $O(h^{n})$ </h1>   
+
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+    <p>
+  Es claro que las sucesiones $\left \{\displaystyle{\frac{1}{n^{2}}}\right\}_{n=1}^{\infty}$ y
+  $\left \{\displaystyle{\frac{1}{n}} \right\}_{n=1}^{\infty}$  son ambas sucesiones convergentes  y 
+  convergen a cero. Sin embargo, notemos que la primera sucesión converge a cero más 
+  rapidamente que la segunda.
+    </p>
+    </div>
+
+
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Se dice que una función <b>$f(h)$ es de orden $g(h)$ cuando $h \to 0$</b>, lo que se denota 
+        por $f(h)=O(g(h))$ (se le llama <b>notación O mayuscula de Landau</b>), si existen 
+        constantes $C$ y $c$ tales que:
+        $$|f(h)| \leq C|g(h)| \text{ siempre que } |h|< c $$
+      </p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Consideremos las funciones $f(x):= x^{3} + 2x^{2} $ y $g(x):=x^{2}$. Entonces $f(x)=O(g(x))$
+      </p>
+      <p><b>Solución:</b></p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>
+        Se satisfacen las siguientes proposiciones:
+        <p>
+          <ol>
+            <li>Si $f_{1}(h) = O(g(h))$ y $f_{2}(h)=O(g(h))$, entonces $f_{1}(h) + f_{2}(h) = O(g(h))$</li>   <br>         
+            <li> Si $f_{1}(h) = O(g_{1}(h))$ y $f_{2}(h)=O(g_{2}(h))$, entonces $f_{1}(h) + f_{2}(h) = O(\max\{|g_{1}(h)|, |g_{2}(h)|\})$</li>   <br>     
+            <li>Si $f(h) = O(g(h))$ y $k>0$ es una constante positiva, entonces  $kf(h) = O(g(h))$</li><br>
+            <li> Si $f_{1}(h) = O(g_{1}(h))$ y $f_{2}(h)=O(g_{2}(h))$, entonces $f_{1}(h) \cdot f_{2}(h) = O(g_{1}(h) \cdot g_{2}(h))$</li>   <br>     
+          </ol></p>
+      </p>
+      <p><b>Demostración:</b></p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>El teorema anterior se puede resumir de la siguiente manera:
+
+        <ul><li>$O(g(h)) + O(g(h))= O(g(h)) $</li><br>
+        <li>$O(g_{1}(h)) + O(g_{2}(h))= O(\max\{|g_{1}|,|g_{2}|\})$</li><br>
+        <li>$k\cdot O(g(h)) = O(g(h))$, para todo constante positiva $k$</li><br>
+        <li>$O(g_{1}(h)) \cdot O(g_{2}(h))= O(g_{1}\cdot g_{2})$</li><br>
+      </ul>
+      </p>
+    </div>
+
+    <div class="nota-box">
+      <h2 class="number-title"> Observación</h2>
+
+      <p>La notación $O(\cdot)$ (que también se usa para límites en el infinito) proporciona 
+        una forma muy útil  para describir  la velocidad de crecimiento (o decrecimiento) de funciones 
+        en términos de la velocidad de crecimiento (decrecimiento) de funciones elementales bien conocidas 
+        ($h^{n},h^{\frac{1}{n}}, a^{h}, \text{log}_{a},$ etc.)</p>
+
+      <p>Por ejemplo, del teorema anterior para $m, n \in  \mathbb{N}$ se tienen los siguientes resultados:
+
+        <ul>
+        <li>$O(h^{m}) + O(h^{m})= O(h^{m}) $</li><br>
+        <li>$O(h^{m}) + O(h^{n})= O(h^{r})$, donde $r=\min\{m,n\}$</li><br>
+        <li>$k\cdot O(h^{m}) = O(h^{m})$, para todo constante positiva $k$</li><br>
+        <li>$O(h^{m}) \cdot O(h^{n})= O(h^{m+n})$</li><br>
+      </ul>
+      </p>
+    </div>
+   
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+    <p>Sean $\{x_{n}\}_{n=1}^{\infty}$ y $\{y_{n}\}_{n=1}^{\infty}$ dos sucesiones. Se dice que la <b>sucesión 
+      $\{x_{n}\}_{n=1}^{\infty}$ es de orden $\{y_{n}\}_{n=1}^{\infty}$</b>, lo que denotamos por $x_{n} =O(y_{n})$, 
+      si existen constantes $C>0$ y $N\in \mathbb{N}$ tales que 
+
+      $$|x_{n}| \leq C |y_{n}| \text{ siempre que } n \geq N$$
+    
+    </p>
+
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Consideremos las sucesiones $\left \{\displaystyle{\frac{n^{2}-1}{n^{3}}}\right\}_{n=1}^{\infty}$ y 
+        $\left \{\displaystyle{\frac{1}{n}}\right\}_{n=1}^{\infty}$. Entonces 
+        $\displaystyle{\frac{n^{2}-1}{n^{3}}}=O\left(\displaystyle{\frac{1}{n}}\right)$
+      </p>
+      <p><b>Solución:</b></p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Nota </h2>
+      <p>
+        Con frecuencia nos encontramos con que una función $f(h)$ se aproxima mediante 
+        otra función $p(h)$ y sabemos que una cota del error cometido es $M|h^{n}|$. Esto
+        nos conduce a la siguiente definición.
+      </p>
+    </div>
+
+
+    <div class="nota-box" id="Def:aprox_O_funciones"> <h2 class="number-title"> Definición</h2>
+      <p>
+        Supongamos que una función $p(h)$ aproxima a otra función $f(h)$ y que existen una constante 
+        real $M>0$ y un número natural  $n$ tales que: 
+
+        $$\displaystyle{\frac{|f(h) - p(h)|}{|h^{n}|}} \leq M \text{ para } h \text{ suficientemente pequeño }$$
+  
+        entonces  se dice que <b>$p(h)$ aproxima a $f(h)$ con orden de aproximación $O(h^{n})$</b> 
+        lo que se denota como:
+      
+        $$f(h)= p(h) + O(h^{n})$$
+      </p>
+
+      <p>De esta manera, <b>$p(h) + O(h^{n})$ denota el conjunto de funciones que tienen el crecimiento de $p(x)$ más 
+        una parte cuyo crecimiento se limita al de $h^{n}$.</b></p>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+    <p>
+      Escribiendo la relación $\displaystyle{\frac{|f(h) - p(h)|}{|h^{n}|}} \leq M$  como $|f(h) - p(h)| \leq M |h^{n}|$,  
+      vemos que $O(h^{n})$ ocupa el lugar de la cota de error $M|h^{n}|$. Además, se sigue que $f(h)= p(h) + O(h^{n})$
+      es equivalente a $f(h)- p(h) = O(h^{n})$
+    </p><br>
+
+   
+    </div>
+    
+    
+    <div class="nota-box"> <h2 class="number-title"> Nota</h2>
+      <p>
+    <p> El siguiente resultado  muestra como podemos aplicar esta definicion a combinaciones simples de funciones:
+    </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Reto</h2>
+      <p>
+        Supongamos que $f(h) = p(h) + O(h^{n})$, $g(h)= q(h) + O(h^{m})$ y 
+        sea $r:=\min\{ m,n\}$. Entonces 
+        <p>
+          <ol>
+            <li>$f(h) + g(h) = p(h) + q(h) + O(h^{r})$</li>   <br>         
+            <li>$f(h) \cdot  g(h) = p(h) \cdot  q(h) + O(h^{r})$</li><br>
+            <li>$\displaystyle{\frac{f(h)}{g(h)}} =\displaystyle{\frac{p(h)}{q(h)}} + O(h^{r}), \text{ siempre que } g(h)\not= 0 \text{ y que } q(h)\not= 0$</li>            
+          </ol></p>
+      </p>
+      <p><b>Demostración:</b> Se deja como ejercicio para el lector.</p>
+    </div>
+
+    
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>
+       Consideremos el caso en el que $p(x)$ es la $n$-ésima aproximación por polinomios de Taylor 
+       de $f(x)$, entonces el <b>resto de la fórmula de Taylor</b> se puede reemplazar  simplemente por $O(h^{n+1})$
+       y sustituye a todos los términos omitidos, que son el que contiene la potencia $h^{n+1}$ y los de 
+       grado superior.</p>
+       
+       <p><b>El resto de la fórmula de Taylor converge a cero con la misma rapidez que $h^{n+1}$ converge 
+       a cero cuando $h\to 0$</b>, tal y como lo expresa la siguiente relación:
+
+       $$\displaystyle{\frac{f^{(n+1)}(c)}{(n+1)!}} \cdot h^{n+1} \approx M \cdot h^{n+1}  \approx O(h^{n+1}) $$
+      
+       válida para $h$ suficientemente pequeño. En otras palabras, el término $O(h^{n+1})$ sustituye 
+       a la cantidad $M \cdot h^{n+1}$, donde $M$ es constante o se "comporta como una constante." 
+      </p>
+      </div>
+
+      <div class="nota-box"> <h2 class="number-title"> Teorema de Taylor</h2>
+
+        <p>
+          Supongamos que $f \in C^{n+1}[a,b]$. Si $x_{0}, x= x_{0} + h \in [a,b]$, entonces 
+          $$f(x_{0} + h)= \sum_{k=0}^{n} \displaystyle{\frac{f^{(k)}(x_{0})}{k!}} h^{k} + O(h^{n+1}) $$
+        </p>
+      </div>
+
+      <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Por el Teorema de Taylor sabemos que: 
+      <ul>
+        <li>$e^{h}=1 + h + \displaystyle{\frac{h^{2}}{2!}} + \displaystyle{\frac{h^{3}}{3!}} + O(h^{4})$ y </li>
+        <li>$Cos(h)= 2 - \displaystyle{\frac{h^{2}}{2!}} + \displaystyle{\frac{h^{4}}{4!}} + O(h^{6})$</li>
+      </ul>
+      </p>
+      <p>Determinar el orden de aproximación  para la suma y el producto.</p>
+      <p><b>Solución:</b></p>
+      </div>
+
+      <h1 class="title flexbox"> El orden de aproximación de una sucesión</h1>   
+
+
+      <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+        <p>
+          El orden de las aproximaciones númericas se suelen conseguir calculando
+          una <b>sucesión de aproximaciones</b> que se acerquen más y más a la respuesta deseada. 
+          La definicón de <b>orden de aproximación de una sucesión</b> es análoga a la dada 
+          para funciones en la <a href="#Def:aprox_O_funciones"> Definición 5.10</a>  
+        </p>
+      </div>
+
+      
+      <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+        <p>
+          Supongamos que $\displaystyle{\lim_{n\to \infty} x_{n}=x}$ y que $\{r_{n}\}_{n=1}^{\infty}$ 
+          es una sucesión tal que $\displaystyle{\lim_{n\to \infty} r_{n}=0}$. Se dice que <b>$\{x_{n}\}_{n=1}^{\infty}$
+          converge   a $x$ con orden de aproximación $O(r_{n})$</b> si existe una constante $K>0$ tal que 
+          
+          $$\displaystyle{\frac{|x_{n} - x|}{|r^{n}|}} \leq K \text{  para } n \text{ lo suficientemente grande}$$ 
+          
+          esto se denota por $x_{n}=x+ O(r_{n})$ o bien <b>$x_{n} \to x$ con orden de aproximación $O(r_{n})$</b>
+        </p>
+      </div>
+
+
+      <!-- 
+      <div class="nota-box"> <h2 class="number-title"> Definición </h2>
+        <p>
+          Sea $\{\beta_{n} \}$ una sucesión que converge a cero y $\{\alpha_{n} \}_{n=1}^{\infty}$.
+          Una sucesión que converge a a un número $\alpha$. Si existe una constante positiva $K$ tal que 
+          para $n$ lo suficientemente grande se satisface:
+  
+          $$|\alpha_{n} - \alpha| \leq K |\beta_{n}|$$
+  
+          entonces, se dice que la sucesión $\{\alpha_{n} \}_{n=1}^{\infty}$ converge a $\alpha$ 
+          con rapidez de convergencia $O(\beta_{n})$. Esta expresión se lee "O mayuscula de $\beta_{n}$"
+           y se indica escribiendo:
+           
+           $$\alpha_{n}= \alpha + O(\beta_{n})$$
+          
+        </p>
+      </div>
+      -->
+  
+      <div class="nota-box"> <h2 class="number-title"> Observación </h2>
+        <p>Aunque en la definición anterior  se puede utilizar cualquier sucesión 
+          $\{r_{n} \}_{n=1}^{\infty}$ en casi todas las situaciones se utilizará sucesiones de la forma:
+          
+          $$r_{n}:= \displaystyle{\frac{1}{n^{p}}}$$
+  
+          para algún $p>0$. Por lo general se tiene interes en el mayor valor de $p$ 
+          tal que:
+          
+          
+          $$x_{n}= \alpha + O\left(\displaystyle{\frac{1}{n^{p}}}\right)$$
+        </p>
+  
+      </div>
+      
+      <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+        <p>
+          Sea $x_{n}= \displaystyle{\frac{\cos(n)}{n^2}}$ y $r_{n}= \displaystyle{\frac{1}{n^{2}}}$. Entonces 
+          $\displaystyle{\lim_{n\to \infty} x_{n}=0}$ con orden de aproximación $O\left(\displaystyle{\frac{1}{n^{2}}}\right)$ 
+        </p>
+        <p><b>Solución:</b></p>
+      </div>
+  
+      
+      <div class="nota-box"> <h2 class="number-title"> Ejemplo </h2>
+        <p>
+          Para cada  $n \in \mathbb{N}$, definamos 
+          <ul>
+            <li>$x_{n}:= \displaystyle{\frac{n+1}{n^{2}}}$</li>
+            <li>$\tilde{x}_{n}:= \displaystyle{\frac{n+3}{n^{3}}}$</li>
+          </ul>
+        </p>
+        <p>Determine cual de entre las sucesiones $\{x_{n} \}_{n\geq 1}$ y $\{\tilde{x}_{n} \}_{n\geq 1}$ converge 
+        mucho más rapido al cero. 
+        </p>
+        <p><b>Solución:</b></p>
+      </div>
+     <!--
+      <div class="nota-box"> <h2 class="number-title"> Observación </h2>
+        <p>
+          Se tiene una definición analoga para la rápidez  de convergencia de funciones  
+        </p>
+      </div>
+  
+  
+      <div class="nota-box"> <h2 class="number-title"> Definición </h2>
+          <p>
+            Supongamos que $\lim_{h\to a} G(h)=0$ y $\lim_{h\to a} F(h)=0$. Si existe una constante
+            positiva $K$ tal que para $h$ lo suficientemente pequeña, se satisface:
+    
+            $$|F(h) - L| \leq K |G(h)|$$
+    
+            lo cual se denota por 
+          
+            $$F(h) = L + O(G(h))$$ 
+    
+            Frecuentemente, las funciones que se usan para la comparación tienen la  forma $G(h)= h^{p}$, 
+            donde $p >0$. 
+          </p>
+    
+          <p>Nos interesa  el mayor valor de $p$ para el cual se satisface:
+  
+           $$F(h)= L + O(h^{p})$$
+          </p>
+        
+        </div>
+-->
+
+      <h1 class="title flexbox">   Propagación del error</h1>
+
+
+      <div class="nota-box"> 
+        <p>Veamos enseguida como pueden propagarse los errores en una cadena de operaciones sucesivas</p>
+
+        <h2 class="number-title"> Propagación del error en una suma</h2>
+
+        <p>Consideremos la suma de dos números $p$ y $q$ (que son valores exactos) 
+          con valores aproximados $p^{\ast} $ y $q^{\ast} $ cuyos errores son $\epsilon_{p}$ 
+          y $\epsilon_{q}$ respectivamente. De esta manera se tiene que:  $p=p^{\ast} + \epsilon_{p}$ y
+           $q=q^{\ast} + \epsilon_{q}$. Luego, de aquí que la suma es:
+           $$p+q= (p^{\ast} + \epsilon_{p}) + (q^{\ast} + \epsilon_{q})= (p^{\ast} + q^{\ast}) + (\epsilon_{p} + \epsilon_{q}) $$
+        </p>
+        
+        <p>Por lo tanto, <b>el error en una suma es la suma de los errores de los sumandos</b>.</p>
+
+        <h2 class="number-title"> Propagación del error en una multiplicación</h2>
+
+       <p>La propagación del error en una multiplicación es más complicada. Para el producto 
+        se tiene:
+       </p>
+
+       $$pq= (p^{\ast}  + \epsilon_{p} )(q^{\ast}  + \epsilon_{q}) =  p^{\ast} q^{\ast} + p^{\ast}\epsilon_{q}
+        + q^{\ast}\epsilon_{p} + \epsilon_{p}\epsilon_{q}$$
+
+      <p>Por lo tanto, si $p^{\ast}$ y $q^{\ast}$ son mayores que $1$ en valor absoluto, los términos $p^{\ast}\epsilon_{q}$ 
+        y $q^{\ast}\epsilon_{p}$ indican que existe la posibilidad de que los errores originales $\epsilon_{p}$ y $\epsilon_{q}$
+        sean "magnificados". Si analizamos los errores relativos, tendremos una percepción más clara de la situación.
+
+      </p>
+
+      <p>Reordenando lo términos en la expresión anterior obtenemos: </p>
+
+      $$pq - p^{\ast} q^{\ast} = p^{\ast} \epsilon_{q} + q^{\ast} \epsilon_{p} + \epsilon_{p} \epsilon_{q}$$
+        
+      <p>Supongamos que $p\not= 0 $ y que $q\not=0$, entonces podemos obtener el error relativo del producto
+        para la aproximación $p^{\ast}q^{\ast}$
+      </p>
+
+      $$ER= \displaystyle{\frac{pq - p^{\ast}q^{\ast}}{pq} =\frac{p^{\ast}\epsilon_{q} +
+       q^{\ast}\epsilon_{p} + \epsilon_{p} \epsilon_{q}}{pq} =\frac{p^{\ast} \epsilon_{q}}{pq}+ \frac{q^{\ast}\epsilon_{p}}{pq} + \frac{\epsilon_{p}\epsilon_{q}}{pq} } $$
+
+      <p>Si además, suponemos que $p^{\ast}$ y $q^{\ast}$ son buenas aproximaciones de $p$ y$q$ , entonces 
+        $\displaystyle{\frac{p^{\ast}}{p}} \approx 1$, $\displaystyle{\frac{q^{\ast}}{q}} \approx 1$ y $ER_{p} ER_{q} \approx \left(\frac{\epsilon_{p}}{p}\right)\left(\frac{\epsilon_{q}}{q}\right) \approx 0  $</p>
+
+
+      <p>Esto prueba que el error relativo  del producto $pq$ es aproximadamente la suma de los errores relativos
+        de las aproximaciones. </p>
+      </div>
+
+
+      <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+
+        <p>Es normal que los errores iniciales en los datos se propaguen a lo largo de una cadena de de operaciones.
+          Una cualidad deseable en en cualquier proceso númerico es que <b>un error pequeño en las condiciones 
+          iniciales produzca errores pequeños en el resultado final</b>. Un algoritmo con esta cualidad se llama <b>estable</b>;
+          en otro caso, se llama <b>inestable</b>. Algunos algoritmos que sólo son estables para ciertas elecciones de datos iniciales; a estos se les conoce como 
+          <b>condicionalmente estables.</b> Siempre que sea posible elegiremos métodos que sean estables.  
+        </p>
+        
+
+        <p>
+          La mayoría de los algoritmos numericos que se veran  a lo largo del curso <b>generan una
+          sucesión  de valores</b> que por lo general  convergen a un número real  $p$. Los elementos
+          de la sucesión que se llaman   <b>aproximaciones</b> se van generando a partir de las
+          aproximaciones anteriores.  
+        </p>
+
+
+  <!-- 
+        <p>Un criterio para elegir los métodos que se utilizan es que, cambios pequeños en los 
+          datos iniciales produzcan otros correspondientes en los resutados finales. Un algoritmo que
+          cumple con esta   propiedad se llama <b>estable</b>  en caso contrario se llama <b>inestable</b>
+        </p>
+  -->
+  
+        <p>Para estudiar el crecimiento de los errores de redondeo y su relación con la estabilidad de un algoritmo 
+          se tiene la siguiente definición:
+        </p>
+  
+        </div>
+    
+     
+
+      <div class="nota-box"> <h2 class="number-title"> Definición </h2>
+        <p>Sea $\epsilon_{0} >0$ un error inicial y $\epsilon_{n}$ la maginitud de un error despues 
+          de $n$ operaciones sucesivas.
+        </p>
+        <ul>
+          <li>Si $|\epsilon_{n}|\approx n \epsilon_{0}$ entonces se dice que el crecimiento del error 
+            es <b>lineal</b> </li><br>
+          <li>Si $|\epsilon_{n}|\approx K^{n} \epsilon_{0}$ para alguna constante  $K$, entonces se dice
+             que el crecimiento del error es <b>exponencial</b>. Si $K>1$, entonces un error exponencial crece 
+            cuando $n\to \infty $ sin que podamos acotarlo; pero si $0< K < 1$, entonces el error exponencial 
+          disminuye a cero cuando $n \to \infty$   </li>
+        </ul>
+      </div>
+
+
+      <div class="nota-box"> <h2 class="number-title"> Observación </h2>
+        <p>Particularmente es inevitable el crecimiento lineal de un error y cuando  $C$ y $E_{0}$ 
+          son pequeños, por lo general son aceptables los resultados.
+        </p>
+        
+    
+        <p>Por otro lado siempre se trata de evitar el crecimiento exponencial de error, pues el término 
+          $C_{n}$ crece incluso para valore  pequeños de $n$, lo que conduce a empresiones inaceptables.
+        </p>
+    <!--
+        <p>La siguiente definición proporciona una medida de la rapidez de convergencia de una sucesión:</p>
+    -->
+       </div>
+    
+    
+    
+
+    </body>

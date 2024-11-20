@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 6 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 6 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 7   </title>
+    
+  </head>
+
+
+
+  <body class="fondo-body" >
+    
+    
+    <h1 class="number-title flexbox"> Semana 7 </h1>   
+    <h1 class="title flexbox">  Métodos tangenciales para el cálculo de raíces </h1>   
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción </h2>
+      <p>
+       Si $f(x), f^{'}(x) $ y $f^{''}(x)$ son continuas  cerca de una raíz $p$ de una función $f$,
+       esta información adicional sobre la naturaleza de $f(x)$ puede usarse para desarrollar algoritmos 
+       que produzcan sucesiones $\{p_{n}\}_{n=1}^{\infty}$ que converjan a $p$ más rapidamente que el 
+       método de Biseción. 
+     </p>
+    </div>
+
+    <h1 class="title flexbox">  Método de Newton-Raphson </h1>
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>El método de Newton-Raphson descansa en la continuidad de $f^{'}(x)$ y $f^{''}(x)$, y 
+        es de los algoritmos más útiles y poderosos para encontrar la raíz $p$ de la ecuación:
+        
+        $$f(x)=0$$  
+      </p>
+
+      <p>Sea $p$ una raíz de la ecuación $f(x)$, entonces la curva $y=f(x)$ y el eje de las
+         abscisas se cortan en el punto $(p,0)$.
+        </p>
+         
+      <p>Consideremos una <b>aproximación inicial</b>
+         $p_{0}$ a la raíz $p$. Entonces, el punto $(p_{0}, f(p_{0}))$ esta situado en la curva
+         $y=f(x)$ más cerca de $(p,f(p))$
+      </p>
+
+      <p>La ecuación de la recta tangente a la gráfica de la función $f(x)$ en el punto $(p_{0},f(p_{0}))$
+        esta dada por: 
+        $$y-f(p_{0})= f^{'}(p_{0}) (x - p_{0})$$
+      </p>
+
+      <p>Sea   $p_{1}$ tal que $(p_{1},0)$  es el  punto de intersección  del eje de las abcisas  con la recta tangente 
+        al punto $(p_{0},f(p_{0}))$, se tiene que:
+      $$p_{1}:= p_{0} - \frac{f(p_{0})}{f^{'}(p_{0})}$$
+      </p>
+
+      <p>Graficamente se puede observar que el punto $p_{1}$ esta más cerca de $p$ que $p_{0}$ </p>
+      
+      <p>Luego, la ecuación de la recta tangente a la grafica del a función $f(x)$ en el punto
+         $(p_{1}, f(p_{1}))$ es:
+        $$y-f(p_{1})= f^{'}(p_{1})(x- p_{1}) $$
+      </p>
+
+      <p>Sea  $p_{2}$ tal que $(p_{2},0)$  es el  punto de intersección  del eje de las abcisas  con la recta tangente 
+        al punto $(p_{1},f(p_{1}))$, se tiene que:
+
+       $$ p_{2} :=  p_{1} - \frac{f(p_{1})}{f^{'}(p_{1})} $$
+      
+       Continuando sucesivamente con este procedimiento, en general se tiene que:
+       
+       $$ p_{n} :=  p_{n-1} - \frac{f(p_{n-1})}{f^{'}(p_{n-1})} $$
+      
+       
+      </p>
+
+
+    <p>De esta manera el <b>método de Newton-Raphson</b> genera una sucesión $\{p_{n}\}_{n}^{\infty}$ 
+       partiendo de un valor inicial $p_{0}$ y definiendo 
+       $$p_{n}:= p_{n-1} - \frac{f(p_{n-1})}{f^{'}(p_{n-1})}\, \, \, \text{ para cada } n \geq 1$$  
+    </p>
+    </div>
+
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>
+        Sea $f\in C^{2}[a,b]$. Si $p\in [a,b]$ con $f(p)=0$ y $f^{'}(p)\not= 0$ entonces existe $\delta >0$
+        tal que el método de Newton-Raphson genera una sucesión $\{p_{n}\}_{n=1}^{\infty}$  que genera  a $p$
+        para cualquier aproximación inicial $p_{0} \in [p-\delta, p+ \delta]$.      
+      </p>
+      <p><b>Demostración:</b></p>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>
+        A la función $g(x)$ definida por la relación:
+        $$g(x)= x - \frac{f(x)}{f^{'}(x)}$$
+        se le llama <b>función de iteración de Newton-Raphson</b>
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Corolario</h2>
+      <p><b>Iteracion de Newton-Raphson para el cálculo de raices cuadradas. </b></p>
+      <p>
+       Supongamos que $A>0$ es un número real y sea $p_{0}>0$ una aproximación inicial a $\sqrt{A}$. 
+        Definimos una sucesión $\{ p_{k}\}_{k=0}^{\infty}$ 
+       mediante el  siguiente proceso recursivo:
+       $$p_{k}:= \frac{1}{2} \left( p_{k-1} + \frac{A}{p_{k-1}} \right)\,\,\, \text{ para cada $n\geq 1$}$$
+       Entonces la sucesión $\{ p_{k}\}_{k=0}^{\infty}$  converge a $\sqrt{A}$, i.e. $\displaystyle{\lim_{n \to \infty } p_{n} = A}$
+      </p>
+
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>En el Corolario notemos que la función de iteración $g(x)$ solo necesita las operaciones 
+        aritmeticas: $+,-,\times, \div $ si $g(x)$ hubiera requerido del calculo de una raiz cuadrada 
+        estariamos atrapados en un razonamiento circular    
+      </p> 
+    </div>
+
+    <h1 class="title flexbox">  Método de la Secante </h1>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+
+
+      <p>Una desventaja obvia del método de Newton-Raphson es que requiere que tengamos una fórmula para la 
+        derivada de $f(x)$. Para los ejemplos en la clase, esto no será un problema, pero en el "mundo real"
+        esto  ya no es así. Una forma estratégica de abordar  este problema es usar una aproximación
+        a la derivada en la fórmula de la  función de iteración de Newton-Raphson:
+      
+        $$f^{´}(x)\approx \frac{f(x+h) -f(x)}{h} $$</p>
+
+      <p> Recordemos que el método de Newton-Raphson se deriva, geométricamente, dibujando una línea tangente
+         desde la raíz aproximada actual hasta el eje. Se requiere la derivada porque usamos la recta tangente. 
+         Si, en cambio, usáramos una línea secante (es decir, una que pasa por dos puntos 
+         en la curva en lugar de solo uno), entonces no se requeriría derivada de la función.
+    </p>
+
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Método de la secante</h2>
+      <p>
+        El método de la secante requiere de dos valores iniciales $p_{0}$ y $p_{1}$. 
+      </p>
+
+      <p>La ecuación de la  recta secante a la gráfica de $f(x)$ que pasa por lo puntos 
+        $(p_{0},f(p_{0}))$ y $(p_{1},f(p_{1}))$ es: 
+       
+        $$y - f(p_{0}) = \frac{f(p_{1}) - f(p_{0})}{p_{1} - p_{0}} (x-p_{0})  $$ 
+      </p>
+
+      <p>Sea $p_{2}$ tal que $(p_{2},0)$ es el  punto de intersección del eje de las abscisas con la recta secante que pasa 
+        por los puntos  $(p_{0},f(p_{0}))$ y $(p_{1},f(p_{1}))$ se tiene que:
+        
+        $$p_{2}:= p_{0} - \frac{f(p_{0}) (p_{1} - p_{0})}{f(p_{1}) - f(p_{0})}$$
+      </p>
+
+     <!--  <p>Si $p_{2}$ no satisface algún criterio de convergencia, entonces se encuentra l-->
+      <p>Luego, la ecuación de la recta secante  que pasa por los puntos $(p_{2},f(p_{2}))$ y $(p_{1},f(p_{1}))$  es:  
+        $$y - f(p_{1}) = \frac{f(p_{2}) - f(p_{1})}{p_{2} - p_{1}} (x-p_{1})  $$
+      </p>
+
+      <p>Sea $p_{3}$ tal que $(p_{3},0)$ es  el punto de intersección del eje de las abscisas con la recta secante que pasa 
+        por los puntos  $(p_{2},f(p_{1}))$ y $(p_{1},f(p_{1}))$  es:
+        
+        $$p_{3} := p_{1} - \frac{f(p_{1}) (p_{2} - p_{1})}{f(p_{2}) - f(p_{1})}$$
+      </p>
+
+      <p>Continuando sucesivamente con este procedimiento, en general se tiene que:
+        $$p_{n}= p_{n-2} - \frac{f(p_{n-2}) (p_{n-1} - p_{n-2})}{f(p_{n-1}) - f(p_{n-2})}, \, \, \,\text{ para toda } n \geq 2$$
+      </p>
+
+
+      <p>De esta manera el <b>método de la secante</b> genera una sucesión $\{p_{n}\}_{n}^{\infty}$ 
+        partiendo de dos valores  iniciales $p_{0}$ y $p_{1}$:
+
+        $$p_{n}:= p_{n-2} - \frac{f(p_{n-2}) (p_{n-1} - p_{n-2})}{f(p_{n-1}) - f(p_{n-2})}, \, \, \,\text{ para toda } n \geq 2$$
+     </p>
+    </div>
+    
+    
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>El método de la secante es consistente con el método de Newton-Raphson, donde utilizamos la aproximación:
+        $$f^{´}(x)\approx \frac{f(x_{n}) -f(x_{n-1})}{x_{n} - x_{n-1}} $$</p>
+      
+        El error en esta aproximación es proporcional a $x_{n} - x_{n-1}$, así que si nosotros asumimos que la sucesión es convergente  
+      (i.e. $x_{n} - x_{n-1} \to 0$ ), entonces el método de la secante se parece cada vez más al método de Newton-Raphson.</p>
+
+    </div>
+
+    
+    <h1 class="title flexbox">  Estimación de errores y velocidad de convergencia  </h1>
+   
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>
+        En esta sección se estudia el orden de convergencia de los métodos  iterativos, que es una medida de la velocidad de convergencia de una sucesión.
+
+      </p>
+    </div>
+      
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>
+        Sea  $\{ p_{n} \}_{n=1}^{\infty}$ una sucesión que converge a $p$ con $p_{n} \not= p$ para toda $n$ y sea
+        $E_{n}:= p-p_{n}$, para cada $n \geq 0$. Si existen constantes postivas  $R >0$ y $A >0$ con 
+        $$\lim_{n \to \infty} \frac{|p_{n+1} -p|}{|p_{n} - p|^{R}} = \lim_{n \to \infty} \frac{|E_{n+1}|}{|E_{n}|^{R}} = A $$
+        entonces se dice que la sucesión <b>$\{ p_{n}\}_{n=1}^{\infty}$  converge a $p$ con orden de convergencia  $R$ 
+        y  constante de error asintótico $A$</b>.  
+      </p>
+      <ul>
+      <li><p> Los casos $R =1,2$, merecen una consideración especial:
+      <ol>
+        <li>Si $R=1$, diremos que la sucesión  $\{ p_{n}\}_{n=0}^{\infty}$ es <b>linealmente convergente</b>. </li><br>
+        <li>Si $R=2$, diremos que  la sucesión  $\{ p_{n}\}_{n=0}^{\infty}$ es  <b>cuadraticaticamente covergente</b>. </li>
+      </ol>  
+      </p>
+      </li>
+      <li><p>En este sentido, se dice que un método iterativo de la forma <b>$p_{n}= g(p_{n-1})$ es de orden $R$</b>, si la 
+        sucesión $\{ p_{n}\}_{n=1}^{\infty}$ converge a  $p= g(p)$ con orden $R$.   </p>
+      </li>
+    </ul>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>Si $R$ es "grande", entonces la sucesión $\{ p_{n}\}_{n=0}^{\infty}$ converge rapidamente a $p$, esto es, 
+        la relación implica que para valores grandes de $n$ tenemos la aproximación $|E_{n+1}| \approx A |E_{n}|^{R}$.   
+        Por ejemplo, supongamos que $R=2$,  y que $|E_{n}|\approx 10^{-2}$, entonces cabe esperar que 
+        $$|E_{n+1}| \approx A \times 10^{-4}$$
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      
+      <p>En este ejemplo comparamos una sucesión linealmente convergente con una sucesión cuadraticamente convergente.</p>
+      <p>
+        Sean $\{ p_{n}\}_{n=1}^{\infty}$ y  $\{ \tilde{p}_{n}\}_{n=1}^{\infty}$ dos sucesiones que convergen linealmente y 
+        cuadraticamente a cero, respectivamente,  con la misma constante de error asintótico, $A= 0.5$, esto es, 
+        $$\lim_{n\to \infty} \frac{|p_{n+1}-0|}{|p_{n} - 0|}= \lim_{n\to \infty} \frac{|p_{n+1}|}{|p_{n}|}= 0.5$$
+        $$\lim_{n\to \infty} \frac{|\tilde{p}_{n+1}-0|}{|\tilde{p}_{n} - 0|^{2}}=\lim_{n\to \infty} \frac{|\tilde{p}_{n+1}|}{|\tilde{p}_{n}|^{2}}= 0.5$$
+      </p>
+
+      <p>Dado que los límites existen entonces:
+        
+        $$|p_{n+1}| \approx 0.5| p_{n} |\,\,\,\,\text{ y } \,\,\,\,  |\tilde{p}_{n+1}| \approx 0.5 | \tilde{p}_{n}|^{2} $$ 
+
+        Para que la sucesión  que converge linealmente se tiene que:
+        
+        $$|p_{n}| \approx 0.5 |p_{n-1}|\approx (0.5)^{2} |p_{n-2}| \approx (0.5)^{3} |p_{n-3}| \approx \cdots \approx  
+        (0.5)^{n-1} |p_{1}| \approx  (0.5)^{n} |p_{0}|   $$
+
+        Por lo tanto,  
+
+        $$|p_{n}| \approx  (0.5)^{n} |p_{0}|   $$
+
+
+        Para la sucesión que converge cuadraticamente, se tiene que:
+
+        \begin{align*}
+         |\tilde{p}_{n}| & \approx 0.5|\tilde{p}_{n-1}|^{2}\\
+          & \approx 0.5 ( 0.5 |\tilde{p}_{n-2}| )^{2} \\
+          & \approx 0.5 ( 0.5( 0.5 |\tilde{p}_{n-3}| )^{2} )^{2} \\
+          & \approx 0.5 ( 0.5( 0.5 ( 0.5 |\tilde{p}_{n-4}| )^{2} ) )^{2} )^{2} \\
+          &\,\,\,\, \vdots\\
+          &= (0.5)^{2^{n}-1} |\tilde{p}_{0}|^{2^{n}} \\
+        \end{align*}
+
+        Por lo tanto,  
+
+        $$|\tilde{p}_{n}| \approx  (0.5)^{2^{n}-1} |\tilde{p}_{0}|^{2^{n}}   $$
+     </p>
+    </div>
+
+    </body>

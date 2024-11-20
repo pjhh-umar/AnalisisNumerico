@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 16 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 16 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 17   </title>
+    
+  </head>
+  <body class="fondo-body" >
+    
+    <h1 class="number-title flexbox"> Semana 17</h1>   
+    
+    <h1 class="title flexbox"> Método de Neville</h1>  
+  
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Para $i,j\in \{0,1,\ldots, n\}$ con $0\leq j \leq i$ denotemos por $Q_{i,j}(x)$
+        al polinomio interpolante de Lagrange de grado $j$ en los $j+1$ números $x_{i-j}, x_{i-j+1}, \ldots, x_{i-1}, x_{i}$
+        esto es:
+        $$Q_{i,j}(x):= P_{i-j,i-j+1,\ldots , i-1,i}(x)$$
+
+      </p>
+     
+    </div>
+
+    
+      <div class="nota-box"> <h2 class="number-title"> Proposición</h2>
+
+        <p>Para $i,j\in \{0,1,\ldots, n\}$ con $0\leq j \leq i$ se satisface:</p>
+         $$Q_{i,j}(x)= \displaystyle{\frac{(x-x_{i-j})Q_{i,j-1}(x) - (x-x_{i})Q_{i-1,j-1}(x) }{x_{i} -x_{i-j}}} $$
+      </div>
+
+
+      <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+        <p>A la implementación del <a href="../Semanas/S16.html#Teo:metodo_neville">Teorema 16.14</a> 
+          para generar los polinomios $Q_{i,j}(x)$ se le llama <b>Método de Neville</b> 
+          
+        </p>
+      </div>
+
+      
+      <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+        <p>Aplicar el método de Neville para interpolar la función $f(x)= \mathrm{ln}(x)$ en $x=2.1$, a partir de 
+          los datos:
+        </p>
+        
+        <p>
+          <table>
+            <thead>
+              <tr>
+                <th>$x$</th>
+                <th>$2$</th>
+                <th>$2.2$</th>
+                <th>$2.3$</th>
+              </tr>
+              </thead>
+                <tbody >
+    
+                  <tr>
+                    <td>$f(x)$</td>
+                    <td>$0.69314718$</td>
+                    <td>$0.78845736$</td>
+                    <td>$0.83290912$</td>
+                    
+                  </tr>
+              </tbody>
+          </table>
+
+        </p>
+        <p><b>Solución:</b>
+        </p>
+      </div>
+      
+      
+      <h1 class="title flexbox"> Diferencias divididas e Interpolación polinomial de Newton</h1>  
+
+     
+
+      <div class="nota-box"> <h2 class="number-title"> Diferencias divididas</h2>
+
+
+        <p>Recordemos que  la derivada de una función $f(x)$ en el punto $x_{0}$ se determina mediante la existencia del siguiente límite:
+          $$f^{'}(x)= \displaystyle{\lim_{x \to x_{0}} \frac{f(x) - f(x_{0}) }{x - x_{0}}}$$
+          Cuando la función  $f(x)$ esta dada en forma tabular:
+
+          <table class="info">
+            <thead>
+              <tr>
+                <th>$x$</th>
+                <th>$x_{0}$</th>
+                <th>$x_{1}$</th>
+                <th>$\ldots$</th>
+                <th>$x_{n}$</th>
+              </tr>
+              </thead>
+                <tbody >
+    
+                  <tr>
+                    <td>$f(x)$</td>
+                    <td>$f(x_{0})$</td>
+                    <td>$f(x_{1})$</td>
+                    <td>$\ldots$</td>
+                    <td>$f(x_{n})$</td>
+                    
+                  </tr>
+              </tbody>
+          </table>
+          La derivada de $f(x)$ sólo se puede obteneer aproximandola:
+        </p>
+
+        <p>Por ejemplo, si $x_{0} < x < x_{1}$ entonces la derivada se puede aproximar por:
+          $$f^{'}(x)\approx \displaystyle{ \frac{f(x_{1}) - f(x_{0}) }{x_{1} - x_{0}}}$$
+        Esta aproximación se conoce como la <b>primera diferencia dividida de $f(x)$ 
+          respecto a los argumentos $x_{0}$ y $x_{1}$</b>, y se denota por $f[x_{0},x_{1}]$,
+          esto es:
+          $$f[x_{0},x_{1}]=\displaystyle{ \frac{f(x_{1}) - f(x_{0}) }{x_{1} - x_{0}}}$$
+          En general, la primera diferencia dividida de $f(x)$ respecto a los argumentos 
+          $x_{i}$ y $x_{i+1}$ es:
+          $$f[x_{i}, x_{i+1}]=\displaystyle{ \frac{f(x_{i+1}) - f(x_{i}) }{x_{i+1} - x_{i}}}$$
+          para obtener aproximaciones de derivadas de orden más alto, se estiende el 
+          concepto de diferencias divididas a 
+          ordenes más altos, por ejemplo, <b> la aproximacón de la segunda derivada en el 
+          intervalo $[x_{0},x_{2}]$</b>, esta dada por la <b>segunda diferencia dividida de $f(x)$
+          con argumentos $x_{0},x_{1}, x_{2}$</b>, esto es,
+          $$f[x_{0},x_{1},x_{2}]=\displaystyle{ \frac{f[x_{1},x_{2}] - f[x_{0}, x_{1}] }{x_{2} - x_{0}}}$$
+          La tercera derivada de una función  $f(x)$ en el intervalo $[x_{0},x_{3}]$ se aproxima con la <b>tercera 
+          diferencia dividida de $f(x)$ con argumentos $x_{0}, x_{1}, x_{2}, x_{3}$</b>, esto es, 
+          $$f[x_{0},x_{1},x_{2},x_{3}]=\displaystyle{ \frac{f[x_{1},x_{2},x_{3}] - f[x_{0}, x_{1},x_{2}] }{x_{3} - x_{0}}}$$
+          En general, la $k$-esima diferencia dividida de $f(x)$ con respecto a los argumentos $x_{j}, x_{j+1}, \ldots , x_{j+k}$
+          esta dada por:
+          $$f[x_{j},x_{j+1},\ldots, x_{j+k}]=\displaystyle{ \frac{f[x_{j+1},x_{j+2},\ldots, x_{j+k}] - f[x_{j},x_{j+1},\ldots, x_{j+k-1}] }{x_{j+k} - x_{j}}}$$
+        </p>
+      </div>
+
+      
+
+      <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+        <p>
+        </p>
+      </div>
+
+      <div class="nota-box"> <h2 class="number-title"> Nota</h2>
+        <p>
+          Sea $P_{n}(x)$ el énesimo polinomio de interpolación de Lagrange que coincide con la función $f$
+          en los diferentes números $x_{0},x_{1},\ldots, x_{n}$. A pesar de que este polinomio es único, existen 
+          representaciones algebraicas que son útiles en ciertas circunstancias. El <b>método de las diferencias 
+          divididas de $f$ respecto a $x_{0},x_{1},\ldots, x_{n}$</b> se utilizan para expresar $P_{n}(x)$ 
+          en la forma:
+          $$P_{n}(x)= a_{0} + a_{1}(x-x_{0})+a_{2}(x-x_{0})(x-x_{1}) + \cdots + a_{n}(x-x_{0})\cdots (x-x_{n-1})$$     
+          para constantes apropiadas $a_{0}, a_{1}, \ldots, a_{n}$ 
+        </p>
+      </div>
+
+      <div class="nota-box"> <h2 class="number-title"> Nota</h2>
+        <p>Supongamos que se tienen $n+1$ datos:</p>
+          <p>
+          <table class="info">
+            <thead>
+              <tr>
+                <th>$x$</th>
+                <th>$x_{0}$</th>
+                <th>$x_{1}$</th>
+                <th>$\ldots$</th>
+                <th>$x_{n}$</th>
+              </tr>
+              </thead>
+                <tbody >
+    
+                  <tr>
+                    <td>$f(x)$</td>
+                    <td>$f(x_{0})$</td>
+                    <td>$f(x_{1})$</td>
+                    <td>$\ldots$</td>
+                    <td>$f(x_{n})$</td>
+                    
+                  </tr>
+              </tbody>
+          </table>
+        </p>
+        <p>
+          Utilizando el <b>método de las diferencias divididas de $f$ respecto a $x_{0},x_{1},\ldots, x_{n}$</b> 
+          el polinomio de grado a lo más $n$que pasa por los $n+1$ puntos dados es:
+          $$P_{n}(x)= f[x_0] + \displaystyle{ \sum_{k=1}^{n} f[x_{0}, x_{1}, \ldots , x_{k}] } (x-x_{0})(x-x_{1})  \cdots (x-x_{k-1})$$     
+          
+          Este polinomio se conoce como el polinomio de  <b>diferencias divididas interpolante de Newton.</b>
+        </p>
+      </div>
+
+
+
+
+
+
+    </body>

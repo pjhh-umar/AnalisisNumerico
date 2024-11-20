@@ -1,0 +1,460 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 5 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 5 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 6   </title>
+    
+  </head>
+
+
+
+  <body class="fondo-body" >
+    
+    
+    <h1 class="number-title flexbox"> Semana 6 </h1>   
+    <h1 class="title flexbox"> Ecuaciones no lineales </h1>   
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción </h2>
+      <p>
+        Para resolver algunos problemas que se presentan en ciencias e ingenieria en ocasiones es necesario conocer 
+        los valores que anulan ciertas funciones o ecuaciones y por lo general la teoría que se tiene del Álgebra 
+        o el Cálculo para conocer dichos valores son tediosos o difíciles de aplicar. De aquí la necesidad de desarrolllar 
+        métodos o algoritmos que nos permiten en tiempo muy corto solucionar este tipo de problemas. 
+      
+      <p>Supongamos que ahorramos dinero haciendo depositos mensuales de $\$P$ pesos a una tasa de interes anual $I$
+        que se compone cada mes, entonces la cantidad total $\$A$ de pesos acumulados despues de $N$ depositos  es:
+        $$A= P + P\left(1+ \frac{I}{12}\right) + P\left(1+ \frac{I}{12}\right)^{2} + \cdots + P\left(1+ \frac{I}{12}\right)^{N-1}$$
+      </p>
+
+      <p>El primer término del miembro derecho de la expresión anterior es el último deposito; el segundo es el penultimo deposito 
+        cuya contribución, habiendo acumulado un periodo de interes,  es $P\left(1+ \frac{I}{12}\right)$ pesos; el antepenultimo 
+      deposito ha acumulado dos periodos de interés y su contribución al capital total  es: $ P\left(1+ \frac{I}{12}\right)^{2}$
+      pesos y así sucesivamente. Finalmente, el primer deposito que ha acumulado interes durante $N-1$ periodos, contribuye con 
+      $ P\left(1+ \frac{I}{12}\right)^{N-1}$ pesos al total.
+     </p>
+
+     <p>
+     Recordemos que la fórmula para la  suma de los primeros $N$ términos de una serie geométrica  es:
+     $$1 + r + r^{2} + \cdots + r^{N}= \frac{1-r^{N}}{1-r}$$
+    </p>
+
+    <p>Luego, 
+
+      \begin{align*}
+      A&= P + P\left(1+ \frac{I}{12}\right) + P\left(1+ \frac{I}{12}\right)^{2} + \cdots + P\left(1+ \frac{I}{12}\right)^{N-1}\\
+      &=P\left(1 + \left(1+ \frac{I}{12}\right) + \left(1+ \frac{I}{12}\right)^{2} + \cdots + \left(1+ \frac{I}{12}\right)^{N-1} \right)
+      \end{align*}
+
+      y haciendo $r:= \displaystyle{1+ \frac{I}{12}}$ se obtiene: 
+
+      $$A= P \left(\displaystyle{\frac{1 - (1+ \frac{I}{12})^{N}}{1-(1+ \frac{I}{12})}} \right)$$
+
+      Simplificando se obtiene la fórmula para obtener el <b>capital acumulado cuando el interes se compone mensualmente:</b> 
+
+      $$A= \frac{P}{\left( \frac{I}{12}\right)} \left(  \left( 1 + \frac{I}{12}\right)^{N} -1\right)$$
+    </p>
+
+
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>Ahorramos $\$ 240$ pesos al mes durante $20$ años y deseamos que el capital acumulado al final de estos $20$
+        años sea de $\$250\,000$ pesos. ¿A que tasa de interes $I$ debo invertir ese dinero para obtener ese resultado? 
+      </p>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Definición </h2>
+      <p>
+       Supongamos que $f(x)$ es una función continua. Cualquier numero real  $\overline{x}$ tal que  $f(\overline{x})=0$ se llama 
+        <b>raiz</b> (<b>cero</b> o <b>solucion</b>) de la ecuación:
+        $f(x)=0$.
+      </p>
+
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>
+       Entre los métodos que se tienen para resolver la ecuación $f(x)=0$ se encuentran los <em>métodos cerrados</em>
+        y <em>abiertos</em>: 
+      </p>
+      <ul>
+      <li>Los <b>métodos  cerrados</b> necesitan de dos valores iniciales $x_{i}$ y $x_{f}$ que encierran a la raiz $p$
+        y tienen la característica  de que siempre encuentran una raíz o en el mejor de los casos una aproximación a $p$.
+      </li><br>
+      <li>Los <b>métodos abiertos</b> requieren unicamente de un sólo valor de inicio $p_{0}$  o bien de dos valores iniciales 
+        que no necesariamente encierran a la raíz $p$. Estos a veces no encuentran  la raíz pero cuando lo hacen por lo general 
+        lo encuentran mucho más rápido que los métodos abiertos. 
+      </li>
+    </ul>
+
+
+       </div>
+
+
+       <h1 class="title flexbox_"> Método de bisección de Bolzano </h1>   
+
+
+       <div class="nota-box"> <h2 class="number-title"> Método de bisección de Bolzano</h2>
+
+        <p>El método de bisección conocido también como de corte binario, de busqueda binaria, de partición,
+           de partición de intervalos, o de Bolzano. es un método cerrado que se basa en el teorema del
+           Valor Intermedio; encuentra la raíz $p$ de la ecuación $f(x)=0$ cuando se logra "encerrar" a 
+           la raiz en un intervalo cerrado $[x_{i},x_{f}]$ en el que se  cumple con $f(x_{i})f(x_{f})\not =0$       
+        </p>
+
+        <h2>El método de bisección sigue los siguientes pasos:</h2>
+        <p>Dada una función  continua $f(x)$:
+          <ol>
+            <li>Encontrar  valores iniciales $x_{i}$ y $x_{f}$ que cumplen con la condición:
+              $$f(x_{i}) f(x_{f}) < 0$$
+            </li><br>
+            <li>La primera aproximación $x_{m_{1}}$ a la raiz $p$ es:
+              $$x_{m_{1}}:= \displaystyle{\frac{x_{i} + x_{f}}{2}}$$
+            </li><br>
+            <li>Se evalua $f(x_{m_{1}})$ y se tienen tres posibles casos:<br>
+              <ul><br>
+                <li><b>Caso 1</b>. $f(x_{i})f(x_{m_{1}}) < 0$
+                  <p>En este caso $f(x_{i})$ y $f(x_{m_{1}})$ tienen signos opuestos por lo que la raiz se encuentra
+                    en el intervalo $[x_{i},x_{m_{1}}]$. Entonces se define 
+                    $$x_{f}:= x_{m_{1}}$$
+                    <!-- $$x_{\text{anterior}}:= x_{i}$$
+                    $$x_{\text{actual}}:= x_{m_{1}} $$-->
+
+                   </p>
+                </li><br>
+                <li><b>Caso 2</b>. $f(x_{i})f(x_{m_{1}}) > 0$
+                <p>En este caso $f(x_{i})$ y $f(x_{m_{1}})$ tienen signos iguales, por lo que $f(x_{m_{1}})$ y $f(x_{f})$ 
+                  tienen signos opuestos, de aquí que la raiz $p$ se encuentra en el intervalo $[x_{m_{1}},x_{f}]$,
+                entonces se define 
+                $$x_{i}:=x_{m_{1}} $$
+                <!-- $$x_{\text{anterior}}:= x_{f}$$
+                $$x_{\text{actual}}:= x_{m_{1}} $$
+                -->
+                </p>
+              </li><br>
+              <li><b>Caso 3.</b> $f(x_{i})f(x_{m_{1}}) = 0$
+              <p>En este caso se tiene que $f(x_{m_{1}})=0$ por lo que $x_{m_{1}}$ es una raiz de $f(x)$ y terminamos.</p>
+             </li><br>
+             </ul>
+            </p>
+           </li><br>
+           <li>Repetiremos el proceso hasta que 
+            $$ERP= \left|\displaystyle{\frac{x_{\text{actual}} - x_{\text{anterior}}}{x_{\text{actual}}}} \right|\times 100\% < \epsilon $$ </li>
+          <p> donde $\epsilon$ es un valor muy pequeño. Si no se satisface  la condición anterior y se  tiene cualquiera de los dos primeros casos, 
+            el proceso se repite con el nuevo intervalo $[x_{i},x_{f}]$. </p>
+        </li>
+      </ol> 
+       </div>
+  
+      
+       <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+          <p>Aproximar la raiz de $f(x)= e^{-x} - \log(x)$ hasta que $|ERP | < 1\%$ aplicando el método de bisección.</p>
+       </div>
+
+       <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+        <p>El proceso de bisección genera una sucesión de intervalos encajados, con sus respectivos puntos medios. La sucesión
+           de los extremos izquierdos de estos intervaloos es creciente y la sucesión de los extremos derechos es decreciente.
+        </p>
+
+       </div>
+       
+      <div class="nota-box" id="Teo:Convergencia_método_biseccion"> <h2 class="number-title"> Teorema</h2>
+     <p>Supongamos que $f\in C[a,b]$ y que $f(a)$ y $f(b)$ tienen signos distintos. 
+      Sea $\{x_n\}_{n\geq 1}$ la sucesión de puntos medios de los intervalos generados por el método de bisección.
+      Entonces existe un número $p \in [a,b]$ tal que $f(p)=0$ y, además para $n=1,2,3,\ldots $ se satisface
+     
+      $$ |p-x_{n}| \leq \frac{b-a}{2^{n}} $$
+
+      En particular,  la sucesión $\{x_{n}\}_{n\geq 1}$ converge a la raiz $r$ de $f$ en $[a,b]$, i.e. $r \in [a,b]$,  $f(r)=0$ y 
+
+      $$\lim_{n\to \infty} x_{n} = p$$
+    </p>
+    <p><b>Demostración.</b></p>
+      </div>
+ 
+
+      <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+        Por el  <a href="#Teo:Convergencia_método_biseccion"> Teorema 6.8 </a>  podemos concluir que la 
+        sucesión $\{ x_{n}\}_{n \geq 1}$ la sucesión de puntos medios de los intervalos generados por el método de bisección  
+        converge a $p$ con una rapidez $O\left(\displaystyle{\frac{1}{2^{n}}}\right)$.  
+      </div>
+
+      
+      <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>Hallar el número mínimo de iteraciones que se tienen que realizar en el  método de Bisección para  que
+        $\{x_{n}\}_{n \geq 1}$  como en el <a href="#Teo:Convergencia_método_biseccion">Teorema 6.8 </a> 
+         aproxime a $p$ con una tolerancia menor que $1\times 10^{-t}$. <!-- entonces 
+        $$n \geq \frac{ \mathrm{ln}(b-a) - \mathrm{ln}(1 \times 10^{-t})  }{\mathrm{ln}(2)}$$-->
+      </p>
+      <p><b>Solución.</b></p>
+      </div>
+
+      
+    <h1 class="title flexbox_"> Puntos fijos </h1>
+    
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+    <p>Sea $g$ una función continua en el intervalo $[a,b]$. Se dice que $g(x)$ tiene un <b>punto fijo</b>
+      $x_{0}$ en $[a,b]$ si 
+    $$g(x_{0})=x_{0}$$
+   </p>
+
+   <p>Geometricamente hablando, los puntos fijos de una función $g(x)$ son los puntos de intersección 
+    de la curva $y=g(x)$ con la recta $y=x$.
+  </p>
+
+  </div>
+
+  
+  <div class="nota-box"> <h2 class="number-title"> Ejemplos</h2>
+  <p>Hallar los puntos fijos de las siguientes funciones en los intervalos dados 
+    
+    <ol>
+      <li>$g(x):=x^{2}-2$ en el intervalo $[-2,3]$.  </li><br>
+      <li>$h(x):=x$ en el intervalo $[0,1]$. </li><br>
+      <li>$g(x):=x-\mathrm{sen}(\pi x)$ en el intervalo $[0,1]$.</li>
+    </ol>
+
+  </p>
+  <p><b>Solución.</b></p>
+  </div>
+
+
+  
+  
+    <div class="nota-box" id="Teo:existencia_unicidad_puntos_fijos"> <h2 class="number-title"> Teorema</h2>
+    <p>
+      <ol>
+        <li>Si $g:[a,b] \to [a,b] $ es una función continua  en $[a,b]$, entonces $g$ tiene un punto fijo en 
+          $[a,b]$. 
+        </li><br>
+        <li>Si además, para todo $x \in (a,b)$  existe  $g^{'}(x)$  y  se satisface que:
+
+          $$|g^{'}(x)| < 1 $$
+        
+          entonces $g$ tiene un único  punto fijo en $[a,b]$.
+        </li>
+      </ol>
+    </p>
+    
+    <p><b>Demostración.</b></p>
+    </div>
+
+    
+
+    <div class="nota-box"> <h2 class="number-title"> Lema</h2>
+      <p>Para $x \geq 0$, se satisface $\mathrm{Sen}(x) \leq x$
+      </p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Prueba que la función $g(x)= \mathrm{Cos}(x)$ tiene un único punto fijo en $[0,1]$
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>Determinar si la función $g$ definida como 
+        $$g(x):= \displaystyle{\frac{x^{2}-1}{3}}$$ 
+        tiene puntos fijos en el intervalo $[-1,1]$
+      </p>
+      
+      <p><b>Solución</b></p>
+      </div>
+      
+      <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+        <p>
+          En el intervalo $[3,4]$ la función $g(x):= \displaystyle{\frac{x^{2}-1}{3}}$ 
+          tiene un único punto fijo en $x_0=3$, pero $g(3) \not\in [3,4]$.
+        </p>
+        <p>Además, 
+          $$|g^{'}(4)|= \left| \frac{8}{3} \right| >1$$
+          En general, $|g^{'}(x)|\not \leq 1$ para todo $x \in [3,4]$. En resumen notemos que la 
+          función $g(x)$ tiene un único  punto fijo en el intervalo $[3,4]$. 
+          Sin embargo, no se cumplen las condiciones del 
+          <a href="Teo:existencia_unicidad_puntos_fijos"> Teorema 6.13</a>.
+          Por lo tanto, las condiciones del <a href="Teo:existencia_unicidad_puntos_fijos"> Teorema 6.13</a>
+           son suficientes para garantizar 
+          la existencia de puntos fijos, pero no son necesarias.  
+        </p>
+
+      </div>
+
+      <h1 class="title flexbox"> Método iterativo de punto fijo </h1>
+
+
+      <div class="nota-box"> <h2 class="number-title"> Método iterativo de punto fijo</h2>
+        <p>Para aproximar el punto fijo de una función continua $g(x)$ se toma un valor 
+          inicial $p_0$ y se genera una sucesión $\{p_{n} \}_{n=1}^{\infty}$ donde 
+          
+          $$p_{n} := g(p_{n-1}), \,\,\,\,\,\,\, \text{ para } \,\,\, n \geq 1 $$ 
+
+          Cuando la sucesión converge a un punto $p$ entonces la continuidad de $g(x)$ implica que:
+
+          $$p=\lim_{n \to \infty} p_{n} = \lim_{n\to \infty} g(p_{n-1})= g(\lim_{n \to \infty} p_{n-1})= g(p)$$
+
+          esto es, $p$ es un punto fijo de la función $g(x)$ o bien una solución de la ecuación $x=g(x)$. 
+          A esta técnica
+          se le  llama <b>método iterativo de punto fijo</b> o <b>iteración funcional de punto fijo</b>.
+        </p>
+      </div>
+<!--
+      <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+        <p>Prueba que la ecuación $x^{3}+ 4x^{2}-10=0$ tiene una raiz en $[1,2]$
+        </p>
+      </div>
+-->
+
+      <div class="nota-box" id="Teo:Convergencia_iteracion_funcional" > <h2 class="number-title"> Teorema </h2>
+        <p>
+            Sea $g(x) \in C[a,b] $ tal que $g(x) \colon [a,b] \to [a,b] $. Si $g^{'}(x)$ existe en $[a,b]$ y si existe 
+            una constante positiva $K < 1$ tal que 
+            $$|g^{'}(x)| \leq K\,\,\,\,\, \text{ para toda } x \in (a,b)$$
+            entonces para cualquier número $p_{0} \in [a,b]$, la sucesión definida por 
+            $$p_{n} := g(p_{n-1})\,\,\,\,\,\,\, \text{ para } \,\,\, n \geq 1 $$ 
+            converge al único punto fijo $p\in [a,b]$
+        </p>
+        <p><b>Demostración.</b></p>
+      </div>
+
+      <!--
+
+      <div class="nota-box"> <h2 class="number-title"> Nota</h2>
+        <p>Enseguida vamos a establecer un teorema que se suele usar para determinar si el proceso de iteración de punto fijo 
+           produce una sucesion convergente o divergente. 
+        </p>
+      </div>
+
+      <div class="nota-box"> <h2 class="number-title"> Teorema del punto fijo</h2>
+        <p>Supongamos que 
+          <ol>
+            <li>$g,g^{'} \in C[a,b]$,</li><br>
+            <li>$K$ una constante positiva </li><br>
+            <li>$p_{0} \in (a,b)$  </li><br>
+            <li>$g(x) \in [a,b]$ para todo $x \in [a,b]$</li><br>
+          </ol>
+          entonces hay un punto fijo $p$ de $g$ en $[a,b]$.
+        </p>
+
+    -->
+        
+
+
+      </div>
+
+
+      <div class="nota-box"> <h2 class="number-title"> Corolario </h2>
+        <p>
+          Si $g$ satisface las hipótesis del <a href="#Teo:Convergencia_iteracion_funcional">Teorema 6.19 </a>, 
+          entonces las siguientes desigualdades proporcionan cotas para el error involucrado al usar $p_n$ para
+          aproximar $p$  
+          <ol>
+          <li>$|p_{n} - p| \leq  K^{n} \max\{ p_{0} -a, b-p_{0} \}\,\,\,\, \text{ para toda } \,\,\, n \geq 1 $</li> <br>
+          <li>$|p_{n} - p| \leq \displaystyle{\frac{K^{n}}{1-K}} |p_{1} -  p_{0}|\,\,\,\, \text{ para toda } \,\,\, n \geq 1 $</li>
+          </ol>
+        </p>
+      </div>
+
+
+      
+<!--
+      <div class="nota-box"> <h2 class="number-title"> Corolario </h2>
+        <p>
+          Si $g$ satisface las hipótesis del <a href="#Teo:Convergencia_iteracion_funcional">Teorema 6.19 </a>, 
+          entonces 
+          $$|p_{n} - p| \leq \frac{K^{n}}{1-K} |p_{1} -  p_{0}|\,\,\,\, \text{ para toda } \,\,\, n \geq 1 $$ 
+          
+        </p>
+      </div>
+-->
+      
+      <div class="nota-box"> <h2 class="number-title"> Nota </h2>
+        <p>Del corolario anterior se tiene que entre más pequeño sea $K$, la sucesión generada 
+          encuentra más rápido el punto fijo $p$.  
+        </p>
+      </div>
+
+      
+
+    </body>

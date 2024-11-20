@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 14 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 14 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 15   </title>
+    
+  </head>
+  <body class="fondo-body" >
+    
+    <h1 class="number-title flexbox"> Semana 15</h1>   
+    
+    <h1 class="title flexbox"> Métodos iterativos</h1>    
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>En general los métodos iterativos no se utilizan  para resolver sistemas lineales de dimensión pequeña,
+        ya que el tiempo necesario para conseguir una solución con una exactitud satisfactoria sobrepasa 
+        el tiempo que requieren los métodos directos, como el método de  eliminación Gaussiana.
+      </p>
+
+      
+      <p>Por otro lado, la solución de sistemas lineales grandes ( por ejemplo $n \geq 50$), se vuelve costosa y difícil
+        en una computadora con los métodos de eliminación directos, ya que para ello se requiere de una memoria amplia;
+        además, como el número de operaciones que se debe ejecutar es muy grande, pueden producirse errores de redondeo
+        también muy grandes. En estas circunstancias, algunos métodos iterativos que generan una sucesión que se
+        aproxima a la solución, pueden ser una buena alternativa.
+      </p>
+
+      <!-- 
+      <p>Estos sistemas de un número muy grande de ecuaciones se presentan en la solución numérica de
+        ecuaciones diferenciales parciales, en la solución de los modelos resultantes en la simulación de columnas
+        de destilación, etc. En favor de estos sistemas, puede decirse que tienen matrices con pocos elementos
+        distintos de cero y que éstas poseen ciertas propiedades (simétricas, bandeadas, diagonal dominantes, en tre
+        otras), que permiten garantizar el éxito en la aplicación de los métodos que presentamos a continuación.
+      </p>
+      -->
+
+      <p>Un método iterativo para resolver un sistema de ecuaciones lineales $A\vec{x}= \vec{b}$
+        comienza con una aproximación inicial $\vec{x}^{(0)}$ a la solución $\vec{x}_{0}$ y genera una sucesión 
+        $\left\{\vec{x}^{(k)}\right\}_{k=0}^{\infty}$ que converge a $\vec{x}_{0}$. Los métodos iterativos
+        más sencillos y conocidos son una generalización del método de punto fijo.
+        Más precisamente, la idea básica
+        de esta clase de métodos es la de considerar la solución $\vec{x}_{0}$ del sistema lineal
+        $A\vec{x}= \vec{b}$ como un punto fijo de una transformación
+        $T\colon \mathbb{R}^{n} \to \mathbb{R}^{n}$
+        definida como:
+        $$T(\vec{x}):= H\vec{x} + \vec{c} $$  
+        donde $H \in \mathbb{M}_{n \times n}(\mathbb{R})$ es una matriz fija llamada <b>matriz de iteración</b> y $\vec{c}\in \mathbb{R}^{n}$ un vector fijo.
+        </p>
+
+      <p>Luego de elegir un vector inicial $\vec{x}^{(0)}$. La aplicación reiterada de esta transformación,
+        genera una sucesión  de vectores $\{\vec{x}^{(k)} \}_{k=0}^{\infty}$  en $\mathbb{R}^{n}$:
+        $$\vec{x}^{(k+1)}:= T\left(\vec{x}^{(k)}\right)=  H \vec{x}^{(k)} + \vec{c}, \,\,\,\,\,\, \forall k=1,2,\ldots$$
+        que bajo ciertas condiciones podemos garantizar que  converge a la solución $\vec{x}_{0}$ del sistema $A\vec{x}= \vec{b}$. 
+        En este caso se detiene el proceso cuando:
+        $$\|\vec{x}^{(k+1)} - \vec{x}^{(k)} \| < \epsilon$$
+        para un valor de $\epsilon >0$ lo suficientemente pequeño.
+      </p>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>Para cualquier matriz cuadrada $A\in \mathbb{M}(\mathbb{R})_{n \times n}$ se satisface
+        $$\rho(A)= \inf \{\|A\|\,  \colon\, \|\cdot \| \text{ es una norma matricial inducida definida sobre } \mathbb{M}(\mathbb{R})_{n \times n}\}$$
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Corolario</h2>
+      <p>Sea  $A \in \mathbb{M}_{n\times n}(\mathbb{R})$. Las siguientes proposiciones son equivalentes:
+        <ol>
+          <li>$\displaystyle{\lim_{n\to \infty} A^{n}}=0_{n\times n}$</li><br>
+          <li>$\displaystyle{\lim_{n\to \infty} \| A^{n} \|=0}, \text{ para alguna norma subordinada}$</li><br>
+          <li>$\rho(A)< 1$</li><br>
+        </ol>
+      </p>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Lema</h2>
+      <p>Si $D\in \mathbb{M}_{n\times n}(\mathbb{R})$ tal que $\rho(D) < 1$ para una determinada
+        norma matricial inducida por una  norma vectorial entonces $\mathrm{I}_{n \times n}-D$ es no singular.
+      </p>
+    </div>
+    
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+    <p>Sean $H$ una matriz cuadrada y $\vec{c}$ un vector tales que la ecuación $\vec{x} = H\vec{x}+c$
+      tiene una solución única $\vec{x}_{0}$. La sucesión $\{\vec{x}^{(k)} \}_{k=0}^{\infty}$ generada por
+      la transformación $T$ como:
+      $$\vec{x}^{(k+1)}:= T\left(\vec{x}^{(k)}\right)=  H \vec{x}^{(k)} + \vec{c}, \,\,\,\,\,\, \forall k=1,2,\ldots$$
+      con vector inicial $\vec{x}^{(0)}$, converge a $\vec{x}_{0}$ si y sólo si $\rho(H) < 1$.
+    </p>
+    <p><b>Demostración:</b></p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Corolario</h2>
+      <p>Si $\| H\| < 1$ para cualquier norma matricial inducida y  $\vec{c}\in \mathbb{R}^{n}$ fijo, entonces 
+      la sucesión $\{ \vec{x}^{(k)}\}$ definida por 
+      $$\vec{x}^{(k+1)} = H\vec{x}^{(k)} + \vec{c}$$
+      converge para cualquier $x^{(0)} \in \mathbb{R}^{(n)}$. Además, para cualquier vector $\vec{x} \in \mathbb{R}^{n}$
+      tal que 
+      $$\vec{x} = H\vec{x} + \vec{c}$$
+      se satisfacen:
+      <ul>
+        <!--
+        <li>$\|\vec{x} - \vec{x}^{(k)} \| \leq \| H\|^{k} \| \vec{x}^{(0)} - \vec{x} \|$</li><br>
+        <li>$\|\vec{x} - \vec{x}^{(k)} \| \leq \displaystyle{\frac{\|H\|^{k}}{1 - \| H\|} \| \vec{x}^{(1)} - \vec{x}^{(0)} \|}$</li><br>
+      -->      
+      </ul>
+
+
+
+
+     </p>
+    </div>
+
+    
+    
+    <div class="nota-box"> <h2 class="number-title"> Métodos iterativos clásicos</h2>
+      
+      <p>Existen muchas maneras de interpretar la solución de un sistema de ecuaciones lineales:
+        $$A\vec{x} = \vec{b}$$
+        como el punto fijo de una transformación $\vec{x} = H\vec{x}  + \vec{c}$.
+      </p>
+      <!--
+      <p>Consideremos una matriz $M \in \mathbb{M}_{n\times n}(\mathbb{R})$ invertible. Con ayuda de esta matriz construyamos la siguiente ecuación 
+        de punto fijo:
+        $$\vec{x}= \left(\mathrm{I}_{n \times n} -  M^{-1}A\right)\vec{x} +M^{-1}\vec{b} $$
+        en este caso $H:= \mathrm{I}_{n \times n} -  M^{-1}A $ y $\vec{c} := M^{-1}\vec{b} $
+      </p>
+
+
+
+
+      <p>Entonces de acuerdo con el teorema anterior, la dificultad radica en encontrar una matriz $M$ tal que:
+        $$\rho(\mathrm{I}_{n \times n} - M^{-1}A) < 1$$
+      </p>
+      -->
+
+      <p>Un par de métodos iterativos clásicos se obtienen si descomponemos la matriz  de coeficientes $A$
+        como:
+        $$A= \mathrm{D}- \mathrm{L} - \mathrm{U}$$
+        donde 
+        <ol>
+          <li> $$\mathrm{D}=(a_{ij}):=  \begin{pmatrix} 
+            a_{11} & 0 & 0& \cdots & 0  \\
+           0 & a_{22} &0& \cdots & 0 \\
+            0 & 0 & a_{33} &\cdots & 0  \\
+            \vdots & \vdots & \vdots&  \ddots & \vdots  \\
+            0 &0 & 0 & \cdots&a_{nn}  \\
+           \end{pmatrix}$$
+            <!--$\mathrm{D}$ es una matriz diagonal tal que 
+            $$d_{ii}:= a_{ii}, \,\,\,\,\, \forall i=1,\ldots ,n$$
+            -->
+          </li><br>
+          <li>$$\mathrm{U}=(u_{ij}):=\begin{pmatrix} 
+            -a_{11} & -a_{12} & -a_{13}  & \cdots & -a_{1n}  \\
+            0 & -a_{22} & -a_{23}       &\cdots & -a_{2n}  \\
+            0 &     0        & -a_{33} &\cdots & -a_{3n}  \\
+            \vdots & \vdots &  \vdots & \ddots & \vdots  \\
+            0 &     0      &   0        & \cdots & -a_{nn}  \\
+           \end{pmatrix}$$
+            <!--$\mathrm{L}$  es una matriz triangular inferior tal que
+          $$\ell_{ij}:= - -a_{i,j}, \,\,\,\,\, \forall i,j=1,\ldots ,n, i>j$$ -->
+          </li><br>
+          <li> $$\mathrm{L}=(\ell_{ij}):=\begin{pmatrix} 
+            -a_{11} & 0 & 0 &  \cdots & 0  \\
+            -a_{21} & -a_{22} &  0 &\cdots & 0  \\
+            -a_{31} & -a_{32} & -a_{33} & \cdots & 0  \\
+           
+             \vdots & \vdots &  \vdots &   \ddots & \vdots  \\
+            -a_{n1} & -a_{n2} &   -a_{n3}  &    \cdots & -a_{nn}  \\
+            \end{pmatrix}$$
+          <!-- $\mathrm{U}$  es una matriz triangular superior tal que
+            $$u_{ij}:= - -a_{i,j}, \,\,\,\,\, \forall i,j=1,\ldots ,n, i < j$$  
+          -->
+            </li><br>
+        </ol>
+      </p>
+
+      <p>
+        Entonces la ecuación $A\vec{x}= \vec{b}$ se transforma en:
+        $$(D - L - U )\vec{x} = \vec{b}$$
+        o bien 
+        $$D\vec{x} = (L + U )\vec{x} +  \vec{b}$$
+        Luego, si $D^{-1}$ existe, es decir si $a_{ii}\not= 0$ para todo $i=1,\ldots,n$, entonces 
+        se obtiene la ecuación de punto fijo:
+        $$\vec{x} = D^{-1}(L + U )\vec{x} + D^{-1}\vec{b}$$
+        De acuerdo al Teorema anterior $H:=D^{-1}(L + U )$ y $\vec{c}:= D^{-1}\vec{b} $
+      </p>
+    </div>
+
+    <h1 class="title flexbox"> Métodos de Jacobi y Gauss-Seidel</h1>     
+
+    
+
+    
+    <div class="nota-box" id="Metodo_Jacobi"> <h2 class="number-title"> Método de Jacobi </h2>
+      <p>De la ecuación
+        $$\vec{x} = D^{-1}(L + U )\vec{x} + D^{-1}\vec{b}$$
+        Despejando $x_{i}$ de la $i$-ésima ecuación se obtiene:
+        $$x_{i}= \displaystyle{ \frac{b_{i} - \displaystyle{\sum_{j\not=i} a_{ij} x_{j}} }{a_{ii}}}$$
+        Por lo tanto, 
+        $$x_{i}= \displaystyle{-\frac{1}{a_{ii}} \left( \displaystyle{\sum_{j\not=i} a_{ij} x_{j} } + b_{i} \right)}, \,\,\,\, \text{ para cada } i=1,\ldots,n $$
+        
+        
+        El método de Jacobi consiste en calcular el  $(k+1)$-ésima término de la sucesión 
+        $\{\vec{x}^{(k)}\}_{k=0}^{\infty}$
+        $$\vec{x}^{(k+1)} :=\left(x^{(k+1)}_{1}),  \ldots, x^{(k+1)}_{n}\right)^{t} $$
+        a partir de la $k$-ésima iteración: 
+        $$\vec{x}^{(k)} :=\left(x^{(k)}_{1}, \ldots, x^{(k)}_{n}\right)^{t} $$
+        De la siguiente manera: 
+        $$x^{(k+1)}_{i}= \displaystyle{-\frac{1}{a_{ii}} \left( \displaystyle{\sum_{j\not=i} a_{ij} x^{(k)}_{j} } + b_{i} \right)}, \,\,\,\, \text{ para cada } i=1,\ldots,n $$
+
+
+        
+        <!-- se obtiene cuando $M=\mathrm{D}-\mathrm{L}$. En este caso, la ecuación 
+        de punto fijo es:
+        $$\vec{x}^{(k+1)} = \left(\mathrm{D} - L \right)^{-1} U \vec{x}^{(k)} + \left(\mathrm{D} - L \right)^{-1}\vec{b}$$
+        -->
+        
+      </p>
+    </div>
+
+
+
+    <div class="nota-box" id="Metodo_Gauss_Seidel"> <h2 class="number-title"> Método de Gauss-Seidel  </h2>
+      <p> A diferencia del método de Jacobi se utilizan los valores más recientes del vector $\vec{x}^{(k+1)}$,
+        es decir aquellos que ya estan calculados, en lugar de los valores de la iteración anterior como 
+        en el método de Jacobi. Por esta razón, el método de Gauss-Seidel en general converge  o diverge 
+        más rápido que el método de Jacobi.     
+      </p>
+
+      <p>La fórmula de Gauss-Seidel se obtiene directamente de la fórmula de iteración de Jacobi, por ejemplo 
+        para obtener el $k+1$-ésimo término de la sucesión se separa la suma en dos partes: las componentes
+        que aún no han sido calculados se toman del $k$-ésimo término, mientras que las componentes que ya
+        estan calculados se les toma de la misma iteración $k+1$:
+        $$x^{(k+1)}_{i}= \displaystyle{-\frac{1}{a_{ii}} \left( \displaystyle{\sum_{j=1}^{i-1} a_{ij} x^{(k+1)}_{j} + \sum_{j=i+1}^{n} a_{ij} x^{(k)}_{j} } + b_{i} \right)}, \,\,\,\, \text{ para cada } i=1,\ldots,n $$
+
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>Si $A$ es estrictamente diagonal dominante, entonces para cualquier aproximación inicial $\vec{x}^{(0)}$ 
+        el método de Jacobi como el método de Gauss-Seidel generan sucesiones $\{x^{(k)}\}_{k=0}^{\infty}$  que 
+        convergen a la solución única del sistema $A\vec{x}=\vec{b}$. 
+      </p>
+
+
+
+    </body>

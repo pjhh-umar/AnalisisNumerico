@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 12 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 12 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li><a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 13   </title>
+    
+  </head>
+  <body class="fondo-body" >
+    
+    <h1 class="number-title flexbox"> Semana 13</h1>   
+    <h1 class="title flexbox"></h1>   
+
+    <h1 class="title flexbox">Métodos iterativos  para la resolución de sistemas de ecuaciones lineales </h1>    
+
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+    <p>Previamente hemos estudiado <b>métodos directos para resolver sistemas de ecuaciones lineales</b> 
+      con $n$ ecuaciones y $n$ incógnitas expresados  matricialmente como: 
+      $$A\vec{x} = \vec{b}$$
+      donde $A \in \mathbb{M}_{n \times n}(\mathbb{R})$ es la matriz de coeficientes del sistema, 
+      $\vec{b}$ es el vector columna $n$-dimensional de términos independientes del sistema y 
+      $\vec{x}$  al vector columna $n$-dimensional de valores a determinar (incognitas).
+      Estos métodos utilizan una serie finita de operaciones
+      aritméticas para determinar la solución exacta del sistema, sujeta únicamente
+      a errores de redondeo.
+    </p>
+    
+    <p>
+      Presentamos también las <b>técnicas de pivoteo</b> para reducir
+      al mínimo los efectos del error de redondeo y  probamos que realizar eliminación 
+      gaussiana sin intercambio de filas permite  factorizar la matriz A en $\mathrm{LU}$, 
+      donde $\mathrm{L}$ es una matriz triangular inferior con unos en la diagonal y  
+      $\mathrm{U}$ es una matriz triangular superior. A esta factorización  se 
+      le llama <b>factorización de Doolittle</b>. Sin embargo, cuando la matriz
+      $A$ es definida positiva, es posible presentar factorizacaiones más simples de  la matriz $A$.
+      Por ejemplo, la <b>factorización de Choleski</b> que tiene  la forma $A = \mathrm{L}\mathrm{L}^{t}$, 
+      donde $\mathrm{L}$ es una matriz triangular inferior. Las matrices definidas positivas también pueden
+      factorizarse en la forma $A = \mathrm{L}\mathrm{D}\mathrm{L}^{t}$ donde $\mathrm{L}$ es una matriz
+      triangular inferior con unos en la diagonal y $\mathrm{D}$ es una matriz diagonal.
+      Con estas factorizaciones, es posible simplificar la resolución del sistema de ecuaciones
+      $A\vec{x} = \vec{b}$.
+    </p>
+
+    <p>
+      Ahora,  presentaremos los  <b>métodos iterativos</b>para resolver sistemas de ecuaciones lineales</b> 
+      con $n$ ecuaciones y $n$. Para ello necesitamos contar primero con un medio que nos permita
+      medir la distancia entre los vectores columna $n$-dimensionales, para determinar si una sucesión
+      de vectores convergen a una solución del sistema.
+    </p>
+
+    <p>Denotemos con  $\mathbb{R}^n$ el conjunto de todos los vectores columna $n$-dimensionales con
+      cuyas componentes son números reales. </p>
+    </div>
+
+    <h1 class="title flexbox"> Normas vectoriales</h1>    
+
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Una <b>norma</b> en $\mathbb{R}^{n}$  es una función 
+        $\| \cdot \| \colon \mathbb{R}^{n} \to \mathbb{R}_{+}$ con las siguientes
+        propiedades: 
+        <ol>
+          <li>$\| \vec{x} \| \geq 0$ para todo $\vec{x} \in \mathbb{R}^{n}$ </li>
+          <li>$\| \vec{x} \| = 0$  si y sólo si  $\vec{x}=\vec{0}$</li>
+          <li>$\| \alpha \vec{x} \| = |\alpha| \|  x \| $ para todo $\vec{x} \in \mathbb{R}^{n}$ y para todo $\alpha \in \mathbb{R}$ </li>
+          <li>$\| \vec{x} + \vec{x} \| \leq \| \vec{x}  \| + \|  \vec{y} \|$ para cualesquiera 
+            $\vec{x}, \vec{y} \in \mathbb{R}^{n}$</li>
+        </ol>
+      </p>
+      <p>
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>
+        En $\mathbb{R}^{n}$, se definen las funciones $\| \cdot \|_{2}, \| \cdot \|_{\infty} \colon \mathbb{R}^{n} \to \mathbb{R}$
+        como:
+        $$\| \vec{x}\|_{2} :=\left( \displaystyle{\sum_{i=1}^{n} x_{i}^{2}}\right)^{\frac{1}{2}} $$
+        y 
+        $$\| \vec{x}\|_{\infty}:= \displaystyle{\max_{}\{|x_{i}| \colon 1\leq i \leq n \} }$$
+        donde $\vec{x}=( x_{1}, x_{2}, \ldots, x_{n})^{t} \in \mathbb{R}^{n}.$
+      </p>
+      
+    </div>
+    
+    <div class="nota-box"> <h2 class="number-title"> Proposición</h2>
+      <p>
+        La función $\| \cdot \|_{2}$ es una   norma  en  $\mathbb{R}^{n}$  y es conocida como la 
+        <b>norma Euclideana del vector $\vec{x}$.</b>
+      </p>
+      <p><b>Demostración:</b></p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Proposición</h2>
+      <p>
+        La función $\| \cdot \|_{\infty}$ es una   norma  en  $\mathbb{R}^{n}$  y es conocida como la
+        <b>norma infinita de $\vec{x}$.</b>
+      </p>
+      <p><b>Demostración:</b></p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Sean $\vec{x}:=(x_{1}, x_{2}, \ldots, x_{n})^{t}, \vec{y}:= (y_{1}, y_{2}, \ldots, y_{n})^{t} \in \mathbb{R}^{n}$ 
+      <b>las distancias $d_{2}$ y $d_{\infty}$ entre $\vec{x}$ y $\vec{y}$</b> se definen como:
+        $$d_{2}(\vec{x},\vec{y}):= \|\vec{x}-\vec{y} \|_{2} := \left( \sum_{i=1}^{n} (x_{i} - y_{i})^{2}\right)^{\frac{1}{2}}$$
+      
+      y 
+      $$d_{\infty}(\vec{x},\vec{y}):=\|\vec{x}-\vec{y} \|_{\infty} := \max\left\{ |x_{i} - y_{i}| \colon 1 \leq i \leq n \right \}$$
+
+      </p>
+    </div>
+    
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Una sucesión de vectores  $\{\vec{x}_{n} \}_{n=1}^{\infty}$ en $\mathbb{R}^{n}$ 
+        <b>converge a un  vector  $\vec{x} \in \mathbb{R}^{n}$ con respecto a una norma $\|\cdot \|$ </b> si para 
+        todo $\epsilon > 0$, existe $N(\epsilon) \in \mathbb{N}$ tal que
+        $$\|\vec{x}^{(k)} - \vec{x}\|< \epsilon,  \,\,\,\, \forall k \geq N(\epsilon)$$
+      </p>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>La sucesión de vectores $\{x^{(k)}\}_{k=1}^{\infty}$ en $\mathbb{R}^{n}$ converge a $\vec{x} \in \mathbb{R}^{n}$ respecto a la norma
+      $\| \cdot \|_{\infty}$  si y sólo si  para cada  $i =1,\ldots, n$ se satisface
+      $$\lim_{k \to \infty} x^{(k)}_{i} = x_{i} $$
+      donde $\vec{x}^{(k)}:= \left(x^{(k)}_{1}, x^{(k)}_{2}, \ldots, x^{(k)}_{n}\right)^{t}$ y
+      $\vec{x}:= (x_{1}, x_{2}, \ldots, x_{n})^{t}$ 
+      </p>
+      <p><b>Demostración:</b></p> 
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Para cada $k \in \mathbb{N}$, sea $\vec{x}^{(k)} \in \mathbb{R}^{4}$ dado por 
+        $$\vec{x}^{(k)} := \left(x_{1}^{(k)}, x_{2}^{(k)}, \ldots , x_{4}^{(k)}\right)^{t}:= \left(1,2+\frac{1}{k}, \frac{1}{k^{2}}, e^{-k} \mathrm{Sen}(k)\right)^{t}$$
+        entonces la sucesión de vectores $\{x^{(k)}\}_{k=1}^{\infty}$ en $\mathbb{R}^{4}$ en converge al vector $(1,2,0,0)^{t}$ 
+        respecto a la norma infinita.
+
+
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Dos normas $\| \cdot \|_{1} $ y $\| \cdot \|_{2} $ son <b>equivalentes</b> 
+        si existen números reales $\alpha$ y $\beta$ tales que 
+        $$\alpha \| \cdot\|_{1} \leq  \| \cdot\|_{2} \leq \beta \|\cdot \|_{1}  $$
+      </p>
+    </div>
+
+    
+
+
+
+    </body>

@@ -1,0 +1,540 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 8 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 8 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 9   </title>
+    
+  </head>
+
+
+
+  <body class="fondo-body" >
+    
+    
+    <h1 class="number-title flexbox"> Semana 9 </h1>   
+    <h1 class="title flexbox">Sistemas de ecuaciones lineales</h1>   
+
+    
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>
+       Resolveremos sistemas de ecuaciones lineales de la forma:
+       $$
+      \begin{matrix} 
+      a_{11}x_{1} & + &  a_{12}x_{2} & + & \cdots & + &  a_{1n}x_{n} & =& b_{1} \\
+      a_{21}x_{1} & + & a_{22}x_{2}  & + & \cdots & + &  a_{2n}x_{n} & =& b_{2} \\
+                  &\vdots&           &\vdots &  \ddots &  \vdots & &  \vdots&   \\
+      a_{n1}x_{1} & + & a_{n2}x_{2}  & + & \cdots & +  &  a_{nn}x_{n} &  = & b_{n}
+     \end{matrix}
+        $$
+        donde para cada $i,j = 1, \ldots , n$, $a_{i,j}, b_{j}$ son constantes dadas y $x_{i}$
+        son los valores a determinar.
+      </p>
+
+     <p>
+      Si denotamos por $A$ la matriz de coeficientes del sistema i.e.
+
+       $$A:= \begin{pmatrix} 
+       a_{11} & a_{12} & \cdots & a_{1n} \\
+       a_{21} & a_{22} & \cdots & a_{2n} \\
+       \vdots & \vdots & \ddots & \vdots \\
+       a_{n1} & a_{n2} & \cdots & a_{nn}
+      \end{pmatrix}$$
+
+      por $\vec{b}$ el vector de términos independientes del sistema i.e.
+
+      $$\vec{b}:= \begin{pmatrix} 
+      b_{1} \\
+      b_{2} \\
+      \vdots \\
+      b_{n}
+     \end{pmatrix}$$
+
+     y por $\vec{x}$ al vector de valores a determinar (incognitas):
+      
+     $$\vec{x}:=\begin{pmatrix} 
+     x_{1} \\
+     x_{2} \\
+     \vdots \\
+     x_{n}
+    \end{pmatrix}$$
+       
+      
+    Entonces el sistema de ecuaciones lineales presentado al inicio se denota por:
+    
+    $$A\vec{x}=\vec{b}.$$
+    </p>
+
+      <p>Luego, se define y denota la <b>matriz aumentada</b> del sistema por:
+
+        $$\tilde{A}=[A,b]:=\begin{pmatrix} 
+        a_{11} & a_{12} & \cdots & a_{1n} & \vdots & a_{1(n+1)} \\
+        a_{21} & a_{22} & \cdots & a_{2n} & \vdots & a_{2(n+1)} \\
+        \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+        a_{n1} & a_{n2} & \cdots & a_{nn} & \vdots & a_{n(n+1)} \\
+       \end{pmatrix}$$
+
+       donde $a_{i(n+1)}:= b_{i}$ para cada $i=1,\ldots,n$..<!-- Los elementos en la $(n+1)$-ésima columna son los valores de $\vec{b}$.-->
+      </p>  
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Técnicas directas y técnicas iterativas</h2>
+      <p>
+    <p>Para resolver el sistema $A\vec{x}=\vec{b}$ se pueden aplicar <b>técnicas directas</b> y <b>técnicas iterativas</b>. </p>
+
+    <ul>
+    <li>
+      Los <b>métodos directos</b> son técnicas que proporcionan una respuesta en un número fijo de pasos y sólo
+      esta sujetos a errores de redondeo.  
+    </li><br> 
+
+    <li>Los <b>métodos iterativos</b> generan una sucesión de aproximaciones (que puede tener límite)
+      a partir de un valor inicial. Si esta sucesión tiene límite, dicho límite es una solución al 
+    sistema $A\vec{x}=\vec{b}$. 
+    </li>
+    </ul>
+    
+    </div>
+
+    <h1 class="title flexbox"> Eliminación Gaussiana</h1>   
+
+    <div class="nota-box"> <h2 class="number-title"> Eliminación Gaussiana</h2>
+      <p>
+       En un sistema de ecuaciones lineales $A\vec{x}=\vec{b}$ se pueden utilizar las siguientes operaciones 
+       para simplificar el sistema:
+       <ol>
+        <li>La ecuación $E_{i}$ se puede multiplicar por una constante $\lambda \in \mathbb{R}$ 
+          distinta de cero y la ecuación resultante se emplea en vez de $E_{i}$. Esta operación 
+          se denota por 
+          $$(\lambda E_{i}) \longrightarrow (E_{i})$$
+        </li><br>
+        <li>La ecuación $E_{j}$ se puede multiplicar por una constante $\lambda \in \mathbb{R}$ 
+          distinta de cero y sumarse a la ecuación resultante se emplea en vez de $E_{i}$. Esta operación 
+          se denota por 
+          $$(E_{i} + \lambda E_{j}) \longrightarrow (E_{i})$$
+        </li><br>
+        <li>El orden de la ecuaciones $E_{i}$ y $E_{j}$ pueden intercambiars. Esta operación 
+          se denota por 
+          $$(E_{j}) \longleftrightarrow (E_{i})$$
+        </li><br>
+       </ol>
+
+       Aplicando esta serie de operaciones  podemos <b>transformar
+       un sistema de ecuaciones lineales en otro que sea más fácil de resolver y
+       con las mismas soluciones.
+      </b>
+      </p>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Eliminación Gaussiana hacia atras</h2>
+      <p>
+        El método de eliminación Gaussiana hacia atras consiste en transformar mediante
+        las operaciones definidas previamente el sistema original:
+
+        $$A\vec{x}=\vec{b}$$
+        
+        en un sistema lineal equivalente:
+        
+        $$U\vec{x}=\vec{y}$$
+
+        donde $U$ es una matriz triangular superior. La razon de lograr ésta transformación
+        del sistema es que el nuevo sistema es más simple y resolverlo sólo requiere un
+        proceso hacia atrás.
+      </p>
+
+      <p>
+        
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>Resuelve el siguiente sistema aplicando el método de eliminación Gaussiana hacia atras:
+        $$
+        \begin{matrix} 
+        x_{1}  & + &  x_{2}  & + &       & + &   x_{4} & =& 4 \\
+        2x_{1} & + &  x_{2}  & - & x_{3} & + &   x_{4} & =& 1 \\
+        3x_{1} & - &  x_{2}  & - & x_{3} & + &  2x_{4} & =& -3 \\
+        -x_{1} & + &  2x_{2} & + & 3x_{3}& - &   x_{4} & =& 4 \\
+       
+       \end{matrix}
+          $$
+
+      </p>
+      <p><b>Solución:</b></p>
+    </div>
+
+
+    <div class="nota-box" id="Metodo_Eliminacion_Gaussiana_Hacia_atras"> <h2 class="number-title"> Método de eliminación Gaussiana hacia atras</h2>
+      <p>
+        Enseguida presentamos el procedimiento general de eleminacón Gaussiana hacia atras aplicado al sistema:
+      
+      $$
+      \begin{matrix} 
+      \mathbf{E_{1}}: & a_{11}x_{1} & + &  a_{12}x_{2} & + & \cdots & + &  a_{1n}x_{n} & =& b_{1} \\
+      \mathbf{E_{2}}:  & a_{21}x_{1} & + & a_{22}x_{2}  & + & \cdots & + &  a_{2n}x_{n} & =& b_{2} \\
+    \vdots  &  &\vdots&           &\vdots &  \ddots &  \vdots & &  \vdots&   \\
+    \mathbf{E_{n}}:  & a_{n1}x_{1} & + & a_{n2}x_{2}  & + & \cdots & +  &  a_{nn}x_{n} &  = & b_{n}
+     \end{matrix}
+        $$
+        Sea $A$ la matriz de coeficientes del sistema y $\vec{b}$ el vector de terminos independientes 
+        del sistema. Denotemos a la matriz aumentada del sistema por $\tilde{A}^{(1)}:= \tilde{A}= [A,\vec{b}]$, esto es:
+
+        $$\tilde{A}^{(1)}= \left(a_{ij}^{(1)} \right)=\begin{pmatrix} 
+        a_{11} & a_{12} & \cdots & a_{1n} & \vdots & a_{1(n+1)} \\
+        a_{21} & a_{22} & \cdots & a_{2n} & \vdots & a_{2(n+1)} \\
+        \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+        a_{n1} & a_{n2} & \cdots & a_{nn} & \vdots & a_{n(n+1)} \\
+       \end{pmatrix}$$
+
+       De esta manera,  para cualesquiera  $i,j=1,\ldots, n$ se tiene que: 
+      $$a^{(1)}_{ij}:= a_{ij}$$
+      </p>
+
+      <p>Si $a^{(1)}_{11}\not =0$, para cada $i=2,3,4,\ldots, n$ realizamos las siguientes operaciones entre ecuaciones:
+      
+        $$\left(E_{i} - \displaystyle{\left(\frac{a^{(1)}_{i1}}{a^{(1)}_{11}}\right)E_{1}}\right) \longrightarrow (E_{i})$$
+      
+        observemos que estas operaciones tienen como efecto convertir en cero  el coeficiente de $x_{1}$ en cada una de las
+        ecuaciones  $E_{i}$ para $i=2,3,\ldots,n$ 
+        
+      </p>
+
+      <p>
+        En general, los coeficientes en las ecuaciones $E_{i}$ para $i=2,3,\ldots,n$  cambian, por lo que 
+        denotamos a la matriz  aumentada del sistema resultante como:
+
+       
+        $$\tilde{A}^{(2)}=\left( a_{ij}^{(2)} \right):=\begin{pmatrix} 
+        a^{(1)}_{11} & a^{(1)}_{12} & \cdots & a^{(1)}_{1n} & \vdots & a^{(1)}_{1(n+1)} \\
+        0 & a_{22}^{(2)} & \cdots & a_{2n}^{(2)} & \vdots & a_{2(n+1)}^{(2)} \\
+        \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+        0 & a_{n2}^{(2)} & \cdots & a_{nn}^{(2)} & \vdots & a_{n(n+1)}^{(2)} \\
+       \end{pmatrix}$$
+
+       Luego, si $a_{22}^{(2)}\not= 0 $ para cada $i=3,4\ldots,n $ realizamos  las siguientes 
+       operaciones entre ecuaciones:
+
+        $$\left(E_{i} - \displaystyle{\left(\frac{a_{i2}^{(2)}}{a_{22}^{(2)}}\right)E_{2}}\right) \longrightarrow (E_{i}).$$
+
+        Similarmente, observemos  el efecto de realizar estas operaciones: hacer cero el coeficiente de $x_{2}$ 
+        en cada uno de las ecuaciones  $E_{i}$ para $i=3,\ldots,n$, obteniendo 
+
+        
+        $$\tilde{A}^{(3)}=\left( a_{ij}^{(3)} \right):=\begin{pmatrix} 
+        a^{(1)}_{11} & a^{(1)}_{12} & a^{(1)}_{13} & a^{(1)}_{14} & \cdots & a^{(1)}_{1n} &   \vdots & a^{(1)}_{1(n+1)} \\
+        0 & a_{22}^{(2)} & a_{23}^{(2)}     &  a_{24}^{(2)} &\cdots & a_{2n}^{(2)} & \vdots & a_{2(n+1)}^{(2)} \\
+        0 &     0        & a_{33}^{(3)}     &  a_{34}^{(3)} &\cdots & a_{3n}^{(3)} & \vdots & a_{3(n+1)}^{(3)} \\
+        \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots &\vdots &\vdots \\
+        0 &     0      &  a_{n3}^{(3)} &  a_{n4}^{(3)}& \cdots & a_{nn}^{(3)} & \vdots & a_{n(n+1)}^{(3)} \\
+       \end{pmatrix}$$
+
+      
+      </p>
+
+      <p>
+        Continuando sucesivamente con este procedimiento para cada  $j=3,4,\ldots, n-1$:</p>
+        
+        <p>Si $a_{jj}^{(j)}\not = 0$, 
+        realizamos para cada $i=j+1, \ldots , n$ las operaciones entre ecuaciones:
+
+        $$\left(E_{i} - \displaystyle{\left(\frac{a_{ij}^{(j)}}{a_{jj}^{(j)}}\right)E_{j}}\right) \longrightarrow (E_{i})$$
+
+        con cada una de estas operaciones se transforma en cero el coeficiente de la variable $x_{j}$ para  cada ecuación  
+        debajo de la $j$-ésima ecuación para cada  $j=1,2,3,\ldots,n-1$.   
+      </p>
+
+
+        <p>
+          Por lo tanto, mediante el proceso de eliminación Gaussiana, se obtiene una sucesión de matrices aumentadas:
+          $$\tilde{A}^{(1)}= \tilde{A},\,  \tilde{A}^{(2)},\,  \ldots , \tilde{A}^{(n)}$$ 
+
+          Para  $k\in\{2,3,\ldots,n \}$ los elementos de la matriz $\tilde{A}^{(k)} = \left( a_{i,j}^{(k)}\right)$, 
+          estan definidos como:
+          $$
+          a_{ij}^{(k)} := \begin{cases}
+            a_{ij}^{(k-1)}& \text{ cuando } i=1,2,\ldots, k-1 \text{ y } j=1,2,\ldots, n+1\\
+            & \\
+            0 &  \text{ cuando } i=k,k+1\ldots, n \text{ y } j=1,2,\ldots, k-1\\
+            &\\
+            \displaystyle{  a_{ij}^{(k-1)}  - \frac{ a_{i(k-1)}^{(k-1)}  }{ a_{(k-1)(k-1)}^{(k-1)}}  a_{(k-1)j}^{(k-1)}  } & \text{ cuando } i=k,k+1\ldots, n \text{ y } j=k, k+1, \ldots, n+1\\
+            \end{cases}
+          $$
+          
+        </p>
+
+      <p>La matriz resultante tiene la forma:
+          
+        $$\overline{A} =\left( \overline{a}_{ij} \right):=\begin{pmatrix} 
+        \overline{a}_{11} & \overline{a}_{12} & \overline{a}_{13} & \overline{a}_{14} & \cdots & \overline{a}_{1n} &   \vdots & \overline{a}_{1(n+1)} \\
+        0 & \overline{a}_{22} & \overline{a}_{23}     &  \overline{a}_{24} &\cdots & \overline{a}_{2n} & \vdots & \overline{a}_{2(n+1)} \\
+        0 &     0        & \overline{a}_{33}     &  \overline{a}_{34} &\cdots & \overline{a}_{3n} & \vdots & \overline{a}_{3(n+1)} \\
+        \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots &\vdots &\vdots \\
+        0 &     0      &   0      &    0   & \cdots & \overline{a}_{nn} & \vdots & \overline{a}_{n(n+1)} \\
+       \end{pmatrix}$$
+      
+      donde salvo el primer renglon no se espera que los valores de $a_{ij}$ coincidan con los valores de la matriz aumentada 
+        original $\tilde{A}=\tilde{A^{1}}$.
+      </p>
+
+
+      <p> La matriz $\overline{A}$ representa el  sistema de ecuaciones lineales $U \vec{x}= \vec{y}$  donde 
+         
+         $$U:=\begin{pmatrix} 
+         \overline{a}_{11} & \overline{a}_{12} & \overline{a}_{13} & \overline{a}_{14} & \cdots & \overline{a}_{1n}  \\
+         0 & \overline{a}_{22} & \overline{a}_{23}     &  \overline{a}_{24} &\cdots & \overline{a}_{2n}  \\
+         0 &     0        & \overline{a}_{33}     &  \overline{a}_{34} &\cdots & \overline{a}_{3n}  \\
+         \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots  \\
+         0 &     0      &   0      &    0   & \cdots & \overline{a}_{nn}  \\
+        \end{pmatrix}$$
+
+         es una matriz triangular superior y 
+        
+         $$\vec{y}:=\begin{pmatrix} 
+         \overline{a}_{1(n+1)} \\
+         \overline{a}_{2(n+1)} \\
+         \vdots \\
+         \overline{a}_{n(n+1)}
+        \end{pmatrix}$$
+           
+        es el nuevo vector de términos independientes.
+      </p>
+        
+        <p>
+        El sistema $U \vec{x}= \vec{y}$ posee  el mismo conjunto de soluciones que el sistema original $A\tilde{x}=\tilde{b}$.
+        </p>
+
+
+        <p>Dado que el nuevo sistema de ecuaciones $U \vec{x}= \vec{y}$ es triangular:
+          
+        
+          $$
+          \begin{matrix} 
+           \overline{a}_{11}x_{1} & + &  \overline{a}_{12}x_{2} & + & \cdots & + &  \overline{a}_{1n}x_{n} & = & \overline{a}_{1(n+1)} \\
+           0 & + & \overline{a}_{22}x_{2}  & + & \cdots & + &  \overline{a}_{2n}x_{n} & =& \overline{a}_{2(n+1)} \\
+                       &\vdots&           &\vdots &  \ddots &  \vdots & &  \vdots&   \\
+           0 & + &   0    & + & \cdots & +  &  \overline{a}_{nn}x_{n} &  = & \overline{a}_{n(n+1)}
+         \end{matrix}
+            $$
+          
+            podemos realizar la  sustitución hacia  atras. Al resolver la $n$-ésima ecuacion para $x_{n}$
+            obtenemos:
+
+            $$x_{n}= \displaystyle{\frac{\overline{a}_{n(n+1)}}{\overline{a}_{nn}}}$$
+          
+            Luego, al resolver la $(n-1$-ésima ecuación para $x_{n-1}$  y al utilizar el valor de la incognita 
+            $x_{n}$ se tiene que:
+            $$x_{n-1} = \displaystyle{\frac{\overline{a}_{(n-1)(n+1)} - \overline{a}_{(n-1)n}x_{n}}{\overline{a}_{(n-1)(n-1)}}}$$ 
+          </p>
+
+          <p>Continuando sucesivamente con este proceso para cada $i=n-1, n-2, \ldots, 2,1$ se obtiene que:
+
+            $$x_{i} = \displaystyle{\frac{\overline{a}_{i(n+1)} - \overline{a}_{in}x_{n} - \overline{a}_{i(n-1)}x_{n-1} - \cdots - \overline{a}_{i(i+1)}x_{i+1}}{\overline{a}_{ii}} = \frac{\overline{a}_{i(n+1)} - \displaystyle{\sum_{j=i+1}^{n} \overline{a}_{ij} x_{j}}}{\overline{a}_{ii}} } $$ 
+
+
+          
+
+          </p>
+    </div>
+
+
+
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>
+        El procedimiento presentado en el método de eliminación Gaussiana tiene problemas si en algun 
+        momento uno los elementos $a_{11}^{(1)}, a_{22}^{(2)}, a_{33}^{(3)}, \ldots , a_{nn}^{(n)}$ 
+        es cero. 
+        
+        <ul>
+          <li>Si  para algún $k\in \{1,2,\ldots,n-1\}$,  $a_{kk}^{(k)}$ es cero,  entonces no
+             es posible realizar la operacion:
+              $$\left(E_{j} - \displaystyle{\left(\frac{a_{ik}^{(k)}}{a_{kk}^{(k)}}\right)E_{k}}\right) \longrightarrow (E_{j})$$
+              Y no podemos utilizar la $k$-ésima fila para eliminar los elementos de la columna 
+              $k$-ésima que estan por debajo de la diagonal principal. 
+              Sin embargo, en general  esto no implica que el sistema no tenga solución. 
+              Podemos intentar intercambiar la $k$-ésima fila con alguba fila posterior.      
+          </li><br>
+          <li>Si $a_{nn}^{(n)} = 0$, entonces, no es posible realizar la sustitución hacia atras y en este 
+            caso el sistema tiene infinitas soluciones.
+          </li>
+        </ul>
+      </p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>Resuelve el siguiente sistema aplicando el método de eliminación Gaussiana hacia atras:
+        $$
+        \begin{matrix} 
+          x_{1}  & - &  x_{2}  & + & 2x_{3}& - &   x_{4} & =& -8 \\
+          2x_{1} & - &  2x_{2} & + & 3x_{3} & - &  3 x_{4} & =& -20 \\
+          x_{1} & + &  x_{2}  & + & x_{3} &  &  & =& -2 \\
+          x_{1} & - & x_{2} & + & 4x_{3}& + &   3x_{4} & =& 4 \\
+       
+       \end{matrix}
+        $$
+
+      </p>
+      <p><b>Solución:</b></p>
+    </div>
+
+   <!--
+    <h1 class="title flexbox"> Estrategias de Pivoteo</h1>   
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Las estrategias de pivoteo
+      </p>
+    </div>
+    -->
+    
+    <h1 class="title flexbox"> Eliminación Gaussiana con pivoteo parcial</h1>     
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Resolver el siguiente sistema de ecuaciones lineales aplicando eliminación Gaussiana hacia atras:
+        $$
+        \begin{matrix} 
+          \mu x_{1}  & + &  x_{2} & = & 1 \\
+              x_{1}  & + &  x_{2} & = & 2  \\
+       \end{matrix}
+        $$
+        
+       donde $\mu= 1\times 10^{-12}$
+      </p>
+      <p><b>Solución:</b></p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>
+        Cuando se aplica eliminación Gaussiana hacia atras, en ocasiones 
+        se obtienen resultados que no son soluciones del sistema en cuestión, esto se debe a 
+        la aritmética de precisión  finita con efectuan las operaciones las calculadoras y/o computadoras.      
+      </p>
+
+      <p>
+        Este es el caso del ejemplo anterior, ya que el elemento pivote $a_{11}$ es muy pequeño 
+        por lo que el cociente $\displaystyle{\frac{1}{a_{11}}}$ resulta ser muy grande y al utilizarlo 
+        aplicando redondeo a una cifra determinada se obtiene un error que en ocasiones afecta a la solución 
+        final.
+      </p>
+    </div>
+
+      <div class="nota-box" id="Metodo_Eliminacion_Gaussiana_Pivoteo_Parcial"> <h2 class="number-title"> Eliminación Gaussiana con pivoteo parcial</h2>
+        <p>
+      <p>
+        Para evitar este tipo de resultados cuando se aplica el método de Gauss hacia atras 
+        para cada $i=1,2,\ldots, n$ se elige como pivote $a_{ii}$ al elemento 
+        $a_{pi}$ con $i\leq p\leq n$  tal que
+        $$|a_{pi}|= \max_{i \leq j \leq n } |a_{ji}|$$
+      </p>
+
+      <p>
+        Si $p\not= i$, entonces  se intercambian la fila $i$ con la fila $p$, esto es se realiza la operación:
+        $$(E_{i}) \longleftrightarrow (E_{p})$$ 
+      </p>
+
+      <p>A este método se le llama <b>eliminación Gaussiana con pivoteo parcial </b></p>
+    </div>
+
+ 
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Resolver el siguiente sistema de ecuaciones lineales aplicando el método de 
+        eliminación Gaussiana con pivoteo parcial:
+           
+        $$
+        \begin{matrix} 
+              &   & 2 x_{2}  & + & x_{3}   & + &  2 x_{4} & = & 5 \\
+        x_{1} &  &            & + & x_{3}   & + &  3 x_{4} & =  & 5 \\
+      3 x_{1} & + &  x_{2}    & - & 4 x_{3}   & + &  2 x_{4}   & =& 2 \\
+      -4x_{1} &   &           & + & x_{3}   & + &    x_{4} & =& -2 \\
+       \end{matrix}
+        $$
+       </p>
+       <p><b>Solución:</b></p>
+    </div>
+
+    
+
+    </body>

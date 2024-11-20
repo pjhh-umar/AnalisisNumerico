@@ -1,0 +1,781 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 3 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 3 cardCounter ;
+        }
+      </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 4   </title>
+    
+  </head>
+
+
+
+  <body class="fondo-body" >
+
+    <h1 class="number-title flexbox"> Semana 4 </h1>   
+    
+
+    <h1 class="title flexbox"> Desbordamiento y subdesbordamiento</h1>
+
+    
+    <div class="nota-box"><h2 class="number-title"> Definición </h2>
+      <p>
+          La representación: 
+
+          $$0 00000000000 0000000000000000000000000000000000000000000000000000$$
+          
+        <p>es reservada  para el cero. De esta manera, todo  número real cuya  una magnitud sea menor que
+
+        $$2^{-1022}$$
+
+        resultan en un <b>subdesbordamiento</b>,  y en general se configuran como $\mathrm{cero}$.
+        Mientras que los números superiores a  
+        
+        $$2^{1023}\cdot  (2 - 2^{-52})$$
+        
+        resultan en un <b>desbordamiento</b> y, comúnmente, causan que los cálculos se detengan
+        (a menos que el programa haya sido programado para detectado  estas representaciones).
+  
+        
+      </p>
+    </div>
+
+    
+    <div class="nota-box"><h2 class="number-title"> Observación </h2>
+      <p>
+        Se tienen dos representaciones para el número cero:</p>
+        <ol>
+          <li>Un cero positivo cuando $s=0$, $c=0$, y $f=0$, y </li>
+          <li>Un cero negativo cuando $s=-1$, $c=0$, y $f=0$</li>
+        </ol>
+      </p>
+    </div>
+
+    <div class="nota-box"><h2 class="number-title"> Observación </h2>
+
+      <p>El <b>número positivo más grande</b> que se puede representar en  formato binario IEEE 754-2008 
+        de $64$ bits es: 
+        $$0 11111111110 1111111111111111111111111111111111111111111111111111$$
+        
+        es decir se obtiene cuando $s = 0$, $c= \displaystyle{\sum_{n=1}^{10} 2^{n}}= (2^{11}-1)-1= 2046$ y 
+        $
+        f = \displaystyle{\sum_{n=1}^{52}2^{-n}}
+          = \frac{1-\left(\displaystyle{\frac{1}{2}}\right)^{53}}{1-\displaystyle{\frac{1}{2}}} - 1
+          = 2\cdot (1 - 2^{-53}) -1
+          =  1 - 2^{-52}
+        $ 
+       <br>      
+          
+        el cual  es equivalente al número decimal:
+
+      $$ 2^{2046-1023} \cdot (1+(1 - 2^{-52}))= 2^{1023} \cdot  (2 - 2^{-52})   \approx 0.17977 \times 10^{309}.$$
+      </p>
+      </div>
+
+      <div class="nota-box"><h2 class="number-title"> Observación </h2>
+       <p> 
+       La representación: 
+
+          $$0 11111111111 1111111111111111111111111111111111111111111111111111$$
+
+      <p>es reservada  para $+\mathrm{INF}$</p>
+       </p>
+
+      </div>
+      <div class="nota-box"><h2 class="number-title"> Observación </h2>
+       <p>El <b>número positivo más pequeño</b> que se puede representar en el formato binario el
+         IEEE 754-2008 de $64$  bits es: 
+        $$0 00000000001 0000000000000000000000000000000000000000000000000000$$
+        
+        es decir se obtiene cuando: $s = 0$, $c = 1$, y $f = 0$ y es equivalente a:
+        
+        $$(-1)^{0} \cdot 2^{1-1023} \cdot (1 + 0)= 2^{-1022} \approx 0.22251\times  10^{-307}$$
+      </p>   
+  
+    </div>
+      
+    
+
+    <h1 class="title flexbox">  Problemas bien planteados</h1>  
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>  
+     
+        <p>Un problema bien planteado es aquel que se puede <b><em>resolver razonablemente bien</em></b> con la ayuda de una computadora. Sobre todo cuando la solución 
+        no se puede hallar de forma analítica. Para ello se necesita: 
+        </p>
+
+        <ol>
+          <li>Desarrollar métodos (algoritmos) para resolver ecuaciones numericamente.</li><br>
+          <li>Implementarlos  en algún software numérico.</li><br>
+          <li>Ejecutar el software (o programa) en una computadora para simular numericamente un proceso.</li><br>
+          <li>Representar los resultados obtenidos en alguna forma comprensible tales como visualizaciones 
+            gráficas.
+          </li><br>
+          <li>Interpretar y visualizar los resultados obtenidos (compararlos  con la realidad), repetir
+             parte del proceso númerico  o todo el proceso si es necesario.
+          </li><br>
+        </ol>
+
+      </div>
+
+      <div class="nota-box"> <h2 class="number-title"> Definición</h2>  
+     
+        <p>Un problema matemático se dice <b>bien planteado</b>
+          (en el <b>sentido de Hadamard</b>) si <em>existe una solución</em> del problema,
+          es <em>única</em>  y <em>depende continuamente de los datos</em> del problema.
+         </p>
+ 
+         <p>
+           Un problema matemático se dice <b>mal planteado</b> si no esta bien planteado.
+         </p>
+      </div>
+
+
+
+  
+
+    <h1 class="title flexbox"> Discretización de un problema matemático</h1>
+
+    <div class="nota-box"><h2 class="number-title"> Introducción</h2>
+
+    <p>Para que un problema matemático se pueda resolver  con la ayuda de una computadora a traves de métodos 
+      númericos es necesario transformarlo a su vez en un problema computacional. El proceso de transformación
+      es llamado <b>discretización del problema matemático</b>. 
+    </p>
+
+    <p>Para discretizar un problema matemático se sigue algunas de las siguientes estratégias:</p>
+
+    <p>
+      <ol>
+        <li>Reemplazar espacios de dimensión infinita con espacios de dimensión finita.</li><br>
+        <li>Reemplazar procesos infinitos con procesos finitos (por ejemplo una integral 
+          o una serie infinita con una suma finita)
+        </li><br>
+        <li>Reemplazar ecuaciones diferenciales (ordinarias o parciales) con ecuaciones algebráicas.</li><br>
+        <li>Reemplazar problemas no lineales en problemas problemas lineales.</li><br>
+        <li>Reemplazar problemas de orden alto en sistemas de orden bajo.</li><br>
+        <li>Reemplazar funciones complicadas en funciones  simples (como polinomios) </li><br>
+        <li>Reemplazar matrices generales con matrices que tiene formas simples (como triángulares)</li><br>
+      </ol>
+    </p>
+    </div>
+
+
+
+  
+    
+    <h1 class="title flexbox">  Fuentes de aproximación </h1>
+
+    <div class="nota-box"><h2 class="number-title"> Introducción</h2>
+      <p>Se distinguen al menos 5 fuentes de aproximación que pueden generar errores que afectan los resultados de 
+        problema científico. 
+      </p>
+    <ol>
+      <li><b>De modelación:</b> Durante el proceso de modelación es posible que se omitan o
+         simplifiquen algunas consideraciones importantes del problema de estudio.
+        (e.g. fricción, viscosidad, resistencia del aire, entre otros).</li><br>
+
+    <li><b>De mediciones empiricas:</b> Ocurre cuando hay necesidad de obtener datos en el 
+      laboratorio o en el campo experimental, pues todos los instrumentos de medición hasta
+      ahora inventados son de <b>precisión finita</b> (errorres sistematicos). La exactitud de los
+      datos puede estar fuertemente limitado por el tamaño de la muestra o las lecturas pueden
+      estar sujetas a ruidos aleatorios (errores accidentales). Por ejemplo cuando hay necesidad
+      de medir la temperatura durante una determinada hora del día, durante un mes o cuando
+      hay necesidad de obtener el censo de población de un país.
+   </li><br>
+
+    <li><b>De calculos previos:</b> Ocurre cuando los datos de entrada del problema fueron 
+      resultados de cálculos aritméticos previos cuyos resultados fueron únicamente aproximados.
+    </li><br>
+
+    <li><b>Error de discretización (aproximación o redondeo):</b> Ocurre cuando el problema matemático es transformado en un problema computacional, 
+      pues algunas características del modelo matemático pueden ser omitidas o simplificadas. 
+
+      <HR>
+        <p><b><u>Ejemplos:</u></b>
+          <ol>
+        <li>Cuando $\displaystyle{\sum_{k=0}^{\infty}} a_{n}$ es reemplazado por la suma finita
+        $\displaystyle{\sum_{k=0}^{N}} a_{n}$</li>
+         <li>o cuando $\displaystyle{\int_{a}^{b}} f(x) dx$
+        es reemplazado por una suma finita de la forma $\displaystyle{\sum_{n=1}^{N}} w_{n} f(x_{n})$
+      </li>
+      </ol>
+        </p>
+      </li>
+
+      <HR><br>
+
+      <li><b>Error de redondeo:</b> Ocurre al realizar una infinidad de operaciones aritméticas (manualmente con una calculadora 
+        o computadora) para resolver problemas computacionales pues de nuevo todos los instrumentos 
+        de calculo hasta ahora invetnados son de precision finita, por lo que 
+        tiene que aproximar los resultados de las operaciones aritmeticas realizadas.
+      </li><br>
+    </ol>
+
+    <HR>
+      <p><b><u>Definición</u></b>
+      El estudio del efecto que producen las aproximaciones sobre los resultados de un problema cientifico  
+      o matematico se le llama <b>análisis de error</b>
+    </p>
+    
+
+
+    
+    <HR>
+      <p><b><u>Observaciones:</u></b>
+        <ol>
+          <li>Los primeros tres tipos de fuentes de aproximación ocurren entre el problema científico y su planteaiento matemático, por lo general
+            los errores que generan, quedan fuera del control del análisis númerico.</li>
+          <li>Las últimas dos fuentes de aproximación ocurren entre el problema matemático y la solución del problema computacional. 
+            Los errores que se generan en estas dos últimas fuentes pueden ser controlados por el analisis númerico.</li>
+        </ol>
+    
+    </div>
+    
+
+    <h1 class="title flexbox"> Análisis  del  error    </h1>
+
+    <div class="nota-box">
+      <p>Recordemos que todo número real puede ser representado en la <b>forma decimal normalizada</b>.
+        $$x=0.d_{1}d_{2}\cdots d_{k-1} d_{k}d_{k+1} \cdots \times 10^{n}$$
+        
+        La <b><em>representación de punto flotante</em></b> de $x$ denotada por $fl(x)$ se obtiene al cortar en $K$ cifras decimales el número $x$.
+        Hay dos formas de realizar esto:
+        <ol>
+          <li>Un primer método, llamado <b>Truncamiento</b> el cual consiste en eliminar los digitos $d_{K}d_{K+1} \cdots$ para 
+          obtener 
+        $$fl(y)=0.d_{1}d_{2}\cdots d_{K-1} d_{K}  \times 10^{n}$$ </li>
+        <li>El otro método, llamado de <b>Redondeo</b>, que consiste en sumar $5 \times 10^{n-(K+1)}$ 
+        al número $y$ y luego truncar el resultado en los primeros $K$ digitos para obtener un número de la forma:
+        $$fl(y)=0.\delta_{1}\delta_{2}\cdots \delta_{K-1} \delta_{K}  \times 10^{n}$$ 
+      </li>
+       </ol>
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>
+       En el método de redondeo, el efecto del redondeo es el siguiente:  si $d_{K+1}\geq 5$, se suma $1$ a $d_{K}$. Para obtener $fl(y)$  (redondeo hacia arriba). 
+        Si $d_{K+1}< 5$ se trunca el número en los primeros $K$ digitos (redondea hacia abajo).
+        </p>
+        <p>Observemos que los digitos pueden cambiar si el redondeo es hacia arriba.</p>
+      
+      
+    </div>
+
+
+        <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+        <p>El número $\pi$ tiene una representación infinita de la forma:
+          $$3.14159265\ldots$$
+          Hallar la forma  decimal de punto flotante de $\pi$ con truncamiento y por redondeo a $5$ dígitos.
+      <p><b>Solución:</b>
+        Su forma decimal normalizada es:
+        $$0.314159265\ldots\times 10^{1}$$
+        <ol>
+          <li>La forma decimal de punto flotante de $\pi$ con truncamiento a cinco cifras es: 
+            $$ fl(y)= 0.31415 \times 10^{1}$$
+          </li>
+          <li>Para obtener la forma punto flotante por redondeo, se observa que $n=1, K=5$, por lo que $n-(k+1)=-5$
+            por lo tanto:
+            $$(0.314159365\ldots \times 10^{1})+ (5\times 10^{-5})=(0.314159265\ldots \times 10^{1}) + (0.000005\times 10^1)$$
+            La forma de punto flotante de $\pi$ con cinco cifras  decimales aplicando redondeo es: 
+            $$fl(\pi)=0.31416\times 10^{1}= 3.1416$$
+            O bien al observar que la sexta cifra decimal de $\pi$ es $9$, la forma de punto flotante de $\pi$ usando redondeo 
+            a cinco cifras es:
+            $$fl(y)=3.1416$$
+          </li>
+        </ol>
+        </p>
+        </p>
+        </div>
+
+        <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+         <p>
+          El error que resulta al sustituir un número por su forma de punto flotante se
+          llama <b>error de redondeo</b> (sin importar si se determina por truncamiento o redondeo) y se define como
+          la diferencia entre el valor aproximado y el valor verdadero. 
+        </p>
+        
+        <p>Como los errores siempre se consideran positivos, se tiene la siguiente definición:</p>
+        </div>
+
+        <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+        <p>Si $p^{\ast}$ es una aproximación al valor verdadero $p$. Se define y denota el 
+          <b>error absoluto</b> de $p^{\ast}$ con respecto a $p$ como:
+          $$EA=|p-p^{\ast}|$$
+        </p>
+        
+        <p>Geometricamente, el error absoluto nos proporciona la cercania entre $p^{\ast}$ y $p$.</p>
+        </div>
+
+        <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+        <p>Una desventaja en la definición de error absoluto es que no toma en consideración la magnitud del valor que se estima, 
+          por ejemplo un error de $1$ cm es mucho más significativo si se esta midiendo el grosor de una tuerca que la longitud de 
+          un puente.</p>
+
+          <p>
+          Una manera de tomar en cuenta las magnitudes de las cantidades que se estan trabajando consiste en normalizar el 
+          error respecto al valor verdadero, con lo que se tiene otro tipo de error llamado <em>error relativo (ER)</em>.
+          </p>
+        </div>
+
+
+        <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+          
+            <p> El <b>error relativo</b> de una aproximación $p^{\ast}$ al valor verdadero $p$
+              es 
+              $$ER=\frac{|p-p^{\ast}|}{|p|}$$
+              <p>Otro tipo de error que tambien es importante es el <b>error relativo porcentual</b> dado por 
+            $$ERP=ER \times 100\%$$
+              </p>
+            </p>
+            
+         
+      </p> 
+    </div>
+
+    <div class="nota-box" id="Ejemplo:Errores_1"> <h2 class="number-title" > Ejemplo </h2>
+      <p>En los siguientes ejercicios obtener  en cada caso el <b>error absoluto</b>, el  <b>error relativo</b> 
+        y el <b>error porcentual</b></p>
+      <ol>
+        <li> Sea $p=0.10\times 10^{2}$ el valor real y  $p^{\ast}=0.08 \times 10^{2}$. Entonces,
+          <p><b>Solución:</b>
+            <p>
+              <ol>
+              <li>$EA= $</li><br>
+              <li>$ER= $</li><br>
+              <li>$ERP= $</li><br>
+              </ol>
+            </p>
+          </p>
+    </li>
+    <li>Sea  $q=0.24\times 10^{-4}$ y el valor aproximado es $q^{\ast}= 0.12\times 10^{-4}$. Entonces,       
+      <p><b>Solución:</b> 
+        <p>
+          <ol>
+            <li>$EA= $</li><br>
+            <li>$ER= $</li><br>
+            <li>$ERP= $</li><br>
+          </ol>
+        </p>
+      </p>
+
+    </li>
+
+
+      </ol></div>
+
+         
+<div class="nota-box"> <h2 class="number-title"> Observación </h2>
+  <p>Al no tomar en cuenta las cantidades con las que se esta 
+    trabajando se puede pensar que el error absoluto es muy pequeño 
+    y tomar el valor aproximado $p^{\ast}$ como muy buena aproximación. Este es el caso 
+    del <a href="S4.html#Ejemplo:Errores_1">Ejemplo 4.7-(2)</a>, al calcular el error relativo
+    tenemos que 
+    
+    $$ER=$$
+
+    lo que nos dice que el valor aproximado es tan solo la mitad del valor verdadero
+    y por lo tanto no es una buena aproximación. Además  observemos que el  error relativo porcentual es:
+    
+    $$ERP=$$
+   </p>
+<!-- 
+   <p>Por lo general, interesa el error absoluto y no el relativo;
+     pero cuando el valor exacto de una cantidad es muy pequeño o muy grande,
+    los errores relativos son más  significativos.
+    </p>
+-->
+
+  </div>
+
+
+
+    <div class="nota-box" id="Ejemplo:Errores_2"> <h2 class="number-title"> Ejemplo </h2>
+      <p> Encontrar el error absoluto y el error relativo en los siguientes casos:
+        <li>Sean $x=3.141592$  y $x^{\ast}= 3.14$. Entonces,
+          <p><ol>
+            <li>$EA= $</li><br>
+            <li>$ER= $</li><br>
+            <li>$ERP= $</li><br>
+          </ol>
+          </p>
+        </li>
+    
+        <li>Sean $y=1\,000\,000$ y $y^{\ast}= 999\, 996$. Entonces,
+          <p><ol>
+            <li>$EA= $</li><br>
+            <li>$ER= $</li><br>
+            <li>$ERP= $</li><br>
+          </ol>
+          </p>
+         </li>
+    
+        <li>Sea $z=0.000012$ y $z^{\ast}= 0.000009$. Entonces,
+          <p><ol>
+            <li>$EA= $</li><br>
+            <li>$ER= $</li><br>
+            <li>$ERP= $</li><br>
+          </ol>
+          </p>
+         </li>
+        </ol>
+      </p>
+    </div> 
+
+      
+<div class="nota-box"> <h2 class="number-title"> Observación </h2>
+  <p> 
+    <ol>
+      <li>En el primer caso no hay mucha diferencia entre el error absoluto y el error relativo,
+     cualquiera de los se puede usarse para determinar la precisión de $x^{\ast}$.  
+    </li><br>
+    <li>En el segundo caso el valor de $y$ es del orden de $10^{6}$, el error absoluto es más grande 
+      y el error relativo es pequeño. En este caso, $y^{\ast}$ sería considerada como una 
+    buena aproximación a $y$.  </li><br>
+    <li>En el tercer caso, $z$ es del orden de magnitud de $10^{-6}$  y el error absoluto 
+      es el menor de los tres casos. Sin embargo, el error relativo es el mayor; en términos
+      de porcentaje, es de un $25\%$, por lo que $z^{\ast}$ es considerada como una mala aproximación 
+      a $z$. 
+     </li><br>
+    </ol>
+  </p>
+
+
+  <ul>
+  <li><b>Observemos que conforme $|p|$ se aleja de $1$ (creciendo o decreciendo), el error relativo ER
+     se va siendo un indicador de la precisión de la aproximación mejor que el error absoluto EA. </b>
+    </li><br>
+
+
+  <li><b>El error absoluto no es más que la distancia entre el valor exacto y el valor aproximado, mientras 
+    que el error relativo mide el error entendido como una proporción del valor exacto. 
+  </b></li><br>
+</ul>
+  </div>
+
+          
+    <div class="nota-box"> <h2 class="number-title"> Definición </h2>
+    <p>Se dice que el número <b>$p^{\ast}$ es una aproximación a  $p$ con $d$ cifras decimales  significativas
+      </b> si $d$ es el mayor entero no negativo para el cual se satisface 
+
+      $$\displaystyle{\frac{|p-p^{\ast}|}{|p|}} < 5 \times 10^{-d}$$
+
+    </p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo </h2>
+    <p>Sea $p=10$, encontrar un intervalo para que un valor $p^{\ast}$ aproxime a $2$ cifras significativas.</p>
+
+    <p><b>Solución:</b></p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo </h2>
+      <p> Determinar el número de cifras significativas de cada una de las siguientes aproximaciones 
+        del <a href="S4.html#Ejemplo:Errores_2">Ejemplo 4.9</a>
+      </p>
+    </div>
+
+    <!--
+
+    <h1 class="number-title flexbox"> Orden de aproximación $O(h^{n})$ </h1>   
+
+
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+    <p>
+  Esta claro que las sucesiones $\left \{\displaystyle{\frac{1}{n^{2}}}\right\}_{n=1}^{\infty}$ y
+  $\left \{\displaystyle{\frac{1}{n}} \right\}_{n=1}^{\infty}$  son ambas sucesiones convergentes  y 
+  convergen a cero, sin embargo, notemos que la primera sucesión converge a cero más 
+  rapidamente que la segunda.
+    </p>
+    </div>
+
+
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>Se dice que una función <b>$f(h)$ es de orden $g(h)$ cuando $h \to 0$</b>, lo que se denota 
+        por $f(h)=O(g(h))$ (se le llama <b>notación O mayuscula de Landau</b>), si existen 
+        constantes $C$ y $c$ tales que:
+        $$|f(h)| \leq C|g(h)| \text{ siempre que } |h|< c $$
+      </p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Consideremos las funciones $f(x)= x^{3} + 2x^{2} $ y $g(x)=x^{2}$. Entonces $f(x)=O(g(x))$
+      </p>
+      <p><b>Solución:</b></p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>
+        Se satisfacen las siguientes proposiciones:
+        <p>
+          <ol>
+            <li>Si $f_{1}(h) = O(g(h))$ y $f_{2}(h)=O(g(h))$, entonces $f_{1}(h) + f_{2}(h) = O(g(h))$</li>   <br>         
+            <li> Si $f_{1}(h) = O(g_{1}(h))$ y $f_{2}(h)=O(g_{2}(h))$, entonces $f_{1}(h) + f_{2}(h) = O(\max\{g_{1}(h), g_{2}(h)\})$</li>   <br>     
+            <li>Si $f(h) = O(g(h))$ y $k>0$ es una constante positiva, entonces  $kf(h) = O(g(h))$</li><br>
+            <li> Si $f_{1}(h) = O(g_{1}(h))$ y $f_{2}(h)=O(g_{2}(h))$, entonces $f_{1}(h) \cdot f_{2}(h) = O(g_{1}(h) \cdot g_{2}(h))$</li>   <br>     
+          </ol></p>
+      </p>
+      <p><b>Demostración:</b></p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>El teorema anterior se puede resumir de la siguiente manera:
+
+        <ul><li>$O(g(h)) + O(g(h))= O(g(h)) $</li><br>
+        <li>$O(g_{1}(h)) + O(g_{2}(h))= O(\max\{g_{1},g_{2}\})$</li><br>
+        <li>$k\cdot O(g(h)) = O(g(h))$, para todo constante positiva $k$</li><br>
+        <li>$O(g_{1}(h)) \cdot O(g_{2}(h))= O(g_{1}\cdot g_{2})$</li><br>
+      </ul>
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>
+        La notación $O(\cdot)$ (que también se usa para límites en el infinito) proporciona 
+        una forma muy útil  para describir  la velocidad de crecimiento (o decrecimiento) de funciones 
+        en términos de la velocidad de crecimiento (decrecimiento) de funciones elementales bien conocidas 
+        ($x^{n},x^{\frac{1}{n}}, a^{x}, \text{log}_{a},$ etc.)
+      </p>
+    -->
+
+    <!-- <p>La velocidad de convergencia de sucesiones puede definirse de forma similar:</p>-->
+    <!--
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+    <p>Sean $\{x_{n}\}_{n=1}^{\infty}$ y $\{y_{n}\}_{n=1}^{\infty}$ dos sucesiones. Se dice que la sucesión 
+      $\{x_{n}\}_{n=1}^{\infty}$ es de orden $\{y_{n}\}_{n=1}^{\infty}$, lo que denotamos por $x_{n} =O(y_{n})$, 
+      si existen constantes $C$ y $N$ tales que 
+
+      $$|x_{n}| \leq C |y_{n}| \text{ siempre que } n \geq N$$
+    
+    </p>
+
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Consideremos las sucesiones $\left \{\displaystyle{\frac{n^{2}-1}{n^{3}}}\right\}_{n=1}^{\infty}$ y 
+        $\left \{\displaystyle{\frac{1}{n}}\right\}_{n=1}^{\infty}$. Entonces 
+        $\displaystyle{\frac{n^{2}-1}{n^{3}}}=O\left(\displaystyle{\frac{1}{n}}\right)$
+      </p>
+      <p><b>Solución:</b></p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Nota </h2>
+      <p>
+        Con frecuencia nos encontramos con una función $f(h)$ se aproxima mediante 
+        otra función $p(h)$ y sabemos que una cota del error cometido es $M|h^{n}|$. Esto
+        nos condce a la siguiente definición.
+      </p>
+    </div>
+
+
+    <div class="nota-box" id="Def:aprox_O_funciones"> <h2 class="number-title"> Definición</h2>
+      <p>
+        Supongamos que una función $p(x)$ aproxima a otra función $f(h)$ y que existen una constante 
+        real $M>0$ y un número natural  $n$ tales que: 
+        $$\displaystyle{\frac{|f(h) - p(h)|}{|h^{n}|}} \leq M \text{ para } h \text{ suficientemente pequeño }$$
+        Entonces  se dice que $p(h)$ aproxima a $f(h)$ con orden de aproximación $O(h^{n})$ 
+        lo que se escribe como:
+      
+        $$f(h)= p(h) + O(h^{n})$$
+      </p>
+
+      <p><b>De esta manera $p(h) + O(h^{n})$ denota el conjunto de funciones que tienen el crecimiento de $p(x)$ más 
+        una parte cuyo crecimiento se limita al de $h^{n}$.</b></p>
+    </div>
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+    <p>
+      Escribiendo la relación $\displaystyle{\frac{|f(h) - p(h)|}{|h^{n}|}} \leq M$  como $|f(h) - p(h)| \leq M |h^{n}|$,  
+      vemos que $O(h^{n})$ ocupa el lugar de la cota de error $M|h^{n}|$. Además, se sigue que $f(h)= p(h) + O(h^{n})$
+      es equivalente a $f(h)- p(h) = O(h^{n})$
+    </p><br>
+
+   
+    </div>
+    
+    
+    <div class="nota-box"> <h2 class="number-title"> Nota</h2>
+      <p>
+    <p> El siguiente resultado  muestra como podemos aplicar esta definicion a combinaciones simples de funciones:
+    </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> RETO</h2>
+      <p>
+        Supongamos que $f(h) = p(h) + O(h^{n})$, $g(h)= q(h) + O(h^{m})$ y 
+        sea $r=min\{ m,n\}$. Entonces 
+        <p>
+          <ol>
+            <li>$f(h) + g(h) = p(h) + q(h) + O(h^{r})$</li>   <br>         
+            <li>$f(h) \cdot  g(h) = p(h) \cdot  q(h) + O(h^{r})$</li><br>
+            <li>$\displaystyle{\frac{f(h)}{g(h)}} =\displaystyle{\frac{p(h)}{q(h)}} + O(h^{r}), \text{ siempre que } g(h)\not= 0 \text{ y que } q(h)\not= 0$</li>            
+          </ol></p>
+      </p>
+      <p><b>Demostración:</b> Se deja de ejercicio al lector.</p>
+    </div>
+
+    
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>
+       Consideremos el caso en el que $p(x)$ es la $n$-ésima aproximación por polinomios de Taylor 
+       de $f(x)$; entonces el resto de la fórmula de Taylor se denota  simplemente por $O(h^{n+1})$
+       y sustituye a todos los términos omitidos, que son el que contiene la potencia $h^{n+1}$ y los de 
+       grado superior. El resto de la fórmula de Taylor converge a cero con la misma rapidez que $h^{n+1}$ converge 
+       a cero cuando $h\to 0$, tal y como lo expresa la siguiente relación:
+
+       $$O(h^{n+1})\approx M \cdot h^{n+1} \approx \displaystyle{\frac{f^{n+1}(c)}{(n+1)!}} \cdot h^{n+1}$$
+      
+       válida para $h$ suficientemente pequeño. En otras palabras, el término $O(h^{n+1})$ sustituye 
+       a la cantidad $M \cdot h^{n+1}$, donde $M$ es constante o se "comporta como una constante." 
+      </p>
+      </div>
+
+      <div class="nota-box"> <h2 class="number-title"> Teorema de Taylor</h2>
+
+        <p>
+          Supongamos que $f \in C^{n+1}[a,b]$. Si $x_{0}, x= x_{0} + h \in [a,b]$, entonces 
+          $$f(x_{0} + h)= \sum_{k=0}^{n} \displaystyle{\frac{f^{k}(x_{0})}{k!}} h^{k} + O(h^{n+1}) $$
+        </p>
+      </div>
+
+      <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Por el Teorema de Taylor sabemos que: 
+      <ul>
+        <li>$e^{h}=1 + h + \displaystyle{\frac{h^{2}}{2!}} + \displaystyle{\frac{h^{3}}{3!}} + O(h^{4})$ y </li>
+        <li>$Cos(h)= 2 - \displaystyle{\frac{h^{2}}{2!}} + \displaystyle{\frac{h^{4}}{4!}} + O(h^{6})$</li>
+      </ul>
+      </p>
+      <p>Determinar el orden de aproximación de la aproximación para la suma y el producto.</p>
+      <p><b>Solución:</b></p>
+      </div>
+
+      <h1 class="number-title flexbox"> El orden de aproximación de una sucesión</h1>   
+
+
+      <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+        <p>
+          El orden de las aproximaciones númericas se suelen conseguir calculando
+          una sucesión de aproximaciones que se acerquen más y más a la respuesta deseada. 
+          La definicón de orden de aproximación de una sucesión es analoga a la dada 
+          para funciones en la <a href="#Def:aprox_O_funciones"> Definición 1.10</a>  
+        </p>
+      </div>
+
+      
+      <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+        <p>
+          Supoongamos que $\lim_{n\to \infty} x_{n}=x$ y que $\{r_{n}\}_{n=1}^{\infty}$ 
+          es unaa sucesión tal que $\lim_{n\to \infty} r_{n}=0$. Se dice que $\{x_{n}\}_{n=1}^{\infty}$
+          converge   a $x$ con orden de aproximación $O(r_{n})$ si existe una constante $K>0$ tal que 
+          
+          $$\displaystyle{\frac{|x_{n} - x|}{|r^{n}|}} \leq K \text{  para } n \text{ lo suficientemente grande}$$ 
+          
+          esto se denota por $x_{n}=x+ O(r_{n})$ o bien $x_{n} \to x$ con orden de aproximación $O(r_{n})$
+        </p>
+      </div>
+
+      <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+        <p>
+          Sea $x_{n}= \displaystyle{\frac{\cos(n)}{n^2}}$ y $r_{n}= \displaystyle{\frac{1}{n^{2}}}$. Entonces 
+          $\lim_{n\to \infty} x_{n}=0$ con orden de aproximación $O(\frac{1}{n^{2}})$ 
+        </p>
+      </div>
+      -->
+
+
+    
+     
+
+
+
+    </body>

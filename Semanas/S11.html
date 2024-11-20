@@ -1,0 +1,564 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 10 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 10 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 11   </title>
+    
+  </head>
+  <body class="fondo-body" >
+    
+    <h1 class="number-title flexbox"> Semana 11</h1>   
+    <h1 class="title flexbox"></h1>   
+
+
+    
+    <h1 class="title flexbox">Método de Doolittle y método de Crout </h1>    
+
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>
+      El primer paso en el proceso de eliminación Gaussiana consiste 
+      en realizar, para cada $i=1, \ldots ,n$ las operaciones:
+
+      $$ (E_{i} + m_{i1} E_{1}) \longrightarrow E_{i}$$
+      
+      donde $$m_{i1}:= \frac{-a^{(1)}_{i1}}{a^{(1)}_{11}}$$
+      <b>Estas  operaciones transforman el sistema en uno en el  que 
+      todas las entradas en la primera  columna por debajo de la diagonal 
+      son cero. </b>
+      </p>
+
+      <p>Alternativamente, el efecto de realizar estas operaciones 
+        se logra simultaneamente al multiplicar (por la derecha) la 
+        matriz original $A^{(1)}:= A$ por la matriz $M^{(1)}$ definida como sigue:
+        $$M^{(1)}:= \left(M^{(1)}_{i,j}\right)=
+        \begin{pmatrix} 
+        1      &  0     &   0     & \cdots & 0       \\
+        m_{21} & 1 &   0     & \cdots & 0  \\
+        m_{31} & 0 &   1     & \cdots & 0  \\
+        \vdots & \vdots & \vdots &\ddots & \vdots  \\
+        m_{n1} & 0 & 0 &\cdots & 1  \\
+        \end{pmatrix}
+        $$
+        donde $$m_{i1}:= \frac{-a^{(1)}_{i1}}{a^{(1)}_{11}}, \text{ para cada } i=2,3,\ldots,n$$
+      </p>
+
+      <p>Esto es, realizar cada una de las operaciones $ (E_{i} + m_{i1} E_{1}) \longrightarrow E_{i}$ se logra realizando la siguiente multiplicación de matrices:
+         $ M^{(1)}A^{(1)}$. A la matriz $M^{(1)}$ se le llama <b>primera matriz de transformación Gaussiana</b>.
+      </p>
+
+      <p>En efecto, 
+        \begin{align*} 
+        A^{(2)}:= M^{(1)} A^{(1)} &= \begin{pmatrix} 
+        1      &  0     & 0  & \cdots & 0       \\
+        m_{21} & 1 & 0  & \cdots & 0  \\
+        m_{31} & 0 &  1  & \cdots & 0  \\
+        \vdots & \vdots & \vdots &  \ddots & \vdots  \\
+        m_{n1} & 0 & 0 & \cdots & 1  \\
+       \end{pmatrix} \begin{pmatrix} 
+       a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & \cdots & a_{1n}^{(1)}  \\
+       a_{21}^{(1)} & a_{22}^{(1)} & a_{23}^{(1)} & \cdots & a_{2n}^{(1)}  \\
+       a_{31}^{(1)} & a_{32}^{(1)} & a_{33}^{(1)} &\cdots & a_{3n}^{(1)}  \\
+       \vdots & \vdots & \vdots &  \ddots & \vdots  \\
+       a_{n1}^{(1)} & a_{n2}^{(1)} & a_{n3}^{(1)} & \cdots & a_{nn}^{(1)}  \\
+      \end{pmatrix}\\
+      &\\
+      &=  \begin{pmatrix} 
+      a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & \cdots & a_{1n}^{(1)}  \\
+      m_{21}a_{11}^{(1)} + a_{21}^{(1)} & a_{22}^{(2)} & a_{23}^{(2)} & \cdots & a_{2n}^{(2)}  \\
+      m_{31}a_{11}^{(1)}  + a_{31}^{(1)} & a_{32}^{(2)} & a_{33}^{(2)} &\cdots & a_{3n}^{(2)}  \\
+      \vdots & \vdots & \vdots &  \ddots & \vdots  \\
+      m_{n1}a_{11}^{(1)} + a_{n1}^{(1)} & a_{n2}^{(2)} &  a_{n3}^{(2)} & \cdots & a_{nn}^{(2)} 
+      
+     \end{pmatrix}\\
+     &\\
+     &=  \begin{pmatrix} 
+     a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & \cdots & a_{1n}^{(1)}  \\
+     0 & a_{22}^{(2)} & a_{23}^{(2)} & \cdots & a_{2n}^{(2)}  \\
+     0 & a_{32}^{(2)} & a_{33}^{(2)} &\cdots & a_{3n}^{(2)}  \\
+     \vdots & \vdots & \vdots &  \ddots & \vdots  \\
+    0 & a_{n2}^{(2)} &  a_{n3}^{(2)} & \cdots & a_{nn}^{(2)} 
+     
+    \end{pmatrix}
+      \end{align*}
+      </p>
+
+      <p>Denotamos la matriz resultante por: $A^{(2)}$ y el vector resultante del producto de $M^{(1)}$ con 
+        $\vec{b}^{(1)}:=\vec{b}$ por $\vec{b}^{(2)}$. Esto es, 
+        
+        $$A^{(2)}\vec{x}= \left(M^{(1)} A^{(1)}\right) \vec{x}= M^{(1)} \left( A^{(1)} \vec{x}\right)= M^{(1)}  \vec{b}= \vec{b}^{(2)} $$
+
+
+        Obteniendo de esta manera el sistema $A^{(2)}\vec{x}= \vec{b}^{(2)}$.
+      
+      </p>
+
+      <p>De manera similar,  construimos la matriz $M^{(2)}$:
+        $$M^{(2)}:= \left(M^{(1)}_{i,j}\right)= \begin{pmatrix} 
+        1      &  0     &   0     & 0     &\cdots & 0       \\
+        0 & 1 &   0     & 0     & \cdots & 0  \\
+        0 & m_{32} &   1     & 0     & \cdots & 0  \\
+        0 & m_{42} &   0    & 1     &\cdots & 0  \\
+        \vdots & \vdots & \vdots & \vdots &\ddots & \vdots  \\
+        0 & m_{n2} & 0 & 0 & \cdots & 1  \\
+       \end{pmatrix}$$
+       donde $$m_{i2}:= \frac{-a^{(2)}_{i2}}{a^{(2)}_{22}}, \text{ para cada } i=3,4\ldots,n$$
+       Esta es la <b>segunda matriz de transformación gaussiana</b>. 
+      </p>
+
+      <p>Observemos que el producto de $A^{(2)}$ con la matriz $M^{(2)}$  tiene ceros 
+        por debajo de la diagonal en  las primeras dos columnas: En efecto, 
+        \begin{align*} 
+        A^{(3)}:= M^{(2)} A^{(2)} &= \begin{pmatrix} 
+        1      &  0     &   0     & 0     &\cdots & 0       \\
+        0 & 1 &   0     & 0     & \cdots & 0  \\
+        0 & m_{32} &   1     & 0     & \cdots & 0  \\
+        0 & m_{42} &   0    & 1     &\cdots & 0  \\
+        \vdots & \vdots & \vdots & \vdots &\ddots & \vdots  \\
+        0 & m_{n2} & 0 & 0 & \cdots & 1  \\
+       \end{pmatrix} \begin{pmatrix} 
+       a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & \cdots & a_{1n}^{(1)}  \\
+       0 & a_{22}^{(2)} & a_{23}^{(2)} & \cdots & a_{2n}^{(2)}  \\
+       0 & a_{32}^{(2)} & a_{33}^{(2)} &\cdots & a_{3n}^{(2)}  \\
+       \vdots & \vdots & \vdots &  \ddots & \vdots  \\
+       0 & a_{n2}^{(2)} & a_{n2}^{(1)} & \cdots & a_{nn}^{(2)}  \\
+      \end{pmatrix}\\
+      &\\
+      &=  \begin{pmatrix} 
+      a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & \cdots & a_{1n}^{(1)}  \\
+      0 & a_{22}^{(2)} & a_{23}^{(2)} & \cdots & a_{2n}^{(2)}  \\
+      0& m_{32}a_{22}^{(2)}  + a_{32}^{(2)}  & a_{33}^{(3)} &\cdots & a_{3n}^{(3)}  \\
+      \vdots & \vdots & \vdots &  \ddots & \vdots  \\
+      0 & m_{n3}a_{22}^{(2)} + a_{n2}^{(2)}&  a_{n3}^{(3)} & \cdots & a_{nn}^{(3)} 
+      
+     \end{pmatrix}\\
+     &\\
+     &=  \begin{pmatrix} 
+     a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & \cdots & a_{1n}^{(1)}  \\
+     0 & a_{22}^{(2)} & a_{23}^{(2)} & \cdots & a_{2n}^{(2)}  \\
+     0 & 0 & a_{33}^{(3)} &\cdots & a_{3n}^{(3)}  \\
+     \vdots & \vdots & \vdots &  \ddots & \vdots  \\
+     0 & 0 &  a_{n3}^{(3)} & \cdots & a_{nn}^{(3)} 
+     
+    \end{pmatrix}
+      \end{align*}
+
+      </p>
+
+
+      <p>Denotamos por $A^{(3)}$ el producto  $M^{(2)} A^{(2)}$ y por $\vec{b}^{(3)}$ el producto  
+        $M^{(2)} \vec{b}^{(2)}$, de esta manera, se tiene que:
+        \begin{align*}
+        A^{(3)} \vec{x}  &= \left(M^{(2)} A^{(2)}\right) \vec{x}\\
+        &=  \left(M^{(2)}\left[M^{(1)}A^{(1)}\right] \right) \vec{x} \\
+        &=  \left(M^{(2)}M^{(1)} \right)\left[ A^{(1)}\vec{x}\right] \\
+        &=  \left(M^{(2)}M^{(1)} \right)\vec{b}^{(1)} \\
+        &=  M^{(2)} \left(M^{(1)}\vec{b}^{(1)} \right)\\
+        &=  M^{(2)} \vec{b}^{(2)} \\
+        &=  \vec{b}^{(3)} \\
+       \end{align*} </p>
+
+       <p>Obteniendo el sistema: $ A^{(3)} \vec{x}= \vec{b}^{(3)} $.</p>
+
+
+       <p> En general, para $k \in \{1,\ldots, n-1 \}$ con el sistema $ A^{(k)} \vec{x}= \vec{b}^{(k)}$ ya formado, 
+        multiplicamos por la <b>$k$-ésima matriz de transformación gaussiana</b>:
+      \begin{align*} 
+      M^{(k)} &=  \left(M_{ij}^{(k)} \right)\\
+      &\\
+      &:= \begin{pmatrix} 
+      1 & 0 & 0 &  \cdots  \cdots \cdots &&0 & & \cdots  \cdots \cdots & 0    \\
+      0 & 1 & 0 &  \cdots \cdots \cdots &  &0 & &\cdots  \cdots \cdots & 0\\
+      0 & 0 & 1 &  \cdots \cdots \cdots &  &0 &  &\cdots  \cdots \cdots & 0\\
+      0 & 0 & 0 &  \ddots  && 0 & & \cdots   \cdots \cdots& 0 \\
+      \vdots &  \vdots & \vdots & \vdots& &\vdots & & \vdots& \vdots  \\
+      0 & 0 & 0  & \cdots \cdots \cdots & & 1 & &\cdots \cdots \cdots  & 0\\
+      0 & 0 & 0  & \cdots \cdots \cdots && m_{(k+1)k} & &\cdots \cdots \cdots  & 0\\
+      \vdots &   \vdots & \vdots & \vdots& & \vdots  & & \ddots & \vdots\\
+      0 &       0      &   0 & \cdots\cdots \cdots && m_{nk}&   & \cdots \cdots \cdots & 1 \\
+      
+     \end{pmatrix}\\
+     &\\
+     &=\begin{cases}
+      1, & \text{ si } i=j \\
+      m_{ik}:= \displaystyle{\frac{-a_{jk}^{(k)}}{a_{kk}^{(k)}}}, & \text{para  } i=k+1,k+2, \ldots ,n \\
+      0, & \text{ d.o.f. } 
+    \end{cases} 
+    \end{align*}
+    
+  
+  </p>
+
+      <p>Obtenemos
+        \begin{align*}
+        A^{(k+1)} \vec{x} &= \left( M^{(k)} A^{k} \right) \vec{x} \\
+        &= \left( M^{(k)} \left[M^{(k-1)} A^{k-1}  \right] \right) \vec{x}\\
+        &= \left( M^{(k)} \left[M^{(k-1)} \left\{M^{(k-1} A^{k-2}  \right\} \right] \right) \vec{x}\\
+        &\hspace{0.35cm}\vdots\\
+        &=  M^{(k)} M^{(k-1)} \cdots  M^{(4)}  M^{(3)}M^{(2)} M^{(1)} A \vec{x}\\
+        &=  M^{(k)} M^{(k-1)} \cdots M^{(4)}  M^{(3)}M^{(2)}  M^{(1)} \left( A \vec{x}\right)\\
+        &=  M^{(k)} M^{(k-1)} \cdots  M^{(4)}  M^{(3)}M^{(2)}  \left( M^{(1)} \vec{b}^{(1)}\right)\\
+        &=  M^{(k)} M^{(k-1)} \cdots  M^{(4)}  M^{(3)}  M^{(2)}   \vec{b}^{(2)} \\
+        &=  M^{(k)} M^{(k-1)} \cdots  M^{(4)}  M^{(3)} \left( M^{(2)}   \vec{b}^{(2)} \right)\\
+        &=  M^{(k)} M^{(k-1)} \cdots  M^{(4)}  M^{(3)}   \vec{b}^{(3)} \\
+        &\hspace{0.35cm}\vdots\\
+        &=  M^{(k)}  \vec{b}^{k}
+        \end{align*}
+      </p>
+
+      
+      <p>El proceso termina con la formación del sistema: $A^{(n)} \vec{x} = \vec{b}^{(n)}$ donde la matriz 
+        $A^{(n)}$ resultante es la siguiente  matriz triangular superior:
+        \begin{align*} 
+        A^{(n)} &= M^{(n-1)} M^{(n-2)}  \cdots M^{(2)} M^{(1)} A \\ 
+        &= \begin{pmatrix} 
+        a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & a_{14}^{(1)} & \cdots & a_{1n}^{(1)}  \\
+        0 & a_{22}^{(2)} & a_{23}^{(2)}     &  a_{24}^{(2)} &\cdots & a_{2n}^{(2)}  \\
+        0 &     0        & a_{33}^{(3)}     &  a_{34}^{(3)} &\cdots & a_{3n}^{(3)}  \\
+        0 &     0        & 0     &  a_{44}^{(4)} &\cdots & a_{4n}^{(4)}  \\
+        \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots  \\
+        0 &     0      &   0      &    0   & \cdots & a_{nn}^{(n)}  \\
+       \end{pmatrix}
+       \end{align*}
+      </p>
+
+     
+   
+      <p><b>Esta  matriz  resulta ser la matriz triangular superior  presente en la
+         factorización $\mathrm{LU}$  de la matriz $A$.</b> Por lo tanto definimos:
+         \begin{align*} 
+         U &:= M^{(n-1)} M^{(n-2)}  \cdots M^{(2)} M^{(1)} A \\ 
+         &= \begin{pmatrix} 
+         a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & a_{14}^{(1)} & \cdots & a_{1n}^{(1)}  \\
+         0 & a_{22}^{(2)} & a_{23}^{(2)}     &  a_{24}^{(2)} &\cdots & a_{2n}^{(2)}  \\
+         0 &     0        & a_{33}^{(3)}     &  a_{34}^{(3)} &\cdots & a_{3n}^{(3)}  \\
+         0 &     0        & 0     &  a_{44}^{(4)} &\cdots & a_{4n}^{(4)}  \\
+         \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots  \\
+         0 &     0      &   0      &    0   & \cdots & a_{nn}^{(n)}  \\
+        \end{pmatrix}
+        \end{align*}
+      </p>
+
+      <p><b>Para determinar la matriz complementaria triangular inferior $\mathrm{L}$ en la factorización  $\mathrm{LU}$</b>, recordemos el efecto 
+        que tiene multiplicar $A^{(k)}$ y $\vec{b}^{(k)}$ por la $k$-ésima  transformación Gaussiana $M^{(k)}$
+        utilizada para obtener el sistema de ecuaciones: $A^{(k+1)} \vec{x} = b^{(k+1)},$
+        mediante $$A^{(k+1)} \vec{x}= M^{(k)} A^{(k)}  \vec{x} = M^{(k)}   \vec{b}^{(k)} = \vec{b}^{(k+1)} $$
+        
+        donde  multiplicar por la matriz $M^{(k)}$ tiene como efecto realizar las  siguientes operaciones de filas:
+       
+        $$ (E_{i} + m_{ik} E_{k}) \longrightarrow (E_{i}), \text{  para cada } i=k+1, \ldots ,n$$
+        donde $$m_{ik}:= \frac{-a^{(k)}_{ik}}{a^{(k)}_{kk}}
+        $$
+      </p>
+
+      <p>
+       <b>Invertir los efectos de estas transformaciones y regresar de $A^{(k+1)}$   a $A^{(k)}$  requiere realizar 
+        las siguientes operaciones</b>:
+        $$(E_{i} - m_{ik} E_{k}) \longrightarrow E_{i}, \text{  para cada } i=k+1, \ldots ,n$$
+        lo cual equivale a multiplicar la matriz $A^{(k+1)}$ por la inversa de la matriz $M^{(k)}$:
+
+        \begin{align*} 
+      L^{(k)} &:=  \left(M_{ij}^{(k)} \right)^{-1}\\
+      &\\
+       &= \begin{pmatrix} 
+      1 & 0 & 0 &  \cdots  \cdots \cdots &&0 & & \cdots  \cdots \cdots & 0    \\
+      0 & 1 & 0 &  \cdots \cdots \cdots &  &0 & &\cdots  \cdots \cdots & 0\\
+      0 & 0 & 1 &  \cdots \cdots \cdots &  &0 &  &\cdots  \cdots \cdots & 0\\
+      0 & 0 & 0 &  \ddots  && 0 & & \cdots   \cdots \cdots& 0 \\
+      \vdots &  \vdots & \vdots & \vdots& &\vdots & & \vdots& \vdots  \\
+      0 & 0 & 0  & \cdots \cdots \cdots & & 1 & &\cdots \cdots \cdots  & 0\\
+      0 & 0 & 0  & \cdots \cdots \cdots && -m_{(k+1)k} & &\cdots \cdots \cdots  & 0\\
+      \vdots &   \vdots & \vdots & \vdots& & \vdots  & & \ddots & \vdots\\
+      0 &       0      &   0 & \cdots\cdots \cdots && -m_{nk}&   & \cdots \cdots \cdots & 1 \\
+      
+     \end{pmatrix}\\
+     &\\
+    &=\begin{cases}
+      1, & \text{ si } i=j \\
+      -m_{ik}:= \displaystyle{-\left(\frac{-a_{ik}^{(k)}}{a_{kk}^{(k)}}\right)= \frac{a_{ik}^{(k)}}{a_{kk}^{(k)}}}, & \text{para  } i=k+1,k+2, \ldots ,n \\
+      0, & \text{ d.o.f. } 
+    \end{cases} 
+    \end{align*}
+      </p>
+
+      <p>Revertir el efecto de cada una de las matrices $M^{(k)}$ se consigue mediante el producto sucesivo  de las 
+        las matrices $L^{(k)}$, para cada $k=1,2,\ldots, n-1$. No es dificil ver que 
+        la matriz $L:= L^{(1)} \cdot L^{(2)}  \cdots L^{(n-1)}$ que se obtiene es una matriz triangular inferior:
+
+        \begin{align*} 
+        L&= L^{(1)}  L^{(2)}  \cdots L^{(n-1)}\\
+         &= \begin{pmatrix} 
+        1 & 0 & 0 &  \cdots\cdots &  0 & 0  \\
+        -m_{21} & 1 & 0  &\cdots\cdots & 0 &0  \\
+        -m_{31} & -m_{32} & 1  &\cdots\cdots & 0 & 0   \\
+        -m_{41} & -m_{42} & -m_{43} &\ddots & 0 & 0  \\
+        \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots  \\
+        -m_{n1} & -m_{n2} & -m_{n3} &  \cdots \cdots & -m_{n(n-1)}& 1  \\
+       \end{pmatrix} 
+       \end{align*}
+       
+       Más aún,  <b>$L$ es la matriz triangular inferior presente  en la factorización $LU$ de $A$.</b>
+
+      </p>
+
+      <p>En efecto, para  $L$ y $U$ y definidas como antes, se sigue que:
+       \begin{align*} 
+        LU & = \left(L^{(1)}  L^{(2)}  \cdots L^{(n-1)}\right)\left( M^{(n-1)} M^{(n-2)}  \cdots M^{(2)} M^{(1)} A \right)\\
+        &=\left( L^{(1)} L^{(2)}  \cdots L^{(n-2)} \right) \left( L^{(n-1)} M^{(n-1)} \right) \left(M^{(n-2)}  \cdots M^{(2)} M^{(1)} A \right)\\
+        &=\left( L^{(1)}  L^{(2)}  \cdots L^{(n-2)} \right) I_{n\times n} \left(M^{(n-2)}  \cdots M^{(2)} M^{(1)} A \right)\\
+        &=\left( L^{(1)}  L^{(2)}  \cdots L^{(n-3)} \right) \left( L^{(n-2)} M^{(n-2)} \right) \left(M^{(n-3)}  \cdots M^{(2)} M^{(1)} A \right)\\
+        &\hspace{0.35cm}\vdots\\
+        &=\left( L^{(1)}  L^{(2)}  \right) \left( L^{(3)} M^{(3)} \right) \left(M^{(2)} M^{(1)} A \right)\\
+        &=\left( L^{(1)}   \right) \left( L^{(2)} M^{(2)} \right) \left( M^{(1)} A \right)\\
+        &= \left( L^{(1)} M^{(1)} \right) A \\
+        &= I_{n\times n} A \\
+        &=A
+
+       \end{align*}  
+      </p>
+    </div>
+
+     
+    <div class="nota-box" id="Teo:FactorizacionLU"> <h2 class="number-title"> Teorema</h2>
+      <p>
+        Si la eliminación Gaussiana se puede realizar en el sistema lineal $A\vec{x} = b$ sin necesidad de intercambiar 
+        filas, entonces la matriz $A$ se puede factorizar como  el producto de una matriz triangular inferior
+        $\mathrm{L}$ y una matriz triangular superior $\mathrm{U}$, es decir como  $A = \mathrm{LU}$, donde 
+        
+        \begin{align*} 
+        L&= \begin{pmatrix} 
+        1 & 0 & 0 &  \cdots\cdots &  0 & 0  \\
+        -m_{21} & 1 & 0  &\cdots\cdots & 0 &0  \\
+        -m_{31} & -m_{32} & 1  &\cdots\cdots & 0 & 0   \\
+        -m_{41} & -m_{42} & -m_{43} &\ddots & 0 & 0  \\
+        \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots  \\
+        -m_{n1} & -m_{n2} & -m_{n3} &  \cdots \cdots & -m_{n(n-1)}& 1  \\
+       \end{pmatrix} 
+       \end{align*}
+       
+
+     \begin{align*} 
+     \mathrm{U}
+     &= \begin{pmatrix} 
+     a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & a_{14}^{(1)} & \cdots\cdots & a_{1n}^{(1)}  \\
+     0 & a_{22}^{(2)} & a_{23}^{(2)}     &  a_{24}^{(2)} &\cdots \cdots & a_{2n}^{(2)}  \\
+     0 &     0        & a_{33}^{(3)}     &  a_{34}^{(3)} &\cdots \cdots & a_{3n}^{(3)}  \\
+     0 &     0        & 0     &  a_{44}^{(4)} &\cdots\cdots & a_{4n}^{(4)}  \\
+     \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots  \\
+     0 &     0      &   0      &    0   & \cdots\cdots & a_{nn}^{(n)}  \\
+    \end{pmatrix}
+    \end{align*}
+    donde para todo $k=1,2,\ldots, n$ y  $j=k+1, \ldots, n$ se define:
+    $$m_{jk}:= \frac{-a^{(k)}_{jk}}{a^{(k)}_{kk}}.$$
+    </p>
+    <p>
+    
+  </p>
+    </div>
+
+
+ 
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+    <p>La factorización $A=\mathrm{LU}$ descrita en el  <a href="S11.html#Teo:FactorizacionLU"> Teorema 11.2 </a> 
+      recibe el nombre de <b>método de Doolittle</b> y requiere que los elementos en la diagonal de la matriz 
+      triangular inferior $\mathrm{L}$ sean $1$. Una variante de la factorización  $A=\mathrm{LU}$
+      es el  <b>método de Crout</b>  factorización en la cual ahora se requiere que los elementos de la matriz 
+      triangular superior $\mathrm{U}$ sean  $1$.
+    </p>
+    </div>
+
+    
+    <h1 class="title flexbox"> Factorización de una matriz definida positiva </h1>
+    
+    
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>Existe una clase de matrices  en las cuales se puede aplicar eliminación Gaussiana sin intercambiar las filas de la matriz.
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>
+        Una matriz $A \in \mathbb{M}_{n\times n} (\mathbb{R})$ de tamaño $n\times n$ se dice que es  <b>estrictamente diagonal dominante (EDD)</b> si para cada 
+        $i=1,\ldots,n$ se satisface
+        $$|a_{ii}| > \displaystyle{\sum_{j\not= i } |a_{ij}|}$$
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        <ol>
+        <li>La matriz $A=\begin{pmatrix} 
+        7 & 2 & 0  \\
+        3 & 5 & -1 \\
+        0 & 5 & -6 \\ 
+        \end{pmatrix}$ 
+        es una matriz  estrictamente diagonal dominante.</li><br>
+        <li>La matriz $B=\begin{pmatrix} 
+          8 & -4 & 0  \\
+          2 & 5 & 1 \\
+          3 & -7 & -12 \\ 
+          \end{pmatrix}$ 
+          es una matriz  estrictamente diagonal dominante.</li><br>
+        <li>La matriz $C=\begin{pmatrix} 
+          6 & 4 & -3  \\
+          4 & -2 & 0 \\
+          -3 & 0 & 1 \\ 
+          \end{pmatrix}$ 
+          no es una matriz  estrictamente diagonal dominante</li>
+      </ol>
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>En el ejemplo anterior, la matriz $A=\begin{pmatrix} 
+        7 & 2 & 0  \\
+        3 & 5 & -1 \\
+        0 & 5 & -6 \\ 
+        \end{pmatrix}$ 
+        es una matriz  estrictamente diagonal dominante, sin embargo la matriz  $A^{t}=\begin{pmatrix} 
+        7 & 3 & 0  \\
+        2 & 5 & 5 \\
+        0 & -1 & -6 \\ 
+        \end{pmatrix}.$
+        No satisface la condición ya que $|5| < |2| + |5| = 7$ por lo tanto no es una matriz  estrictamente diagonal dominante
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>Si $A \in \mathbb{M}_{n\times n} (\mathbb{R})$ es una matriz estrictamente diagonal dominante, entonces 
+        <ol>
+          <li>$A$ es no singular </li>
+          <li> Se puede aplicar eliiminacón Gaussiana al sistema $A\vec{x}= \vec{b}$ y obtener una solución unica 
+            sin intercambiar  renglones ni columnas. </li>
+        </ol>
+      </p>
+      <p>
+        <b>Demostración:</b>
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <p>
+        Una matriz  $A \in \mathbb{M}_{n\times n} (\mathbb{R})$ es <b>definida positiva (DP)</b>  si $A$ es una matriz simétrica  y si 
+        $$\vec{x}^{t} A \vec{x} > \vec{0} \text{ para todo } \vec{x} \in \mathbb{R}^{n}, \vec{x} \not=\vec{0}   $$
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+       Determinar si la matriz $A=\begin{pmatrix} 
+       2 & -1 & 0  \\
+       -1 & 2 & -1 \\
+       0 & -1 & 2 \\ 
+       \end{pmatrix}$ es definida positiva.
+      </p>
+      <p><b>Solución:</b></p>
+    </div>
+
+
+    <div class="nota-box"> <h2 class="number-title"> Observación</h2>
+      <p>Por lo general es dificil aplicar la definición para determinar si una matriz es definida positiva. 
+        El siguiente teorema no da algúnas propiedades que deben cumplir las matrices definidas positivas.
+      </p>
+    </div> 
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Teorema</h2>
+      <p>Sea $A \in \mathbb{M}_{n\times n} (\mathbb{R})$. Si $A$ es una matriz definida positiva
+        <ol>
+          <li>$A$ es no singular </li>
+          <li>$a_{ii} >0$ para cada $i=1, \ldots , n$</li>
+          <li>$\displaystyle{\max_{1\leq k,j \leq n} |a_{kj}| \leq\max_{1\leq i \leq n}|a_{ii}|}$</li>
+          <li>$(a_{ij})^{2} < a_{ii} a_{jj} \text{ para cada } i\not = j$</li>
+        </ol>
+      </p>
+      <p>
+        <b>Demostración:</b>
+      </p>
+    </div>
+
+
+    
+   
+
+    </body>

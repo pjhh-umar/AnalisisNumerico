@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 2 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 2 cardCounter ;
+        }
+      </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas  </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios  </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Ejercicios propuestos tercer parcial  </title>
+    
+  </head>
+
+
+
+  <body class="fondo-body" >
+    <h1 class="number-title flexbox"> Ejercicios propuestos tercer parcial </h1>   
+
+    <div class="ejercicio-box" id=""> <h2 class="number-title"> Ejercicio </h2>
+      <p>Crea un programa utilizando Python o Scilab que calcule la suma de dos matrices 
+        previamente almacenadas en arreglos. El programa debe validar que las dimensiones 
+        de las matrices sean las apropiadas para poder llevar a cabo la suma, en caso
+        contrario imprimir un mensaje de advertencia adecuado. 
+      </p>
+     </div>
+
+     
+     <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+      <p>Crea un programa utilizando Python o Scilab que calcule el producto de dos matrices 
+        previamente almacenadas en arreglos. El programa debe validar que las dimensiones 
+        de las matrices sean las apropiadas para poder llevar a cabo la suma, en caso
+        contrario imprimir un mensaje de advertencia adecuado. 
+      </p>
+     </div>
+
+     <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+      <p>Crea un programa utilizando Python o Scilab que determine la transpuesta de una matriz 
+        previamente almacenada en un  arreglo. 
+      </p>
+     </div>
+
+  
+
+     <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+      <p>
+        Sea $A\in\mathbb{M}(\mathbb{R})$, se define y denota  la  <b>matriz adjunta</b> de $A$ como la matriz $\mathrm{Adj}(A)$ 
+         cuyo elemento de la fila $i$ y la columna $j$  es:
+
+         $$(-1)^{i+j} |A^{i,j}|$$
+         
+        donde  la matriz $A^{i,j}$  es la matriz que se obtiene al eliminar la fila $i$ y la columna $j$ de la matriz $A$ . 
+      </p>
+
+      <p>Crea un programa utilizando Python o Scilab que calcule la matriz adjunta de una matriz cuadrada 
+        (previamente almacenada en un arreglo). 
+      </p>
+     </div>
+
+     <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+      <p>Crea un programa utilizando Python o Scilab que calcule el determinante de una matriz cuadrada 
+        (previamente almacenada en un arreglo). El programa debe validar que en efecto se tiene una  matriz  
+        cuadrada. 
+      </p>
+     </div>
+
+     <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+      <p>Crea un programa utilizando Python o Scilab que calcule el determinante de una matriz cuadrada 
+        (previamente almacenada en un arreglo). El programa debe validar que en efecto se tiene una  matriz  
+        cuadrada. 
+      </p>
+      <p><b>Hint:</b> Utiliza el desarrollo por cofactores.</p>
+     </div>
+
+     <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+      <p>Crea un programa utilizando Python o Scilab que dada una matriz cuadrada $A$
+        (previamente almacenada en un arreglo), verifique si la matriz $A$ es invertible utilizando su determinante. Si $\mathrm{det}(A) \not=0$
+        calcular la matriz inversa de $A$, de lo contrario mandar un mensaje  advertiendo que la matriz no es invertible y 
+        detener el programa. El programa debe validar que en efecto se tiene una  matriz   cuadrada. 
+      </p>
+      <p><b>Hint:</b> Utiliza la matriz adjunta de $A$ </p>
+     </div>
+
+     <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+
+      <p>
+        Dado un sistema de ecuaciones de la forma:
+        $$A\vec{x}= \vec{b}$$
+        donde $A$ es una matriz de tamaño $n\times n$ (matriz de coeficientes del sistema), $\vec{x}$ es el vector de incognitas 
+        y $\vec{b}$ es el vector de términos independientes, $\vec{x}$ y $\vec{b}$ son vectores 
+        de tamaño $n\times 1$.
+      </p>
+
+      <p>
+        Crea un programa utilizando Python o Scilab que dada la matriz de coeficientes  $A$
+        y el vector de términos independientes $\vec{b}$ (previamente almacenados en un arreglo y un vector respectivamente) 
+        correspondientes al sistema $A\vec{x}= \vec{b}$, <b>implemente el 
+        <a href="../Semanas/S9.html#Metodo_Eliminacion_Gaussiana_Hacia_atras"> método de eliminación Gaussiana hacia atras </a> </b>
+        para resolver el sistema de ecuaciones. 
+      </p>
+      </div>
+
+
+      <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+
+        <p>
+          Dado un sistema de ecuaciones de la forma:
+          $$A\vec{x}= \vec{b}$$
+          donde $A$ es una matriz de tamaño $n\times n$ (matriz de coeficientes del sistema), $\vec{x}$ es el vector de incognitas 
+          y $\vec{b}$ es el vector de términos independientes, $\vec{x}$ y $\vec{b}$ son vectores 
+          de tamaño $n\times 1$.
+        </p>
+  
+        <p>
+          Crea un programa utilizando Python o Scilab que dada la matriz de coeficientes  $A$
+          y el vector de términos independientes $\vec{b}$ (previamente almacenados en un arreglo y un vector respectivamente) 
+          correspondientes al sistema $A\vec{x}= \vec{b}$, 
+          <b>implemente el <a href="../Semanas/S9.html#Metodo_Eliminacion_Gaussiana_Pivoteo_Parcial"> método de eliminación Gaussiana con pivoteo parcial </a></b>
+          para resolver el sistema de ecuaciones. 
+        </p>
+        </div>
+
+        <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+
+          <p>
+            Dado un sistema de ecuaciones de la forma:
+            $$A\vec{x}= \vec{b}$$
+            donde $A$ es una matriz de tamaño $n\times n$ (matriz de coeficientes del sistema), $\vec{x}$ es el vector de incognitas 
+            y $\vec{b}$ es el vector de términos independientes, $\vec{x}$ y $\vec{b}$ son vectores 
+            de tamaño $n\times 1$.
+          </p>
+    
+          <p>
+            Crea un programa utilizando Python o Scilab que dada la matriz de coeficientes  $A$
+            y el vector de términos independientes $\vec{b}$ (previamente almacenados en un arreglo y un vector respectivamente) 
+            correspondientes al sistema $A\vec{x}= \vec{b}$, 
+            <b>implemente el <a href="../Semanas/S10.html#Metodo_Eliminacion_Gaussiana_Pivoteo_Parcial_Escalonado"> método de eliminación Gaussiana con pivoteo parcial escalonado</a></b>
+            para resolver el sistema de ecuaciones. 
+          </p>
+          </div>
+
+          <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+
+            <p>
+              Dado un sistema de ecuaciones de la forma:
+              $$A\vec{x}= \vec{b}$$
+              donde $A$ es una matriz de tamaño $n\times n$ (matriz de coeficientes del sistema), $\vec{x}$ es el vector de incognitas 
+              y $\vec{b}$ es el vector de términos independientes, $\vec{x}$ y $\vec{b}$ son vectores 
+              de tamaño $n\times 1$.
+            </p>
+      
+            <p>
+              Crea un programa utilizando Python o Scilab que dada la matriz de coeficientes  $A$
+              y el vector de términos independientes $\vec{b}$ (previamente almacenados en un arreglo y un vector respectivamente) 
+              correspondientes al sistema $A\vec{x}= \vec{b}$, <b>implemente
+              el <a href="../Semanas/S10.html#Metodo_Eliminacion_Gaussiana_Pivoteo_Parcial_Escalonado_Completo"> método de eliminación Gaussiana con pivoteo parcial escalonado completo</a></b>
+              para resolver el sistema de ecuaciones. 
+            </p>
+            </div>
+
+            <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+
+              <p>
+                Dado un sistema de ecuaciones de la forma:
+                $$A\vec{x}= \vec{b}$$
+                donde $A$ es una matriz de tamaño $n\times n$ (matriz de coeficientes del sistema), $\vec{x}$ es el vector de incognitas 
+                y $\vec{b}$ es el vector de términos independientes, $\vec{x}$ y $\vec{b}$ son vectores 
+                de tamaño $n\times 1$.
+              </p>
+        
+              <p>
+                Crea un programa utilizando Python o Scilab que dada la matriz de coeficientes  $A$
+                y el vector de términos independientes $\vec{b}$ (previamente almacenados en un arreglo y un vector respectivamente) 
+                correspondientes al sistema $A\vec{x}= \vec{b}$, <b>implemente
+                el <a href="../Semanas/S10.html#Metodo_Eliminacion_Gaussiana_Pivoteo_Completo"> método de eliminación Gaussiana con pivoteo completo</a></b>
+                para resolver el sistema de ecuaciones. 
+              </p>
+              </div>
+
+              <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                <p>Crea un programa utilizando Python o Scilab que dada una matriz cuadrada $A$
+                  (previamente almacenada en un arreglo), implemente el <a href="../Semanas/S11.html#Teo:FactorizacionLU"> metodo de Doolittle</a> para <b>hallar
+                  la factorización $\mathrm{LU}$</b> correspondiente. El programa debe imprimir 
+                  la matriz  triangular inferior  $\mathrm{L}$ con entradas en la diagonal igual a $1$, así como 
+                  la matriz triangular superior $\mathrm{U}$.
+                </p>
+               
+               </div>
+
+               <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+
+                <p>
+                  Dado un sistema de ecuaciones de la forma:
+                  $$A\vec{x}= \vec{b}$$
+                  donde $A$ es una matriz de tamaño $n\times n$ (matriz de coeficientes del sistema), $\vec{x}$ es el vector de incognitas 
+                  y $\vec{b}$ es el vector de términos independientes, $\vec{x}$ y $\vec{b}$ son vectores 
+                  de tamaño $n\times 1$.
+                </p>
+          
+                <p>
+                  Crea un programa utilizando Python o Scilab que dada la matriz de coeficientes  $A$
+                  y el vector de términos independientes $\vec{b}$ (previamente almacenados en un arreglo
+                  y un vector respectivamente) correspondientes al sistema $A\vec{x}= \vec{b}$, <b>implemente
+                  el <a href="../Semanas/S11.html#Teo:FactorizacionLU"> metodo de Doolittle</a></b> para resolver el sistema de ecuaciones. 
+                </p>
+
+                <p><b>Hint:</b>   <a href="../Semanas/S10.html#Nota:doolittle">Vea Nota 10.10</a> </p>
+                </div>
+
+                <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                  <p>Crea un programa utilizando Python o Scilab que dada una matriz cuadrada $A$
+                    (previamente almacenada en un arreglo), implemente el 
+                     algoritmo presentado en la <a href="../Semanas/S12.html#alg:fac_LDLt">  factorización $\mathrm{LD}\mathrm{L}^{t}$ 12.8 </a> para <b>determinar la
+                    factorización $\mathrm{LD}\mathrm{L}^{t}$</b> correspondiente. El programa debe
+                    imprimir la matriz triangular inferior $\mathrm{L}$ con entradas en la diagonal 
+                    igual a $1$, así como la matriz diagonal $\mathrm{D}$ y la matriz  $\mathrm{L}^{t}$ .
+                  </p>
+
+                </div>
+
+
+                <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                  <p>Crea un programa utilizando Python o Scilab que dada una matriz cuadrada $A$
+                    (previamente almacenada en un arreglo), implemente el algoritmo presentado en la 
+                    <a href="../Semanas/S12.html#algoritmo:cholesky">  factorización de Cholesky 12.10 </a> 
+                    para <b> determinar la factorización $\mathrm{L}\mathrm{L}^{t}$</b> correspondiente. 
+                    El programa debe  imprimir la matriz triangular inferior $\mathrm{L}$.
+                  </p>
+                </div>
+<!--
+                <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                  <p>Resuelva los siguientes sistemas de ecuaciones aplicando el método de eliminación Gaussiana hacia atras:</p>
+                    <ol>
+                      <li>$$\begin{pmatrix} 1 & -1 &  2 & 1 \\
+                        3 & 2 & 1 & 4 \\
+                        5 & 8 & 6 & 3\\ 
+                        6 & 2 & 5 & 3 
+                        \end{pmatrix} \begin{pmatrix} x_{1} \\
+                        x_{2} \\
+                        x_{3} \\x_{4}
+                        \end{pmatrix}= \begin{pmatrix} 1 \\
+                        1 \\
+                        1 \\
+                        -1  
+                        \end{pmatrix} $$ </li><br>
+
+                        <li>
+                          $$\begin{matrix}
+                          3x_{1} & + & 4x_{2} & + & 3x_{3}  & = 10\\
+                          x_{1} & + & 5x_{2} &-& x_{3} & = 7\\
+                          6x_{1} & + & 3x_{3} & + &7x_{3} & = 15\\
+                          \end{matrix}$$
+                        </li><br>
+                        <li>
+                          $$\begin{matrix}
+                          x_{1}  & + & 3x_{2}  & +  & 2x_{3}  & + & x_{4}  & = -2\\
+                          4x_{1} &  + & 2x_{2} & + & x_{3}   & + & 2x_{4}  & = 2\\
+                          2x_{1} &   & x_{2}  & - & x_{3}    & - & x_{4}  & = 3\\
+                          3x_{1} &   &        & + & x_{3}    & 2 & 2x_{4}  & = 1
+
+                          \end{matrix}$$
+                        </li><br>
+                    </ol>
+                  <p><b>Observación:</b> En cada ejercicio muestra las matrices obtenidas en cada paso.</p>
+                </div>
+-->
+                <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                  <p>Para cada uno de los siguientes sistemas de ecuaciones 
+                    implemente el método de eliminación Gaussiana con 
+                    pivoteo parcial escalonado. Considerando los siguientes casos:
+                    <ul>
+                      <li><b>Si el sistema tiene infinitas soluciones.</b> Imprimir un mensaje indicando esto y
+                        mostrar una solución del sistema. 
+                      </li><br>
+                      <li><b>El sistema tiene solución única.</b>  Imprimir un mensaje indicando esto y
+                      mostrar la solución del sistema.</li><br>
+                      <li><b>El sistema no tiene soluciones reales.</b> Imprimir un mensaje indicando esto.</li><br>
+                      
+                    </ul>    
+                    En los dos primeros casos imprimir las matrices intermedias obtenidas y la matriz triangular
+                    superior obtenida despues de aplicar eliminación Gaussiana. 
+                  </p>
+                    <ol>
+                      <li>
+                        $$\begin{pmatrix} 1& -1 &  2 \\
+                        -2 & 1 & -1 \\
+                        4 & -1 & 2 
+                        \end{pmatrix} \begin{pmatrix} x_{1} \\
+                        x_{2} \\
+                        x_{3} 
+                        \end{pmatrix}= \begin{pmatrix} -2 \\
+                        2 \\
+                        -1 
+                        \end{pmatrix} $$ 
+                      </li><br>
+                      <li>$$\begin{pmatrix} 1 & 0 &  3 & 0 \\
+                        0 & 1 & 3 & -1 \\
+                        3 & -3 & 0 & 6\\ 
+                        0 & 2 & 4 & -6 
+                        \end{pmatrix} \begin{pmatrix} x_{1} \\
+                        x_{2} \\
+                        x_{3} \\x_{4}
+                        \end{pmatrix}= \begin{pmatrix} 0 \\
+                        0 \\
+                        0 \\
+                        0  
+                        \end{pmatrix} $$ </li><br>
+                        <li>
+                          $$\begin{matrix}
+                          2x_{1} & + & 3x_{2} & &  & = 8\\
+                          -x_{1} & + & 2x_{2} &-& x_{3} & = 0\\
+                          3x_{1} &   &        & + &2x_{3} & = 9\\
+                          \end{matrix}$$
+                        </li><br>
+                        <li>
+                          $$\begin{matrix}
+                          -x_{1} & + & x_{2}  &   &          & - & 3x_{4}  & = 4\\
+                           x_{1} &   &        & + & 3 x_{3}  & + & x_{4}  & = 0\\
+                                 &   & x_{2}  & - & x_{3}    & - & x_{4}  & = 3\\
+                          3x_{1} &   &        & + & x_{3}    & 2 & 2x_{4}  & = 1
+                          
+                          \end{matrix}$$
+                        </li><br>
+                    </ol>
+                  </div>
+
+                  <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                    <p>Considera el siguiente sistema de ecuaciones lineales:
+                      
+                    </p>
+                    <p>Implementa el método de Doolittle para hallar la factorización $\mathrm{LU}$ de la matriz
+                      de coeficientes. Muestra las matrices $\mathrm{L}$ y $\mathrm{U}$ obtenidas. Luego, con ayuda
+                      de esta factorización resuelve el sistema de ecuaciones.
+                    </p>
+                  </div>
+    
+              <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                <p>Considera el siguiente sistema de ecuaciones lineales:
+                  
+                </p>
+                <p>Encuentra la factorización $\mathrm{LD}\mathrm{L^{t}}$ de la matriz de coeficientes.
+                  Muestra las matrices $\mathrm{L}$ y $\mathrm{D}$ obtenidas. Luego, con ayuda
+                  de esta factorización resuelve el sistema de ecuaciones.
+                </p>
+              </div>
+                  
+              <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                <p>Considera el siguiente sistema de ecuaciones lineales:
+                  
+                </p>
+                <p>Implementa la factorización de Cholesky para hallar la factorización $\mathrm{L}\mathrm{L}^{t}$
+                  de la matriz de coeficientes. Muestra la matrices $\mathrm{L}$ resultante. Luego, con ayuda
+                  de esta factorización resuelve el sistema de ecuaciones.
+                </p>
+              </div>
+
+
+              
+              <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                <p>Dado un sistema de ecuaciones de la forma:
+                  $$A\vec{x}= \vec{b}$$
+                  donde $A$ es una matriz de tamaño $n\times n$ (matriz de coeficientes del sistema), $\vec{x}$ es el vector de incognitas 
+                  y $\vec{b}$ es el vector de términos independientes, $\vec{x}$ y $\vec{b}$ son vectores 
+                  de tamaño $n\times 1$.
+                </p>
+          
+                <p>
+                  Crea un programa utilizando Python o Scilab que dada la matriz de coeficientes  $A$
+                  y el vector de términos independientes $\vec{b}$ (previamente almacenados 
+                  en un arreglo y un vector respectivamente) 
+                  correspondientes al sistema $A\vec{x}= \vec{b}$, <b>implemente
+                  el  <a href="../Semanas/S15.html#Metodo_Jacobi">  Método de Jacobi </a> 
+                  para encontrar una aproximación a una solución del sistema de ecuaciones $A\vec{x}= \vec{b}$
+                  a partir de una aproximación inicial  $\vec{x}^{(0)}$,</b>
+                  de tal manera que el error absoluto sea menor que $1\times 10^{-5}$. Utiliza la norma vectorial infinita 
+                  $\| \cdot \|_{\infty}$ para calcular la distancia entre dos  aproximaciones consecutivas. 
+                </p>
+
+                <p>Si se excede de $10$ iteraciones antes de alcanzar la aproximación deseada 
+                  detener el algoritmo e imprimir la aproximación obtenida hasta ese punto.
+                </p>
+                   <p>
+                El programa debe imprimir en cada iteración la siguiente información:
+            <p>
+              <table class="info">
+                          
+                <caption><b><font size="4"></font></b></caption>
+                <thead>
+                  <tr>
+                    <th>$k$</th>
+                    <th>$x_{1}^{(k)}$</th>
+                    <th>$x_{2}^{(k)}$</th>
+                    <th>$\ldots$</th>
+                    <th>$x_{n}^{(k)}$</th>
+                    <!-- <th>$A\vec{x}^{(k)}$</th>-->
+                    <th>$EA$</th>
+                  </tr>
+                  </thead>
+                    <tbody >
+        
+                      <tr>
+                        <td>$\#$ Iteración</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <!--<td></td>-->
+                        <td><center>$\| \vec{x}^{(k+1)} - \vec{x}^{(k)}\|_{\infty}$</center></td>
+                        
+                      </tr>
+      
+                    <!--
+                  <tr>
+                    <td ><center>$0$</center></td>
+                    <td><center>$a_{0}:= a$</center></td>
+                    <td><center>$x_{0}=\displaystyle{\frac{a_{0} + b_{0}}{2}}$</center></td>
+                    <td><center>$b_{0}:=b$</center></td>
+                    <td><center>$\displaystyle{\left|\frac{x_{actual} - x_{anterior}}{x_{actual}}\right|}$</center></td>
+                    <td><center>$\displaystyle{\left|\frac{x_{actual} - x_{anterior}}{x_{actual}}\right|}\times 100 \%$</center></td>
+                    <td></td>
+                  </tr>
+                  -->
+                  </tbody>
+              </table>
+              </div>
+
+              <div class="ejercicio-box" id=""><h2 class="number-title"> Ejercicio </h2>
+                <p>Dado un sistema de ecuaciones de la forma:
+                  $$A\vec{x}= \vec{b}$$
+                  donde $A$ es una matriz de tamaño $n\times n$ (matriz de coeficientes del sistema), $\vec{x}$ es el vector de incognitas 
+                  y $\vec{b}$ es el vector de términos independientes, $\vec{x}$ y $\vec{b}$ son vectores 
+                  de tamaño $n\times 1$.
+                </p>
+          
+                <p>
+                  Crea un programa utilizando Python o Scilab que dada la matriz de coeficientes  $A$
+                  y el vector de términos independientes $\vec{b}$ (previamente almacenados 
+                  en un arreglo y un vector respectivamente) 
+                  correspondientes al sistema $A\vec{x}= \vec{b}$, <b>implemente
+                  el  <a href="../Semanas/S15.html#Metodo_Gauss_Seidel">  Método de Gauss_Seidel </a> 
+                  para encontrar una aproximación a una solución del sistema de ecuaciones $A\vec{x}= \vec{b}$
+                  a partir de una aproximación inicial  $\vec{x}^{(0)}$,</b>
+                  de tal manera que el error absoluto sea menor que $1\times 10^{-5}$. Utiliza la norma vectorial infinita 
+                  $\| \cdot \|_{\infty}$ para calcular la distancia entre dos  aproximaciones consecutivas. 
+                </p>
+
+                <p>Si se excede de $10$ iteraciones antes de alcanzar la aproximación deseada 
+                  detener el algoritmo e imprimir la aproximación obtenida hasta ese punto.
+                </p>
+                El programa debe imprimir en cada iteración la siguiente información:
+                <p>
+                  <table class="info">
+                              
+                    <caption><b><font size="4"></font></b></caption>
+                    <thead>
+                      <tr>
+                        <th>$k$</th>
+                        <th>$x_{1}^{(k)}$</th>
+                        <th>$x_{2}^{(k)}$</th>
+                        <th>$\ldots$</th>
+                        <th>$x_{n}^{(k)}$</th>
+                        <!-- <th>$A\vec{x}^{(k)}$</th>-->
+                        <th>$EA$</th>
+                      </tr>
+                      </thead>
+                        <tbody >
+            
+                          <tr>
+                            <td>$\#$ Iteración</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <!--<td></td>-->
+                            <td><center>$\| \vec{x}^{(k+1)} - \vec{x}^{(k)}\|_{\infty}$</center></td>
+                            
+                          </tr>
+          
+                        <!--
+                      <tr>
+                        <td ><center>$0$</center></td>
+                        <td><center>$a_{0}:= a$</center></td>
+                        <td><center>$x_{0}=\displaystyle{\frac{a_{0} + b_{0}}{2}}$</center></td>
+                        <td><center>$b_{0}:=b$</center></td>
+                        <td><center>$\displaystyle{\left|\frac{x_{actual} - x_{anterior}}{x_{actual}}\right|}$</center></td>
+                        <td><center>$\displaystyle{\left|\frac{x_{actual} - x_{anterior}}{x_{actual}}\right|}\times 100 \%$</center></td>
+                        <td></td>
+                      </tr>
+                      -->
+                      </tbody>
+                  </table>
+              </div>
+          
+
+
+</body> 

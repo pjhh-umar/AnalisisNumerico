@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 0 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 0 cardCounter ;
+        }
+      </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas  </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios  </a> </li>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Ejercicios propuestos primer parcial   </title>
+    
+  </head>
+
+
+
+  <body class="fondo-body" >
+    <h1 class="number-title flexbox"> Ejercicios propuestos primer parcial </h1>   
+    
+  
+    <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio</h2>
+    <p>Demuestra que si $f \in C[a,b]$ y $f(a) f(b) < 0 $, entonces existe $c \in (a,b)$ tal que $f(c)=0.$</p>   
+    </div>
+
+  
+
+    <div class="ejercicio-box" id="Ejer:programa_metodo_horner">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Crea un programa utilizando Python o Scilab que implemente el Método de Horner para evaluar polinomios. 
+      El programa debe solicitar el grado $n$ del polinomio $p(x)$, el punto $c$ en el que se debe 
+      evaluar el polinomio y  regresar $p(c)$.
+    </p>
+   </div>
+
+   
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p> Usa el programa creado en el  <a href="T1Ejercicios.html#Ejer:programa_metodo_horner">Ejercicio 1.2 </a>
+    para hallar $p(c)$ en los siguientes casos:
+      <ol>
+        <li>$p(x)= x^4 + x^3 -13x^2 -x -12, c=3$</li>
+        <li>$p(x)= 2x^7 + x^6 + x^5 -2^4 -x +23, c=-1$</li>
+      </ol>
+    </p>
+   </div>
+
+   <div class="ejercicio-box" id="Ejer:programa_entero_positivo_a_binario">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p> Crea un programa utilizando Python o Scilab que reciba un número entero positivo $N$ y devuelva la representación 
+      binaria de $N$.
+    </p>
+   </div>
+
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+   <p>Utiliza el programa creado en el  
+    <a href="T1Ejercicios.html#Ejer:programa_entero_positivo_a_binario">Ejercicio 1.4 </a>
+    para convertir los siguientes números decimales en su forma binaria:</p>
+   <ol>
+    <li>578</li>
+    <li>8907</li>
+    <li>305781</li>
+    <li>293882</li>
+    <li>987654321</li>
+   </ol>
+   </div>
+
+      
+   <div class="ejercicio-box" id="Ejer:programa_binario_a_entero_positivo">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p> Crea un programa utilizando Python o Scilab que lea un archivo .txt con la representación
+       binaria de un número  entero positivo y devuelva su forma decimal (base $10$).
+    </p>
+   </div>
+
+
+<!--
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p> Crea un programa utilizando Python o Scilab que reciba un archivo .txt con la representación de una fracción binaria
+         y devuelva su forma decimal (base $10$) de los siguientes números:
+      <ol>
+        <li>$11011_{\text{dos}}$</li>
+        <li>$1010101_{\text{dos}}$</li>
+        <li>$10101_{\text{dos}}$</li>
+        <li>$110110110_{\text{dos}}$</li>
+      </ol>
+    </p>
+   </div>
+-->
+
+<div class="ejercicio-box">
+  <h2 class="number-title"> Ejercicio </h2>
+ <p>Utiliza el programa creado en el  
+  <a href="T1Ejercicios.html#Ejer:programa_binario_a_entero_positivo">Ejercicio 1.6 </a>
+  para convertir los siguientes números enteros positivos dados en su forma binaria a su forma decimal:</p>
+  <ol>
+    <li>$10101_{\text{dos}}$</li>
+    <li>$11111110_{\text{dos}}$</li>
+    <li>$111000_{\text{dos}}$</li>
+    <li>$1000000111_{\text{dos}}$</li>
+  </ol>
+  </p>
+ </div>
+
+
+
+   <div class="ejercicio-box" id="Ejer:programa_fraccion_decimal_a_fraccion_binaria">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Crea un programa utilizando Python o Scilab que  reciba un fracción decimal $0< R < 1$ y 
+      devuelva la correspondiente fracción
+      binaria de $R$,  represente unicamente $32$ bits, i.e. $32$ digitos  despues del punto.
+    </p>
+   </div>
+
+   
+<div class="ejercicio-box">
+  <h2 class="number-title"> Ejercicio </h2>
+ <p>Utiliza el programa creado en el  
+  <a href="T1Ejercicios.html#Ejer:programa_fraccion_decimal_a_fraccion_binaria"> Ejercicio 1.8 </a>
+  para convertir los siguientes números decimales entre $0$ y $1$ a su correspondiente representación como 
+  fracción binaria:
+  <ol>
+    <li>$0.314159265$</li>
+    <li>$0.271828182$</li>
+    <li>$0.161803398$</li>
+  </ol>
+ </p>
+</div>
+
+
+   <div class="ejercicio-box" id="Ejer:programa_fraccion_binaria_a_fraccion_decimal">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Crea un programa utilizando Python o Scilab que lea un archivo .txt con la representación binaria 
+      de un número decimal positivo entre $0$ y $1$ (i.e. recibirá una fracción binaria), y 
+      devuelva la forma decimal (base $10$)
+    </p>
+   </div>
+
+   
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Utiliza el programa creado en el  
+      <a href="T1Ejercicios.html#Ejer:programa_fraccion_binaria_a_fraccion_decimal"> Ejercicio 1.10 </a>
+      para convertir las siguientes fracciones binarias en su forma decimal:
+      <ol>
+        <li>$0.10101_{\text{dos}}$</li>
+        <li>$0.11111110_{\text{dos}}$</li>
+        <li>$0.111000_{\text{dos}}$</li>
+        <li>$0.1000000111_{\text{dos}}$</li>
+      </ol>
+    </p>
+   </div>
+
+   <div class="ejercicio-box" id="Ejer:programa_real_decimal_positivo_a_binario">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Crea un programa utilizando Python o Scilab  que reciba un número real positivo $x$, y devuelva 
+      la correspondiente representación binaria de $x$, use $32$ bits para representar la parte entera 
+      y $32$ bits para representar la parte decimal. Por ejemplo, si $x=1.5$ el programa devolvera
+      $$00000000000000000000000000000001.10000000000000000000000000000000$$
+    </p>
+    <p><b>Sugerencia:</b> Convierta  la parte entera y  la parte fraccionaria por separado. </p>
+   </div>
+
+   
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Utiliza el programa creado en el  
+      <a href="T1Ejercicios.html#Ejer:programa_real_decimal_positivo_a_binario"> Ejercicio 1.12 </a>
+      para convertir  los siguientes números reales positivos dados en su forma decimal a su 
+      correspondiente forma binaria con su respectiva fracción binaria.</p>
+    <ol>
+      <li>$110010000100001.0110101_{\text{2}}$</li>
+      <li>$1010011011.00100100001_{\text{2}}$</li>
+    </ol>
+   </div>
+  
+   <div class="ejercicio-box" id="Ejer:programa_entero_a_binario_C1">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p> Crea un programa utilizando Python o Scilab que reciba un número entero $M$, e implemente 
+      el método por complemento a uno para obtener la representación binaria de $M$ usando $32$ bits 
+    </p>
+   </div>
+
+   <div class="ejercicio-box" >
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Utiliza el programa creado en el  
+      <a href="T1Ejercicios.html#Ejer:programa_entero_a_binario_C1"> Ejercicio 1.14 </a> 
+      para obtener la representación binaria de los siguientes números enteros usando $32$ bits:
+        <ol>
+          <li>$-64$</li>
+          <li>$5439$</li>
+          <li>$-12345$</li>
+          <li>$987654$</li>
+          <li>$-13579$</li>
+          <li>$-259$</li>
+        </ol>
+    </p>
+   </div>
+
+
+   <div class="ejercicio-box" id="Ejer:programa_entero_a_binario_C2">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Crea un programa utilizando Python o Scilab  que reciba un número entero $M$, e
+       implemente el método por complemento a dos  para obtener la representación 
+       binaria de $M$ usando $32$ bits 
+    </p>
+   </div>
+
+
+
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Utiliza el programa creado en el  
+      <a href="T1Ejercicios.html#Ejer:programa_entero_a_binario_C2"> Ejercicio 1.16 </a> 
+      para   obtener la representación binaria de los siguientes números enteros usando $32$ bits: 
+      <ol>
+        <li>$-64$</li>
+        <li>$5439$</li>
+        <li>$-12345$</li>
+        <li>$987654$</li>
+        <li>$-13579$</li>
+        <li>$-259$</li>
+      </ol>
+    </p>
+   </div>
+
+
+
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p>Crea un programa utilizando Python o Scilab  que reciba un número real $x$, y devuelva la representación
+       de $x$ en  el formato binario IEEE 754-2008 usando  $64$ bits.
+    </p>
+   </div>
+
+   
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+    <p> Crea un programa utilizando Python o Scilab que lea un archivo .txt donde se encuentra almacenada  la representación
+       en el formato binario IEEE 754-2008 usando  $64$ bits de un número real $x$ y devuelva la forma 
+       decimal de $x$. 
+
+    </p>
+   </div>
+<!---
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+  <p>Crea un programa utilizando Python o Scilab  que reciba un número real en su forma decimal normalizada: Puedes 
+    pedir que primero ingrese la mantisa (la sucesión de dígitos despues del punto decimal  ) $p$ y una aproximación  $p^{\ast}$,
+     y devuelva el error absoluto, relativo y porcentual de la aproximación $p^{\ast}$ a $p$.  
+    
+    </p>
+   </div>
+-->
+
+
+
+   <div class="ejercicio-box">
+    <h2 class="number-title"> Ejercicio </h2>
+  <p>Crea un programa utilizando Python o Scilab  que reciba un valor $p$ y una aproximación  $p^{\ast}$,
+     e imprima  el error absoluto, relativo y  porcentual de la aproximación $p^{\ast}$ a $p$. Así como 
+     el  número de cifras decimales  significativas con las que $p^{\ast}$ se aproxima a $p$.      
+    </p>
+   </div>
+
+</body>

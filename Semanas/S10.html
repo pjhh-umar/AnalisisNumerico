@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC >
+
+<html lang="es">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Following part is mathjax, for latex-->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <!-- This part is for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- This part is to load main.js -->
+    <script type="text/javascript" src="../main.js"></script>
+
+
+
+
+    <!-- Next part is for new coomands -->
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            sen: "\\operatorname{sen}",
+            seg: ["\\overrightarrow{#1}", 1]
+          },
+          tags: "ams" /* this part is for numbered equations */
+        }
+      };
+    </script>
+
+    <!-- This part is for using single $ for latex input, instead of \(\) -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+    </script>
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" , href="../style.css" />
+
+    <!-- This part restart counter of cards to start at n+1 -->
+    <style>
+        body.number-title{
+          counter-reset: sectionCounter 9 cardCounter ;
+        }
+        h1.number-title{
+          counter-reset: sectionCounter 9 cardCounter ;
+        }
+    </style>
+  
+    <!-- Top Menu  -->
+
+
+    <header class="main-header">
+        <h1> Análisis Númerico  </h1>
+       <nav class="top-nav">
+        <ul>
+          <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Home.html"> Inicio  </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Informacion_General.html"> Información general </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Notas.html"> Notas </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Ejercicios.html"> Ejercicios </a> </li>
+        <li> <a href="https://pjhh-ciencias.github.io/AnalisisNumerico/Enlaces_externos.html"> Links </a> </li>
+        </ul>
+
+       </nav>
+       <!-- 
+        <nav class="small-nav" align=right>
+          <button onclick="myFunction()">Claro/Obscuro 
+        </nav> 
+      -->
+
+      </header>
+
+      <!-- This part is for title in tab-->
+      <title> Semana 10   </title>
+    
+  </head>
+  <body class="fondo-body" >
+    
+    <h1 class="number-title flexbox"> Semana 10 </h1>   
+    <h1 class="title flexbox"></h1>   
+
+
+    
+    <h1 class="title flexbox"> Eliminación Gaussiana con pivote parcial escalonado</h1>    
+
+
+    
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>
+       Cuando en un sistema de ecuaciones lineales se tienen
+      coeficientes cuyos valores absolutos son muy grandes,
+      en ocasiones el pivote parcial no es suficiente para 
+      encontrar la solución exacta del sistema ya que la aritmética
+      utilizada por las calculadoras y/o computadoras
+      producen errores que en ocasiones afectan al resultado
+      final del método. Este es el caso del ejemplo siguiente. 
+      </p>
+
+    
+   
+     
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>Resolver el siguiente sistema de ecuaciones lineales aplicando el método de 
+        eliminación Gaussiana con pivoteo parcial:
+           
+        $$
+        \begin{matrix} 
+         x_{1} & + & x_{2} & =  & 2 \\
+         2x_{1} & + & (1\times 10^{10} )x_{2} &  = & 1\times 10^{10}\\
+       \end{matrix}
+        $$
+       </p>
+
+       <p><b>Solución:</b></p>
+       
+    </div>
+
+  
+
+    <div class="nota-box" id="Metodo_Eliminacion_Gaussiana_Pivoteo_Parcial_Escalonado"> <h2 class="number-title"> Eliminación Gaussiana con pivoteo parcial escalonado</h2>
+      <p>
+        En casos como el del ejemplo anterior se recomienda  utilizar el <b>pivoteo parcial escalonado</b> 
+        o <b>pivoteo de escalonado  de columna</b>. 
+      </p>
+
+      <ul>
+      <li>
+      <p>El primer paso del procedimiento consiste en definir para cada renglon, un <b>factor de escala</b> 
+        $s_{i}$ como:
+        
+        $$s_{i}:= \max_{1\leq j \leq n}\{ | a_{i,j} |\}$$
+
+        Si para algún $i$, $s_{i}=0$, el sistema no tiene solución única.
+      </p>
+      </li>
+      <li>
+      <p>
+        Por otro lado, si $s_{i} \not= 0 $ para toda $1\leq i \leq n$. El intercambio adecuado de 
+        renglones para poner ceros en la primera columna se determina seleccionando
+        el <b>menor número entero</b> $1\leq p \leq n$ tal que:
+        
+        $$\frac{|a_{p_{1}}|}{s_{p}} = \max_{1 \leq k \leq n}  \frac{|a_{k_{1}}|}{s_{k}}$$
+        
+        Si $p\not= 1$, entonces realizar el intercambio  de renglones: $(E_{1}) \longleftrightarrow  (E_{p})$
+        y el intercambio de los correspondientes factores de escala: $s_{1} \longleftrightarrow  s_{p}$.
+
+      </p>
+    </li>
+    </li>
+
+      <p><b>El cambio de escala garantiza que el mayor elemento de cada renglon tiene magnitud relativa $1$
+        antes de realizar la comparación para el intercambio de renglones. 
+      </b>
+      </p>
+
+      <li>
+      <p>De forma similar, para $i\geq 2$ antes de eliminar los coeficientes de la variable $x_{i}$ 
+        en las ecuaciones que se encuentran debajo del renglon $i$,   se elige el <b>menor entero</b> $i \leq p \leq n$ tal que 
+
+        $$\frac{|a_{p_{i}}|}{s_{p}} = \max_{i \leq k \leq n}  \frac{|a_{k_{i}}|}{s_{k}}$$
+
+         
+        Si $p\not= i$, entonces realizar el intercambio  de renglones: $(E_{i}) \longleftrightarrow  (E_{p})$
+        y el intercambio de los correspondientes factores de escala: $s_{i} \longleftrightarrow  s_{p}$.
+         </p>
+
+         <p><b>Observación:</b> Los factores de escala $s_{i}$ <b>se calculan sólo una vez</b>, al inicio del procedimiento 
+          y también <b>deben intercambiarse al realizar los cambios de renglon</b>. 
+         </p>
+        </li>
+        </ul>
+    </div>
+
+    <!--
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>Resolver el siguiente sistema de ecuaciones lineales aplicando el método de 
+        eliminación Gaussiana con pivoteo parcial escalonado:
+           
+        $$
+        \begin{matrix} 
+         x_{1} & + & x_{2} & =  & 2 \\
+         2x_{1} & + & (1\times 10^{10} )x_{2} &  = & 1\times 10^{10}\\
+       \end{matrix}
+        $$
+       </p>
+       <p><b>Solución:</b></p>
+       
+    </div>
+-->
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>|  
+        Resolver el siguiente sistema de ecuaciones lineales aplicando el método de 
+        eliminación Gaussiana con pivoteo parcial escalonado:
+           
+        $$
+        \begin{matrix} 
+         3x_{1}   &  - & 13x_{2}  & + & 9x_{3}   & + &  3 x_{4} & = & -19 \\
+        -6x_{1} & + &  4x_{2}     & + & x_{3}   & - &  18 x_{4} & =  & -34 \\
+         6 x_{1} & - &  2x_{2}    & + & 2 x_{3}   & + &  4 x_{4}   & =& 16 \\
+         12x_{1} & -  &  8x_{2}  & + & 6x_{3}   & + &   10x_{4} & =& 26 \\
+       \end{matrix}
+        $$
+       </p>
+       <p><b>Solución:</b></p>
+    </div>
+
+ 
+    <h1 class="title flexbox"> Eliminación Gaussiana con pivoteo parcial escalonado completo</h1>    
+
+
+    
+    <div class="nota-box" id="Metodo_Eliminacion_Gaussiana_Pivoteo_Parcial_Escalonado_Completo"> <h2 class="number-title">  Eliminación Gaussiana con pivoteo parcial escalonado completo</h2>
+      <p>
+        En el método de eliminación Gaussiana con pivoteo parcial escalonado. Si los factores escalares 
+        $s_{1}, s_{2}, \ldots, s_{n}$ se determinan cada vez que se tienen 
+        una decision de intercambio de renglones se incrementa el tiempo de computo, esta técnica 
+        se llama <b>pivoteo parcial escalonado completo</b> 
+      </p>
+
+    </div>
+
+    <h1 class="title flexbox"> Eliminación Gaussiana con pivoteo  completo</h1>    
+
+
+    
+    <div class="nota-box" id="Metodo_Eliminacion_Gaussiana_Pivoteo_Completo"> <h2 class="number-title"> Eliminación Gaussiana con pivoteo completo</h2>
+      <p>
+
+      <p>
+        Si un sistema de ecuaciones lineales requiere de un pivoteo parcial escalonado completo
+        se recomiendo mejor aplicar <b>eliminación Gaussiana con pivoteo completo</b>:
+      </p>
+      <p>El cual consiste en elegir  para cada $k \in \{1,\ldots, n \}$ el pivote $a_{kk}$ como el elemento de mayor magnitud
+        de entre los valores  $|a_{ij}|$ para $k\leq i,j \leq n$. Una vez localizado este elemento se realizan los cambio de renglones y columnas 
+        para poner el elemento el elemento en la posición pivote. 
+      </p>
+    </div>
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Resolver el siguiente sistema de ecuaciones lineales aplicando el método de 
+        eliminación Gaussiana con pivoteo completo:
+           
+        $$
+        \begin{matrix} 
+         2x_{1}   &  - & 3x_{2}  & + & 2x_{3}  & = & 5 \\
+        -4x_{1}   &  + & 2x_{2}  & - & 6x_{3}  & = & 14 \\
+         2x_{1}   &  + &  2x_{2} & + & 4 x_{3} & = & 8 \\
+       \end{matrix}
+        $$
+       </p>
+       <p><b>Solución:</b></p>
+    </div>
+
+    
+    <h1 class="title flexbox"> Factorización de matrices </h1>    
+   <!-- 
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>
+        La descomposición LU es un método analítico muy recurrido por las ventajas de su programación,
+        tal como el almacenamiento en memoria, su convergencia y su algoritmo relativamente
+        sencillo de elaborar. Se mostrará cóomo se descompone una matriz de orden nxn y posteriormente
+        la forma en que ésta descomposición se aplica en la solucióon de sistemas de ecuaciones lineales.
+      </p>
+    </div>
+-->
+    <h1 class="title flexbox">Factorización LU </h1>    
+    
+    <div class="nota-box"> <h2 class="number-title"> Introducción</h2>
+      <p>
+        El problema principal es resolver el sistema de ecuaciones de la forma:
+        $$A\vec{x}= \vec{b}$$
+        donde $A$ es una matriz de tamaño $n\times n$, $\vec{x}$ es el vector de incognitas 
+        y $\vec{b}$ es el vector de términos independientes, $\vec{x}$ y $\vec{b}$ son vectores 
+        de tamaño $n\times 1$.
+      </p>
+
+      <p>En la sección anterior se utilizo eliminación Gaussiana para resolver dicho sistema. Otra forma 
+        de resolver el sistema $A\vec{x}= \vec{b}$ es factorizando la matriz $A$ de la siguiente manera:
+        $$A=\mathrm{LU}$$
+        donde $\mathrm{L}$ es una matriz triangular inferior  y $\mathrm{U}$ es una matriz triangular superior.
+        Aunque no todas las matrices tienen una factorización como: $A=\mathrm{LU}$ si es posible hacerlo con 
+        un gran número de matrices que surgen en las aplicaciones.   
+      </p>
+    </div>
+
+     
+    <div class="nota-box"> <h2 class="number-title"> Definición</h2>
+      <ul>
+      <li>Una matriz $\mathrm{U}=(u_{ij})$ de tamaño $n\times n$, es una 
+        <b>matriz triángular superior</b>  si  para toda $j=1,\ldots, n$, 
+         $$u_{ij}=0, \text{ para cada } i=j+1,\ldots, n.$$
+         Esto es,  
+        $$\mathrm{U}=(u_{ij}):=\begin{pmatrix} 
+         u_{11} & u_{12} & u_{13} & u_{14} & \cdots & u_{1n}  \\
+         0 & u_{22} & u_{23}     &  u_{24} &\cdots & u_{2n}  \\
+         0 &     0        & u_{33}     &  u_{34} &\cdots & u_{3n}  \\
+         0 &     0        & 0     &  u_{44} &\cdots & u_{4n}  \\
+         \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots  \\
+         0 &     0      &   0      &    0   & \cdots & u_{nn}  \\
+        \end{pmatrix}$$
+      </li>
+      <li>Una matriz $\mathrm{L}=(\ell_{ij})$ de tamaño $n\times n$, es una 
+        <b>matriz triángular inferior</b>  si  para toda $j=1,\ldots, n$, 
+         $$\ell_{ij}=0, \text{ para cada } i=1,2, \ldots, j-1.$$
+         Esto es, $L$ 
+        $$\mathrm{L}=(\ell_{ij}):=\begin{pmatrix} 
+        \ell_{11} & 0 & 0 & 0 & \cdots & 0  \\
+        \ell_{21} & \ell_{22} & 0    &  0 &\cdots & 0  \\
+        \ell_{31} & \ell_{32} & \ell_{33}     &  0 &\cdots & 0  \\
+        \ell_{41} & \ell_{42} & \ell_{43}     &  \ell_{44} &\cdots & 0  \\
+         \vdots & \vdots &  \vdots & \vdots   & \ddots & \vdots  \\
+        \ell_{n1} & \ell_{n2} &   \ell_{n3}  &   \ell_{n4}   & \cdots & \ell_{nn}  \\
+        \end{pmatrix}$$
+      </li>
+    </ul>
+      
+    </div>
+
+
+    
+    <div class="nota-box" id="Nota:doolittle"> <h2 class="number-title"> Nota</h2>
+      <p>
+        Si una matriz $A$ se factoriza como: $A=\mathrm{LU}$, entonces al sustituir en $A\vec{x}= \vec{b}$,
+        se tiene que 
+        $$\left(\mathrm{LU} \right)\vec{x}= \vec{b}$$
+        o bien,  
+        $$\mathrm{L}\left(\mathrm{U} \vec{x}\right)= \vec{b}$$
+        haciendo $\vec{y}:= \mathrm{U}\vec{x}$, se tiene que resolver el sistema:
+        $$\mathrm{L}\vec{y}= \vec{b}.$$
+        Luego, una vez que se tiene el valor del vector  $\vec{y}$ se resuelve el sistema:
+        $$\mathrm{U}\vec{x}= \vec{y}$$
+        
+      </p>
+      
+    </div>
+
+     
+    <div class="nota-box" > <h2 class="number-title"> Observación</h2>
+      <p>
+        Notemos que los sistemas $\mathrm{L}\vec{y}= \vec{b}$ y $\mathrm{U}\vec{x}= \vec{y}$ son muy faciles 
+        de resolver. 
+      </p>
+      <p>
+        Ahora el problema de resolver el sistema de ecuaciones $A=\mathrm{LU}$ se traduce a factorizar una 
+        matriz de la forma:  $A=\mathrm{LU}$
+      </p>
+    </div>
+
+    
+    
+
+    <div class="nota-box"> <h2 class="number-title"> Ejemplo</h2>
+      <p>
+        Sea $A$ una matriz de tamaño $3 \times 3$ y supongamos que $A$ tiene una factorización de la forma:
+        $A=\mathrm{LU}$
+        donde $\mathrm{L}$ es una matriz triangular superior y $\mathrm{U}$ es una matriz triangular superior.
+      </p>
+      $$
+      \begin{pmatrix} 
+      a_{11} & a_{12} & a_{13}   \\
+      a_{21} & a_{22} & a_{23}    \\
+      a_{31} & a_{32} & a_{33}  
+      \end{pmatrix}
+      =
+      \begin{pmatrix} 
+      \ell_{11} & 0 & 0   \\
+      \ell_{21} & \ell_{22} & 0    \\
+      \ell_{31} & \ell_{32} & \ell_{33}     
+      \end{pmatrix}
+      \begin{pmatrix} 
+      u_{11} & u_{12} & u_{13}   \\
+      0 & u_{22} & u_{23}     \\
+      0 &     0        & u_{33}   
+     \end{pmatrix} 
+    $$ 
+
+    </div>
+    
+
+    </body>
